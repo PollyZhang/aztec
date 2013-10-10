@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<link href='${ctx_path}/sys/css/tbo_error.css' rel='stylesheet' type='text/css'>
+		<title>500</title>
+	</head>
+	<body>
+		<p class="error-code">
+			500
+		</p>
+		<p class="not-found">服务器内部出错</p>
+		<div class="clear"></div>
+		<div class="content">
+			服务器内部出错!
+			<br/><a href="${ctx_path}">返回主页</a>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,144 @@
+<#include "/WEB-INF/web/frame/head.html"/>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/sys/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript">
+<!--
+function doPage(pageNum){
+	var pageCount=${busList.totalPage};
+	var pageIndex=${busList.pageNumber};
+	if(pageNum>pageCount){
+		pageNum=pageCount==0?1:pageCount;
+	}else if(pageNum<1){
+		pageNum=1;
+	}
+	if(pageIndex!=pageNum){
+		$("#pageIndex").val(pageNum);
+		$("#busForm").attr("action","${ctx_path}/busQuery/");
+		$("#busForm").submit();
+	}
+}
+
+$(function(){
+	$( "#dateQuery" ).datepicker({
+         defaultDate: "+1w",
+         changeMonth: true,
+         numberOfMonths: 1,
+         minDate: new Date()
+     });
+     
+     $("#faCheShiJianStartQuery").timepicker({
+		showSecond: false,
+		timeFormat: 'HH:mm',
+		stepHour: 1,
+		stepMinute: 1,
+		stepSecond: 1
+	});
+	$("#faCheShiJianEndQuery").timepicker({
+		showSecond: false,
+		timeFormat: 'HH:mm',
+		stepHour: 1,
+		stepMinute: 1,
+		stepSecond: 1
+	});
+});
+
+function resetQuery(){
+	$('#dateQuery').val("");
+	$('#faWangCheZhanQuery').val("");
+	$('#faCheShiJianStartQuery').val("");
+	$('#faCheShiJianEndQuery').val("");
+	
+}
+
+function query(){
+	$("#pageIndex").val(1);
+	$("#busForm").attr("action",baseUrl+"/busQuery/");
+	$("#busForm").submit();
+}	
+//-->
+</script>
+<!-- 内容 -->
+<div id="content" class="span9">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/index/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/busQuery?type=ITEM002">车次浏览</a>
+			</li>
+		</ul>
+	</div>
+	<form id="busForm" class="form-horizontal" action="" method="post">
+	<input type="hidden" id="busToken" name="busToken" value="${(busToken)!}">
+	<input type="hidden" id="pageIndex" name="pageIndex" value="${busList.pageNumber}">
+	<input type="hidden" id="type" name="type" value="ITEM002">
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon icon-color icon-clock"></i>&nbsp;${dateQuery!}车次列表</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			<div class="box-content">
+					<p><span class="alert alert-info span12">
+					    发车日期:<input class="input-small datepicker" id="dateQuery" name="dateQuery" value="${dateQuery!}" type="text" onkeydown="return false;">
+						&nbsp;终点站:<input style="width:80px;" type="text" id="faWangCheZhanQuery" name="faWangCheZhanQuery" class="input" value="${faWangCheZhanQuery!}">
+						&nbsp;发车时间:<input style="width:80px;" class="input-small datepicker" id="faCheShiJianStartQuery" name="faCheShiJianStartQuery" value="${faCheShiJianStartQuery!}" type="text" onkeydown="return false;">
+				    	- <input style="width:80px;" class="input-small datepicker" id="faCheShiJianEndQuery" name="faCheShiJianEndQuery" value="${faCheShiJianEndQuery!}" type="text" onkeydown="return false;">
+				    	&nbsp;<a class="btn btn-info" href="#" onclick="javascript:resetQuery();">
+							<i class="icon-remove-sign icon-white"></i>  
+							重置                                            
+						</a>
+						&nbsp;<a class="btn btn-success" href="#" onclick="javascript:query();">
+							<i class="icon icon-color icon-search"></i>  
+							查询                                            
+						</a>	
+					</span>			
+					</p>
+					
+					<table class="table table-striped table-bordered bootstrap-datatable datatable">
+						  <thead>
+							  <tr>
+								  <th width="30px">序号</th>
+								  <th>车次</th>
+								  <th>发往车站</th>
+								  <th>发车时间</th>
+								  <th>车型</th>
+								  <th>准售座位</th>
+							  </tr>
+						  </thead>   
+						  <tbody>
+						  	<#list busList.getList() as x>
+						  	<tr>
+						  		<td>${x_index+1}</td>
+						  		<td>${x.CheCi}</td>
+						  		<td>${x.FaWangCheZhan}</td>
+						  		<td>${x.FaCheShiJian}</td>
+						  		<td>${x.CheXingMingCheng}</td>
+						  		<td><#if x.ZhunShouZuoWei=0>座位不对号<#else>${x.ZhunShouZuoWei}</#if></td>
+						  	</tr>
+						  	</#list>
+						  </tbody>
+					  </table>
+					<div style="float:left;">
+					  		总记录数:${busList.totalRow}条  当前${busList.pageNumber}页/共${busList.totalPage}页
+					</div>
+					  <div class="pagination pagination-right">
+						  <ul>
+							<li><a href="#" onclick="javascript:doPage(1);">首页</a></li>
+							<li><a href="#" onclick="javascript:doPage(${busList.pageNumber-1});">上一页</a></li>
+							<li><a href="#" onclick="javascript:doPage(${busList.pageNumber+1});">下一页</a></li>
+							<li><a href="#" onclick="javascript:doPage(${busList.totalPage});">尾页</a></li>
+						  </ul>
+					  </div> 
+			</div>
+		</div>
+	</div>
+	
+	</form>
+
+</div>
+
+<#include "/WEB-INF/web/frame/foot.html"/>
+

@@ -1,0 +1,150 @@
+body{font:12px Arial,Verdana,Tahoma,"宋体";margin:0 auto;width:1024px;}
+*{padding:0px;margin:0px;}
+* li{list-style:none;}
+a{text-decoration:none;color:#20537A;}
+a:hover{text-decoration:underline;}
+
+.clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.clearfix {
+    _zoom: 1;
+}
+*+html .clearfix {
+	overflow:auto;
+}
+
+.menu_navcc{width:1024px; margin:0 auto;}
+.menu_nav{width:1024px;height:48px;background:url(../images/nav_bg.gif) repeat-x;float:left;}
+.menu_nav .nav_content{margin-left:0px;padding-left:25px;background:url(../images/nav_l_bg.gif) no-repeat;float:left;}
+.menu_nav .nav_content li{width:88px;height:48px;padding-left:15px;padding-right:13px;background:url(../images/nav_li_right.gif) no-repeat right center;float:left;line-height:48px;text-align:center;font-size:14px;font-weight:bold;}
+.menu_nav .nav_content li a{color:#fff;width:88px;height:48px;display:block;}
+.menu_nav .nav_content li.current{line-height:37px;} 
+ 
+/* .menu_nav .nav_content li em{background:url(../images/bid_new.gif) no-repeat;width:35px;height:21px;display:inline-block;position:absolute;top:-20px;left:40px;}
+ */
+.menu_nav .nav_content li.current a,.menu_nav .nav_content li a:hover{width:88px;height:37px;background:url(../images/nav_li_current.gif) no-repeat;display:block;color:#fff;}
+ 
+.menu_nav .nav_content li a:hover{background:url(../images/nav_li_hover.gif) no-repeat;line-height:37px;text-decoration:none;}
+.menu_nav_right{padding-right:20px;background:url(../images/nav_r_bg.gif) no-repeat right top;float:right;margin-left:50px;padding-top:13px;height:23px;padding-bottom:12px;}
+ 
+p{
+margin-bottom:15px}
+/*订票流程样式*/
+.swMain1 {
+  float:left;
+  margin-left:7px;
+  margin-top:5px;
+  height:60px;
+  width:180px;
+  text-decoration: none;
+  outline-style:none;
+  -moz-border-radius  : 5px;
+  -webkit-border-radius: 5px;
+  z-index:99;
+  color:#F8F8F8;
+  background: #8CC63F;
+  border: 1px solid #8CC63F;
+  cursor:text;
+}
+.stepNumber1{
+  position:relative;
+  float:left;
+  width:30px;
+  text-align: center;
+  padding:5px;
+  padding-top:0;
+  font: bold 45px Verdana, Arial, Helvetica, sans-serif;
+  color: #F8F8F8;
+}
+.stepDesc1{
+  position:relative;
+  display:block;
+  float:left;
+  text-align: left;
+  padding:5px;
+  font: bold 20px Verdana, Arial, Helvetica, sans-serif;
+}
+.stepDesc1 small{
+  font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+}
+.swMain2 {
+  margin-left:7px;
+  margin-top:5px;
+  float:left;
+  height:60px;
+  width:180px;
+  text-decoration: none;
+  outline-style:none;
+  -moz-border-radius  : 5px;
+  -webkit-border-radius: 5px;
+  z-index:99;
+  color:#F8F8F8;
+  background: #EA8511;
+  border: 1px solid #EA8511;
+  cursor:text;
+  -moz-box-shadow: 5px 5px 8px #888;
+  -webkit-box-shadow: 5px 5px 8px #888;
+  box-shadow: 5px 5px 8px #888;
+}
+.stepNumber2{
+  position:relative;
+  float:left;
+  width:30px;
+  text-align: center;
+  padding:5px;
+  padding-top:0;
+  font: bold 45px Verdana, Arial, Helvetica, sans-serif;
+  color: #F8F8F8;
+}
+.stepDesc2{
+  position:relative;
+  display:block;
+  float:left;
+  text-align: left;
+  padding:5px;
+  font: bold 20px Verdana, Arial, Helvetica, sans-serif;
+}
+.stepDesc2 small{
+  font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+}
+.swMain3 {
+  margin-left:7px;
+  margin-top:5px;
+  float:left;
+  height:60px;
+  width:180px;
+  text-decoration: none;
+  outline-style:none;
+  -moz-border-radius  : 5px;
+  -webkit-border-radius: 5px;
+  z-index:99;
+  color:#ccc;
+  background: #F8F8F8;
+  border: 1px solid #ccc;
+  cursor:text;
+}
+.stepNumber3{
+  position:relative;
+  float:left;
+  width:30px;
+  text-align: center;
+  padding:5px;
+  padding-top:0;
+  font: bold 45px Verdana, Arial, Helvetica, sans-serif;
+  color: #ccc;
+}
+.stepDesc3{
+  position:relative;
+  display:block;
+  float:left;
+  text-align: left;
+  padding:5px;
+  font: bold 20px Verdana, Arial, Helvetica, sans-serif;
+}
+.stepDesc3 small{
+  font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+}

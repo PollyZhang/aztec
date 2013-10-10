@@ -1,0 +1,233 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<!-- UEdit编辑器-1.2.3.0-->
+<link rel="stylesheet" type="text/css" href="${ctx_path}/common/ueditor/themes/default/ueditor.css">
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/ueditor/editor_config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/ueditor/editor_all_min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/sys/js/tbo_common.js"></script>
+
+<script type="text/javascript">
+
+$(function(){
+    
+	var nDate='${newsDate!}';
+	 if(nDate!=null && nDate!=''){
+	   $('#newsDate').val(nDate);
+	 }  
+     $("#newsDate").datepicker({
+	            defaultDate: "+1w",
+	            changeYear: true,
+	            changeMonth: true,
+	            numberOfMonths: 1
+	    });
+	          
+	var editor_a = new baidu.editor.ui.Editor({
+		 autoHeightEnabled:false,
+	     minFrameHeight:400<#if !(contents?? && contents.id??)>,initialContent:''</#if>
+	});
+	editor_a.render( 'myEditor' );
+	/* $( "#createTime" ).datetimepicker({
+		showSecond: true,
+		timeFormat: 'HH:mm:ss',
+		stepHour: 1,
+		stepMinute: 1,
+		stepSecond: 1 
+	});  */
+	
+	$("#contentsForm").validationEngine();
+	<#if msg??>
+	  noty({"text":"${(msg)!}",timeout: 2000,"layout":"center","type":"success"});
+	</#if>
+	<#if errorinfo??>
+	  noty({"text":"${(errorinfo)!}",timeout: 2000,"layout":"center","type":"error"});
+	</#if>
+});
+function validateImage(field, rules, i, options){
+	var strName=[".gif",".png",".jpg",".bmp"];
+	var validateStr=validateFile(strName,field,"gif,jpg和bmp",3);
+	if(validateStr!=null && validateStr!=''){
+		return validateStr;
+	}
+}
+function validateVideo(field, rules, i, options){
+	var strName=[".3gp",".rm",".rmvb",".mp4"];
+	var validateStr=validateFile(strName,field,"mp4,3gp,rm和rmvb",10);
+	if(validateStr!=null && validateStr!=''){
+		return validateStr;
+	}
+}
+function validateAttach(field, rules, i, options){
+	var strName=[".txt",".rar",".zip",".doc",".docx"];
+	var validateStr=validateFile(strName,field,"txt,rar,zip,doc和docx",10);
+	if(validateStr!=null && validateStr!=''){
+		return validateStr;
+	}
+}
+
+function returnList(){
+	$('#queryForm').submit();
+}
+</script>
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/contents">内容管理</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-home"></i>&nbsp;<#if id?? && id!=''>编辑<#else>“${(itemName)!}”栏目添加</#if>内容</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			<div class="box-content">
+				<form id="contentsForm" action="${ctx_path}/contents/save" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<input type="hidden" id="contentsToken" name="contentsToken" value="${(contentsToken)!}">
+		    	<input type="hidden" id="itemId" name="itemId" value="${(itemId)!}">
+		    	<input type="hidden" id="itemType" name="contents.itemType" value="${(itemType)!}">
+		    	<input type="hidden" id="itemTypeQuery" name="itemTypeQuery" value="${(itemTypeQuery)!}">
+		    	<input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
+		    	<input type="hidden" id="titleQuery" name="titleQuery" value="${(titleQuery)!}">
+		    	<input type="hidden" id="contentTypeQuery" name="contentTypeQuery" value="${(contentTypeQuery)!}">
+		    	<input type="hidden" id="statusQuery" name="statusQuery" value="${(statusQuery)!}">
+		    	<input type="hidden" id="startNewsDateQuery" name="startNewsDateQuery" value="${(startNewsDateQuery)!}">
+		    	<input type="hidden" id="endNewsDateQuery" name="endNewsDateQuery" value="${(endNewsDateQuery)!}">
+		    	<input type="hidden" id="itemName" name="itemName" value="${(itemName)!}">
+		    	<input type="hidden" id="imageFile" name="contents.imageFile" value="${(imageFile)!}">
+		    	<input type="hidden" id="videoFile" name="contents.videoFile" value="${(videoFile)!}">
+		    	<input type="hidden" id="attachFile" name="contents.attachFile" value="${(attachFile)!}">
+		    	<input type="hidden" id="status" name="contents.status" value="${(contents.status)!}">
+		    	<#if id?? && id!=''>
+		    	<input type="hidden" id="contents.id" name="contents.id" value="${(contents.id)!}">
+		    	</#if>		
+					<table style="line-height:40px;margin-left:16px;">
+						<tr>
+							<td><label class="control-label">正标题&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="contents.title" name="contents.title" class="validate[required,maxSize[100]]" style="width:790px;" value="${(contents.title)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">副标题&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="contents.subTitle" name="contents.subTitle" class="validate[maxSize[125]]" style="width:790px;" value="${(contents.subTitle)!}"></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">新闻日期&nbsp;</label></td>
+						    <td><input type="text" id="newsDate" name="contents.newsDate" onkeydown="return false;" class="validate[required] input-small datepicker" style="width:100px;" value="${(contents.newsDate)!}"><font color="red">*</font>
+							<td><label class="control-label" style="margin-left:100px;">新闻类型&nbsp;</label></td>
+							<td>
+								<select id="contents.contentType" name="contents.contentType" class="validate[required]" data-rel="chosen">
+									<option value="">请选择</option>
+									<#if contentTypeList??>
+										<#list contentTypeList as x>
+									      <option value="${x.code}" <#if contents?? && contents.contentType?? && contents.contentType==x.code>selected</#if>>${x.name}</option>
+										</#list>
+									</#if>
+							  	</select><font color="red">*</font>
+							</td>
+						</tr>
+						<tr>
+							<td><label class="control-label">来源&nbsp;</label></td>
+							<td><input type="text" id="contents.source" name="contents.source" class="validate[maxSize[60]]" value="${(contents.source)!}"></td>
+							<td><label class="control-label" style="margin-left:100px;">来源的URL&nbsp;</label></td>
+							<td><input type="text" id="contents.sourceUrl" name="contents.sourceUrl" class="validate[maxSize[100]]" style="width:324px;" value="${(contents.sourceUrl)!}"></td>
+						</tr>
+						
+						<tr>
+							<td><label class="control-label">是否分享&nbsp;</label></td>
+							<td style="line-height:20px;">
+								<input type="radio" id="contents.isShared" name="contents.isShared" value="true" style="float:left;" <#if contents?? && contents.isShared?? && contents.isShared>checked</#if>><span style="padding-top:5px;float:left;">是</span>
+								<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+								<input type="radio" id="contents.isShared" name="contents.isShared" value="false" style="float:left;" <#if contents?? && contents.isShared?? && !contents.isShared>checked<#elseif !contents?? || !contents.isShared??>checked</#if>><span style="padding-top:5px;float:left;">否</span>
+							</td>
+							<td><label class="control-label" style="margin-left:100px;">作者&nbsp;</label></td>
+								<td><input type="text" id="contents.author" name="contents.author" class="validate[maxSize[10]]" value="${(contents.author)!}"></td>
+							</td>
+						</tr>
+						<tr>
+							<td><label class="control-label">是否置顶&nbsp;</label></td>
+							<td style="line-height:20px;">
+								<input type="radio" id="contents.isTop" name="contents.isTop" value="true" style="float:left;" <#if contents?? && contents.isTop?? && contents.isTop>checked</#if>><span style="padding-top:5px;float:left;">是</span>
+								<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+								<input type="radio" id="contents.isTop" name="contents.isTop" value="false" style="float:left;" <#if contents?? && contents.isTop?? && !contents.isTop>checked<#elseif !contents?? || !contents.isTop??>checked</#if>><span style="padding-top:5px;float:left;">否</span>
+							</td>
+							<td><label class="control-label" style="margin-left:100px;">图片附件&nbsp;</label></td>
+							<td><input type="file" id="imageFile" name="imageFile" class="validate[funcCall[validateImage]]" value=""></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">视频附件&nbsp;</label></td>
+							<td><input type="file" id="videoFile" name="videoFile" class="validate[funcCall[validateVideo]]"></td>
+							<td><label class="control-label" style="margin-left:100px;">普通附件&nbsp;</label></td>
+							<td><input type="file" id="attachFile" name="attachFile" class="validate[funcCall[validateAttach]]"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="3">
+								<div style="line-height:15px;width:700px;margin-top:5px;">
+									<#if imageFile??>
+									<div id="imageDiv" style="float:left;">
+									图片附件:&nbsp;<a href="${ctx_path}/upload${imageFile}" class="btn" style="line-height:10px;" target="_blank">查看</a>
+											&nbsp;<a href="#" class="btn"  style="line-height:10px;"onclick="$('#imageFile').val('');$('#imageDiv').hide();">断开连接</a>&nbsp;&nbsp;
+									</div>
+									</#if>
+									<#if videoFile??>
+									<div id="videoDiv" style="float:left;">
+									视频附件:&nbsp;<a href="${ctx_path}/upload${videoFile}" class="btn" style="line-height:10px;" target="_blank">查看</a>
+											&nbsp;<a href="#" class="btn" style="line-height:10px;" onclick="$('#videoFile').val('');$('#videoDiv').hide();">断开连接</a>&nbsp;&nbsp;
+									</div>
+									</#if>
+									<#if attachFile??>
+									<div id="attachDiv" style="float:left;">
+									普通附件:&nbsp;<a href="${ctx_path}/upload${attachFile}" class="btn" style="line-height:10px;" target="_blank">查看</a>
+											&nbsp;<a href="#" class="btn" style="line-height:10px;" onclick="$('#attachFile').val('');$('#attachDiv').hide();">断开连接</a>
+									</div>
+									</#if>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="3"><div style="line-height:15px;width:700px;color:#f00;margin-top:5px;">文件上传说明:图片(gif,png,jpg和bmp)大小:3MB,视频(mp4,3gp,rm和rmvb)大小:10MB,附件(txt,rar,zip,doc和docx)大小:10MB,其他类型或者文件太大后台将不做处理！</div></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">摘要(限<font color="red">500</font>字)&nbsp;</label></td>
+							<td colspan="3">
+							 <textarea id="contents.summary" name="contents.summary" rows="3" class="cleditor validate[maxSize[500]]" style=" width: 790px; height: 60px;">${(contents.summary)!}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<td><label class="control-label">内容&nbsp;</label></td>
+							<td colspan="3">
+								<textarea id="myEditor" name="contents.contents" style="width:800px;line-height:20px;" rows="3" cols="20">
+							    	<#if contents?? && contents.contents??>${(contents.contents)!}</#if>
+								</textarea>
+							</td>
+						</tr>
+					</table>
+					<div class="form-actions">
+					  <button type="submit" class="btn btn-primary">保存</button>
+					  <button type="button" class="btn" onclick="javascript:returnList();">返回</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<form id="queryForm" action="${ctx_path}/contents/returnList" class="form-horizontal" method="post">
+		    	<input type="hidden" id="itemId1" name="itemId1" value="${(itemId)!}">
+		    	<input type="hidden" id="itemType1" name="itemType1" value="${(itemType)!}">
+		    	<input type="hidden" id="itemTypeQuery1" name="itemTypeQuery1" value="${(itemTypeQuery)!}">
+		    	<input type="hidden" id="pageIndex1" name="pageIndex1" value="${(pageIndex)!}">
+		    	<input type="hidden" id="titleQuery1" name="titleQuery1" value="${(titleQuery)!}">
+		    	<input type="hidden" id="contentTypeQuery1" name="contentTypeQuery1" value="${(contentTypeQuery)!}">
+		    	<input type="hidden" id="statusQuery1" name="statusQuery1" value="${(statusQuery)!}">
+		    	<input type="hidden" id="startNewsDateQuery1" name="startNewsDateQuery1" value="${(startNewsDateQuery)!}">
+		    	<input type="hidden" id="endNewsDateQuery1" name="endNewsDateQuery1" value="${(endNewsDateQuery)!}">
+		    	<input type="hidden" id="itemName1" name="itemName1" value="${(itemName)!}">
+  </form>
+<#include "/WEB-INF/sys/frame/foot.html"/>

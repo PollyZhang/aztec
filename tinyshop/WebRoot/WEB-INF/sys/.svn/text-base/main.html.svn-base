@@ -1,0 +1,25 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<!-- 内容 -->
+<div id="content" class="span10">
+		<div class="box" style="margin-top:0px;">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-home"></i>&nbsp;欢迎使用</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			
+			<div class="box-content" style="height:355px;">
+				<div class=" span12 top-block" style="height:355px;">
+					<div><h1>&nbsp;&nbsp;</h1></div>
+					<span><img  src="${ctx_path}/sys/images/${logo}" width="50" height="50" /></span>
+					<div><h1>&nbsp;&nbsp;</h1></div>
+					<div><h1>欢迎使用</h1></div>
+					<div><h5>&nbsp;&nbsp;</h5></div>
+					<div><h1>${title!}</h1></div>
+				</div>
+			     
+			</div>
+			
+		</div>
+</div>
+<#include "/WEB-INF/sys/frame/foot.html"/>

@@ -1,0 +1,24 @@
+		</div><!-- row-fluid -->
+
+    <footer>
+		 <div class="box">
+		   <div class="" style="margin-top:10px; height:25px;text-align:center;text-size:16px;">
+		     	<a href="${ctx_path}/index" title="在线订票" ><span>在线订票</span></a> |
+				<a href="${ctx_path}/busQuery?type=ITEM001" title="车次浏览" ><span>车次浏览</span></a> |
+				<a href="${ctx_path}/contentsList?type=ITEM002" title="新闻公告" ><span>新闻公告</span></a> |
+				<a href="${ctx_path}/contentsList?type=ITEM003&first=98ac448c-c2e0-46b2-8ac2-dafa56c89f0d" title="订票指南" ><span>订票指南</span></a> |
+				<a href="${ctx_path}/contentsList?type=ITEM004&first=6cce151a-37d0-46fc-8049-851aebd4331f" title="车站介绍" ><span>车站介绍</span></a> |
+				<a href="${ctx_path}/questionsQuery?type=ITEM005" title="旅客问答" ><span>旅客问答</span></a>
+			</div>	
+					
+		</div>
+		<div style="text-align:center;line-height: 20px;">
+			电子邮箱：zz@163.com | 热线电话：0371-99999999</br>
+			Copyright© 2013  XX汽车票网 All Right Reserved ICP备案号：豫ICP备00000000号 
+		</div>
+		</br>
+	</footer>
+		
+  </div><!-- end container-fluid -->	
+</body>
+</html>

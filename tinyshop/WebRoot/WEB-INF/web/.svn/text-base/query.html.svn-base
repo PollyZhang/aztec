@@ -1,0 +1,340 @@
+<#include "/WEB-INF/web/frame/head.html"/>
+<script>
+var gid;
+var bankCode;
+function doPage(pageNum){
+	var pageCount=${listPage.totalPage};
+	var pageIndex=${listPage.pageNumber};
+	if(pageNum>pageCount){
+		pageNum=pageCount==0?1:pageCount;
+	}else if(pageNum<1){
+		pageNum=1;
+	}
+	if(pageIndex!=pageNum){
+		$("#pageIndex").val(pageNum);
+		$("#queryForm").attr("action","${ctx_path}/query/");
+		$("#queryForm").submit();
+	}
+}
+function showInfo(ddh,fcz,cc,zdz,xkz,sDate,sTime,ps,pj,zh,qpr,qprCard,jzk,fcq,cDate){
+	$("#ddh").html(ddh);
+	$("#fcz").html(fcz);
+	$("#cc").html(cc);
+	$("#zdz").html(zdz);
+	$("#xkz").html(xkz);
+	$("#sDate").html(sDate);
+	$("#sTime").html(sTime);
+	$("#ps").html(ps);
+	$("#pj").html(pj);
+	$("#zh").html(zh);
+	$("#qpr").html(qpr);
+	$("#qprCard").html(qprCard);
+	$("#jzk").html(jzk);
+	$("#fcq").html(fcq);
+	$("#cDate").html(cDate);
+	$("#infoDiv").modal("show");
+}
+function selectBank(id){
+	$("#bankDiv input[type='radio']").attr("checked",false);
+	$("#bankDiv .icon_bank").removeClass("icon_bank_box_border");
+	bankCode=null
+ 	gid=id;
+ 	$("#selectBankDiv").modal("show");
+}
+function goBank(){
+	var radioBank=$("#bankDiv input[type='radio'][checked]");
+	if(radioBank.length>0 && bankCode!=null){
+		$.post("${ctx_path}/query/getAlipayUrl",{ id:gid,bankCode:bankCode},function(data){
+			if(data.result==1){
+ 				$("#selectBankDiv").modal("hide");
+				window.open(data.url);
+			}else{
+				noty({"text":data.url,timeout: 2000,"layout":"center","type":"error"});
+			}
+		},"json");
+	}else{
+		noty({"text":"请至少选择一个支付方式！",timeout: 2000,"layout":"center","type":"error"});
+	}
+}
+
+
+function goBack(id){
+	if(confirm("确定要撤销这张订单?")){
+		$("#id").val(id);
+		$("#queryForm").attr("action","${ctx_path}/query/cancelOrder");
+		$("#queryForm").submit();
+	}
+}
+function onBankBorder(strName){
+	$("#bankDiv input[type='radio']").attr("checked",false);
+	$("#bankDiv .icon_bank").removeClass("icon_bank_box_border");
+	$("#bankDiv .icon_"+strName).addClass("icon_bank_box_border");
+	$("#"+strName).attr("checked",true);
+	bankCode=strName;
+}
+function clearDate(){
+	$("#startQuery").val("");
+	$("#endQuery").val("");
+}
+$(function(){
+	$("#startQuery").datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 1,
+          onClose: function(selectedDate) {
+              $("#endQuery").datepicker("option", "minDate", selectedDate );
+          }
+      });
+      $("#endQuery").datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 1,
+          onClose: function(selectedDate) {
+              $("#startQuery").datepicker("option", "maxDate", selectedDate );
+          }
+      });
+      <#if msg??>
+		noty({"text":"${msg}",timeout: 2000,"layout":"center","type":"success"});
+	  </#if>
+	  <#if error??>
+		noty({"text":"${error}",timeout: 2000,"layout":"center","type":"error"});
+	  </#if> 
+ });
+</script>
+<style>
+	.icon_bank{display: block;height: 36px;background-repeat: no-repeat;text-indent: -9999px;background-image: url("${ctx_path}/web/images/bank.png")}
+	.icon_bank_box{width: 123px;border: 1px solid #ddd;vertical-align: middle;position: relative;display: inline-block;background-color: #eee;float:left;margin-left:5px;margin-top:5px;}
+	.icon_bank_box_border{border: 1px solid #ff0000;}
+	.icon_ICBC{background-position: 0px -432px;}
+	.icon_CCB{background-position: 0px -72px;}
+	.icon_ABC{background-position: 0px -0px;}
+	.icon_POSTGC{background-position: 0px -504px;}
+	.icon_BOCB2C{background-position: 0px -36px;}
+	.icon_COMM{background-position: 0px -288px;}
+	.icon_CMB{background-position: 0px -216px;}
+	.icon_CEBBANK{background-position: 0px -108px;}
+	.icon_SPDB{background-position: 0px -612px;}
+	.icon_GDB{background-position: 0px -324px;}
+	.icon_CITIC{background-position: 0px -180px;}
+	.icon_CIB{background-position: 0px -144px;}
+	.icon_CMBC{background-position: 0px -252px;}
+	.icon_SPABANK{background-position: 0px -576px;}
+	table {
+	  width: 100%;
+	  margin-bottom: 18px;
+	  background-color: transparent;
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	}
+	table td {
+	  padding: 3px;
+	  vertical-align: center;
+	  border-top: 1px solid #dddddd;
+	}
+	.tableLabel{
+	  width:80px;
+	  text-align: right;
+	  background:#F8F8F8;
+	}
+</style>
+<div class="container-fluid" style="padding-left:0px;padding-right:0px;">
+	<div class="row-fluid">
+		<noscript>
+			<div class="alert alert-block span10">
+				<h4 class="alert-heading">Warning!</h4>
+				<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+			</div>
+		</noscript>
+		<div id="content" class="span9">
+			<div>
+				<ul class="breadcrumb">
+					<li>
+						<a href="${ctx_path}/index">首页</a><span class="divider">/</span>
+					</li>
+					<li>
+						<a href="#">订单列表</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<div class="box-header well" data-original-title>
+					<h2><i class="icon-user"></i>&nbsp;查询条件</h2>
+					<div class="box-icon">
+					</div>
+				</div>
+				<form id="queryForm" action="${ctx_path}/query/" method="post" class="form-horizontal">
+				  	<input id="pageIndex" name="pageIndex" type="hidden">
+				  	<input id="id" name="id" type="hidden">
+				  	<input id="cancelToken" name="cancelToken" type="hidden" value="${cancelToken}">
+					<div class="box">
+						<div class="box-content">
+							<table class="table-bordered">
+								<tr>
+									<td class="tableLabel">下客站:</td>
+									<td>
+										<input type="text" id="xianKeQuery" name="xianKeQuery" class="input" value="<#if xianKeQuery??>${xianKeQuery}</#if>">
+									</td>
+									<td class="tableLabel">状态:</td>
+									<td>
+										<select id="zhuangTaiQuery" name="zhuangTaiQuery"  class="input" data-rel="chosen">
+											<option value="">---请选择---</option>
+											<#if zhuangTaiMap??>
+											<#list zhuangTaiMap.keySet() as key>
+												<option value="${key}" <#if zhuangTaiQuery?? && zhuangTaiQuery==key>selected</#if>>${zhuangTaiMap[key]}</option>
+											</#list>
+											</#if>
+					  					</select>
+					  				</td>
+								</tr>
+								<tr>
+									<td class="tableLabel">发车日期:</td>
+									<td colspan="3">
+										&nbsp;&nbsp;从&nbsp;&nbsp;<input type="text" onkeydown="return false;" class="input datepicker" id="startQuery" name="startQuery" value="<#if startQuery??>${startQuery}</#if>">
+					  	   				&nbsp;&nbsp;到&nbsp;&nbsp;<input type="text" onkeydown="return false;" class="input datepicker" id="endQuery" name="endQuery" value="<#if endQuery??>${endQuery}</#if>">
+										&nbsp;&nbsp;<a href="#" onclick="javascript:clearDate();" class="btn btn-small btn-danger">清空</a>
+									</td>
+								</tr>
+							</table>
+							<center>
+								<input type="submit" class="btn btn-primary" value="查询"/>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="reset" class="btn btn-danger" value="重置"/>
+							</center>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-content">
+							<table class="table table-condensed">
+								  <thead>
+									  <tr>
+										  <th width="30">序号</th>
+										  <th width="30">车次</th>
+										  <th width="80">发车站</th>
+										  <th width="70">下客站</th>
+										  <th width="70">终点站</th> 
+										  <th width="105">发车日期</th>
+										  <th width="40">状态</th>
+										   <th width="105">订购时间</th>    
+										  <th width="140">操作</th>                                   
+									  </tr>
+								  </thead>   
+								  <tbody>
+								  	<#if listPage.getList()?? && listPage.getList()?size gt 0>
+								  	<#list listPage.getList() as x>
+									<tr>
+										<td class="center" style="line-height:30px;">${x_index+1}</td>
+										<td class="center" style="line-height:30px;">${x.CheCi}</td>
+										<td class="center" style="line-height:30px;">${x.FaCheZhan}</td>
+										<td class="center" style="line-height:30px;">${x.XiaKeZhan}</td>
+										<td class="center" style="line-height:30px;">${x.ZhongDianZhan}</td>
+										<td class="center" style="line-height:30px;">${x.FaCheRiQi?string('yyyy-MM-dd')} ${x.FaCheShiJian}</td>
+										<td class="center" style="line-height:30px;">${x.ZhuangTai}</td>
+										<td class="center" style="line-height:30px;">${x.ShouPiaoRiQiShiJian?string('yy-MM-dd HH:mm:ss')}</td>
+										<td class="center">
+											<a href="#" class="btn btn-mini btn-primary" onclick="javascript:showInfo('${x.DingDanHao}','${x.FaCheZhan}','${x.CheCi}','${x.ZhongDianZhan}','${x.XiaKeZhan}','${x.FaCheRiQi?string('yyyy-MM-dd')}','${x.FaCheShiJian}','${x.PiaoShu}','${x.PiaoJia}','${x.ZuoHao}','${x.QuPiaoRenXingMing}','${x.ShenFenZhengHao}','${x.JinZhanKou}','${x.FaCheQu}','${x.ShouPiaoRiQiShiJian?string('yyyy-MM-dd HH:mm:ss')}');">详情</a>
+											<#if x.ZhuangTai=='未付款'>
+											<a href="#" class="btn btn-mini btn-success" onclick="javascript:selectBank('${x.id}');">支付</a>
+											<a href="#" class="btn btn-mini btn-danger" onclick="javascript:goBack('${x.id}');">撤销</a>
+											</#if>
+										</td> 
+										                                   
+									</tr> 
+									</#list>
+									<#else>
+										<tr><td colspan="8" height="50"><div style="margin-top:20px;"><center>没有找到相关信息</div></center></td></tr>
+									</#if>                               
+								  </tbody>
+							 </table>  
+							 <div style="float:left;">
+							  		总记录数:${listPage.totalRow}条  当前<#if listPage.totalPage!=0>${listPage.pageNumber}<#else>0</#if>页/共${listPage.totalPage}页
+							  </div>
+							  <div class="pagination pagination-right">
+								  <ul>
+									<li><a href="#" onclick="javascript:doPage(1);">首页</a></li>
+									<li><a href="#" onclick="javascript:doPage(${listPage.pageNumber-1});">上一页</a></li>
+									<li><a href="#" onclick="javascript:doPage(${listPage.pageNumber+1});">下一页</a></li>
+									<li><a href="#" onclick="javascript:doPage(${listPage.totalPage});">尾页</a></li>
+								  </ul>
+							  </div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal hide fade" id="selectBankDiv">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3><div id="membertitle">支付方式</div></h3>
+	</div>
+	<div class="modal-body form-horizontal">
+		<div id="bankDiv" style="margin-left:35px;">
+			<div>
+				<input id="ICBCB2C" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="ICBCB2C" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_ICBCB2C" onclick="javascript:onBankBorder('ICBCB2C');">中国工商银行</div>
+				<input id="CCB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CCB" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CCB" onclick="javascript:onBankBorder('CCB');">中国建设银行</div>
+				<input id="ABC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="ABC" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_ABC" onclick="javascript:onBankBorder('ABC');">中国农业银行</div>
+			</div>
+			<div style="float:left;">
+				<input id="POSTGC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="POSTGC" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_POSTGC" onclick="javascript:onBankBorder('POSTGC');">中国邮政储蓄银行</div>
+				<input id="BOCB2C" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="BOCB2C" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_BOCB2C" onclick="javascript:onBankBorder('BOCB2C');">中国银行</div>
+				<input id="COMM" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="COMM" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_COMM" onclick="javascript:onBankBorder('COMM');">交通银行</div>
+			</div>
+			<div style="float:left;">
+				<input id="CMB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CMB" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CMB" onclick="javascript:onBankBorder('CMB');">招商银行</div>
+				<input id="CEBBANK" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CEBBANK" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CEBBANK" onclick="javascript:onBankBorder('CEBBANK');">中国光大银行</div>
+				<input id="SPDB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="SPDB" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_SPDB" onclick="javascript:onBankBorder('SPDB');">浦发银行</div>
+			</div>
+			<div style="float:left;">
+				<input id="GDB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="GDB" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_GDB" onclick="javascript:onBankBorder('GDB');">广东发展银行</div>
+				<input id="CITIC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CITIC" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CITIC" onclick="javascript:onBankBorder('CITIC');">中信银行</div>
+				<input id="CIB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CIB" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CIB" onclick="javascript:onBankBorder('CIB');">兴业银行</div>
+			</div>
+			<div style="float:left;">
+				<input id="SPABANK" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="SPABANK" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_SPABANK" onclick="javascript:onBankBorder('SPABANK');">平安银行</div>
+				<input id="CMBC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CMBC" onclick="javascript:onBankBorder(this.value);">
+				<div class="icon_bank icon_bank_box icon_CMBC" style="float:none;" onclick="javascript:onBankBorder('CMBC');">中国民生银行</div>
+			</div><br>
+		</div>
+	</div>
+	<div class="modal-footer center">
+		<a href="#" class="btn btn-small btn-primary" onclick="javascript:goBank();">登陆网上银行</a>
+		<a href="#" class="btn btn-small" data-dismiss="modal">关闭</a>
+	</div>
+</div>
+<div class="modal hide fade" id="infoDiv">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3><div id="membertitle">订单信息</div></h3>
+	</div>
+	<div class="modal-body form-horizontal">
+		<table class="table table-bordered">
+			<tr><td class="tableLabel" style="text-align:right;">订单号:</td><td colspan="3"><div id="ddh"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">车次:</td><td><div id="cc"></div></td><td class="tableLabel" style="text-align:right;">发车站:</td><td><div id="fcz"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">下客站:</td><td><div id="xkz"></div></td><td class="tableLabel" style="text-align:right;">终点站:</td><td><div id="zdz"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">发车日期:</td><td><div id="sDate"></div></td><td class="tableLabel" style="text-align:right;">发车时间:</td><td><div id="sTime"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">票数:</td><td><div id="ps"></div></td><td class="tableLabel" style="text-align:right;">票价:</td><td><div id="pj"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">座号:</td><td colspan="3"><div id="zh"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">取票人姓名:</td><td colspan="3"><div id="qpr"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">取票人身份证:</td><td colspan="3"><div id="qprCard"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">进站口:</td><td><div id="jzk"></div></td><td class="tableLabel" style="text-align:right;">发车区:</td><td><div id="fcq"></div></td></tr>
+			<tr><td class="tableLabel" style="text-align:right;">售票日期:</td><td colspan="3"><div id="cDate"></div></td></tr>
+		</table>
+	</div>
+	<div class="modal-footer center">
+		<a href="#" class="btn btn-small" data-dismiss="modal">关闭</a>
+	</div>
+</div>
+<#include "/WEB-INF/web/frame/foot.html"/>

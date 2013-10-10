@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>${title}</title>
+	<!-- The styles -->
+	<link id="bs-css" href="${ctx_path}/sys/css/bootstrap-cerulean.css" rel="stylesheet">
+	
+	<link href="${ctx_path}/sys/css/bootstrap-journa-web.css" rel="stylesheet">
+	<link href="${ctx_path}/sys/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+	<link href='${ctx_path}/sys/css/opa-icons.css' rel='stylesheet'>
+	<link href="${ctx_path}/sys/css/charisma-app.css" rel="stylesheet">
+	<link href='${ctx_path}/sys/css/chosen.css' rel='stylesheet'>
+	<link href='${ctx_path}/sys/css/jquery.noty.css' rel='stylesheet'>
+	<link href='${ctx_path}/sys/css/noty_theme_default.css' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="${ctx_path}/common/validationEngine/css/validationEngine.jquery.css">
+
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="${ctx_path}/sys/js/html5.js"></script>
+	<![endif]-->
+
+	<!-- 图标 -->
+	<link rel="shortcut icon" href="${ctx_path}/sys/images/favicon.ico">
+	<script>
+		var baseUrl="${ctx_path}";
+		var noerror=true;
+		var menuNum=<#if menuNum??>${menuNum}<#else>0</#if>;
+	</script>
+	
+	<!-- jQuery -->
+	<script src="${ctx_path}/sys/js/jquery-1.7.2.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="${ctx_path}/sys/js/jquery-ui-1.8.21.custom.min.js"></script>
+	<!-- jquery.cookie插件 -->
+	<script src="${ctx_path}/sys/js/jquery.cookie.js"></script>
+	<!-- bootstrap-dropdown -->
+	<script src="${ctx_path}/sys/js/bootstrap-dropdown.js"></script>
+	<!-- modal / dialog library -->
+	<script src="${ctx_path}/sys/js/bootstrap-modal.js"></script>	
+	<!-- select or dropdown enhancer -->
+	<script src="${ctx_path}/sys/js/jquery.chosen.min.js"></script>
+	<!-- notification plugin -->
+	<script src="${ctx_path}/sys/js/jquery.noty.js"></script>
+	<!-- ValidationEngine-2.6.2-->
+	<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/validationEngine/js/languages/jquery.validationEngine-zh_CN.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/validationEngine/js/jquery.validationEngine.js"></script>
+	<!-- 界面初始化脚本 -->
+	<script src="${ctx_path}/web/js/web_head.js"></script>	
+	<script src="${ctx_path}/web/js/web_member.js"></script>	
+	
+	
+	<!-- 导航引入 -->
+	<link href="${ctx_path}/web/css/menu.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="${ctx_path}/web/js/menu.js"></script>
+
+ </head>
+
+<body>
+	<!--顶部 -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<!-- logo -->
+				<a href="#">
+					<img alt="logo" src="${ctx_path}/web/images/${logo}" />
+				</a>
+				<div style="float:right">
+				     <a href="javascript:void(0);" style="CURSOR: hand" onclick="SetHome(this,'${webUrl!}');">设为首页</a>&nbsp;|&nbsp;
+					 <a href="javascript:void(0);" style="CURSOR: hand" onclick="AddFavorite('汽车订票网站',location.href)">收藏本站</a>
+				</div>
+				<div style="float:right;margin-right:0px;margin-top:20px;">
+				    <img alt="热线" src="${ctx_path}/web/images/hotline.png" />
+				</div>
+			</div> <!-- end container-fluid- -->
+		</div><!-- end navbar-inner -->
+		<div class="menu_navcc">
+		   <div class="menu_nav clearfix">
+				<ul id="menu_nav_ul" class="nav_content">
+					<li><a href="${ctx_path}/index" title="在线订票" ><span>在线订票</span></a></li>
+					<li><a href="${ctx_path}/busQuery?type=ITEM001" title="车次浏览" ><span>车次浏览</span></a></li>
+					<li><a href="${ctx_path}/contentsList?type=ITEM002" title="新闻公告" ><span>新闻公告</span></a></li>
+					<li><a href="${ctx_path}/contentsList?type=ITEM003&first=98ac448c-c2e0-46b2-8ac2-dafa56c89f0d" title="订票指南" ><span>订票指南</span></a></li>
+					<li><a href="${ctx_path}/contentsList?type=ITEM004&first=6cce151a-37d0-46fc-8049-851aebd4331f" title="车站介绍" ><span>车站介绍</span></a></li>
+					<li><a href="${ctx_path}/questionsQuery?type=ITEM005" title="旅客问答" ><span>旅客问答</span></a></li>
+					
+				</ul>
+				<div id="time" style="float:left;margin-left:80px;margin-top:15px;width:150px;font-size:11pt;"></div>
+				   <script>
+						var str="&nbsp;";
+						var todayDate = new Date();date = todayDate.getDate();month= todayDate.getMonth() +1;year= (todayDate.getYear() < 1900)?(1900 + todayDate.getYear()) : todayDate.getYear();day= todayDate.getDay();str="<font color='yellow'>";if(navigator.appName == "Netscape" || navigator.appName =="Opera"){year= todayDate.getFullYear();str+=year+"年"+month+"月"+date+"日"+" ";}else if(navigator.appVersion.indexOf("MSIE") != -1){str+=year+"年"+month+"月"+date+"日"+" ";}switch (todayDate.getDay()){case 5: str+="星期五";break;case 6: str+="星期六";break;case 0: str+="星期日";break;case 1: str+="星期一";break;case 2: str+="星期二";break;case 3: str+="星期三";break;case 4: str+="星期四";break;}str+="</font>";
+						$('#time').html(str);
+					</script>
+			    <div class="menu_nav_right" style="float:none;">
+			    </div>
+	       </div>
+	    </div>
+	</div><!-- end navbar -->
+
+<!-- 菜单及导航结束 -->
+
+<div class="container-fluid" style="padding-left:0px;padding-right:0px;">
+  <div class="row-fluid">
+		<!-- left menu starts -->
+	<div class="span3 main-menu-span">
+		<div class="box" style="margin-top:0px;">
+			<div class="box-header well" >
+				<h2><i class="icon icon-color icon-user"></i>&nbsp;会员中心</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			<div class="box-content" style="height:180px;">
+			   <!-- 会员登录 -->
+			   <#if errorinfo??>
+					<div class="alert alert-info">
+						${errorinfo}
+					</div>
+					<script type="text/javascript">
+						noerror=false;
+					</script>
+				</#if>
+							
+				<#if session['member']??>
+			        <div style="font-size:14px;margin:0 auto;width:200px;line-height:20px;">
+						<p style="margin-bottom: 5px;"><strong>您好:${session['member'].name!}!</strong></p>
+						<p style="margin-bottom: 5px;" class="blue"><b>未完成订单数量：<span style="color:red;"> <#if noFinish??>${noFinish}<#else>0</#if> </span>张</b>
+						</p>
+						<p style="margin-bottom: 5px;" class="blue"><b>已订购订单数量：<span style="color:red;"> <#if finish??>${finish}<#else>0</#if> </span>张</b>
+						</p>
+						<p style="margin-bottom:5px;">
+						 <a class="btn btn-small btn-primary" href="${ctx_path}/query/noFinish">&nbsp;&nbsp;未完成订单查询&nbsp;</a>
+						 <a class="btn btn-small btn-primary" href="${ctx_path}/query/" style="margin-left:5px;">&nbsp;订单查询&nbsp;&nbsp;</a>
+						</p>
+						<p style="margin-bottom:5px;">
+						<button class="btn btn-small btn-primary" onclick="javascript:person('${(session['member'].id)!}');">个人信息</button>
+						<button class="btn btn-small btn-primary" style="margin-left:5px;" onclick="javascript:personPw('${(session['member'].id)!}');">修改密码</button>
+						<button id="logout" class="btn btn-small btn-danger" style="margin-left:5px;">退出</button>
+						</p>
+						<p style="margin-bottom: 0;color:red;" class="center"><b>[离开时请安全退出]</b>
+						</p>
+						
+					</div>
+				<#else>
+				  <form id="loginForm" action="" method="post">   
+					  <fieldset>
+						<div class="input-prepend" title="帐号" >
+							<span class="add-on"><span> 帐&nbsp;&nbsp;&nbsp;&nbsp;号: </span></span><input class="input-large span6" name="loginAccount" id="loginAccount" type="text"  data-validation-engine="validate[required,minSize[5],maxSize[30]]" placeholder="请输入帐号" />
+						</div>
+						<div class="clearfix"></div>
+						<div class="input-prepend" title="密码" data-rel="tooltip">
+							<span class="add-on"><span> 密&nbsp;&nbsp;&nbsp;&nbsp;码: </span></span><input class="input-large span6" name="loginPassword" id="loginPassword" type="password"  data-validation-engine="validate[required,minSize[6],maxSize[50]]" placeholder="请输入密码"/>
+							<a href="#">找回密码</a>
+						</div>
+						
+						<div class="clearfix"></div>
+						<div class="input-prepend" title="验证码" data-rel="tooltip">
+							<span class="add-on"><span class="">验证码:</span></span><input class="input-large span6" name="verifycode" id="verifycode" type="text" data-validation-engine="validate[required,custom[integer],minSize[4],maxSize[4]]"  maxlength="4" placeholder="请输入验证码"/><span id="codeSpan" class="add-on" style="width:60px;height:26px;padding:0px;margin-top:1px;"><img id="codeImg" src="${ctx_path}/webLogin/generateCode" title="点击更换验证码" alt="点击更换验证码" onclick="javascript:changeCode();"></span>
+						</div>
+						<div class="clearfix"></div>
+						
+						<p class="center">
+							<a class="btn btn-primary" href="#" onclick="javascript:login();" id="loginBtn">
+									<i class="icon icon-color icon-tag"></i>  
+									登录                                            
+								</a>	
+							<a class="btn btn-danger" href="#" onclick="javascript:reset();">
+								<i class="icon icon-color icon-arrowrefresh-s"></i>  
+								重置                                            
+							</a>
+						</p>
+						<p class="muted" style="margin-bottom: 0;">还不是本站会员?
+						   <a class="" style="width:55px;" title="免费注册" data-rel="tooltip" href="#" onclick="javascript:register();">
+							免费注册                                           
+				           </a>
+						</p>
+						
+					</fieldset>
+				 </form>
+				</#if> 
+			</div><!--end 会员 box-content  -->
+	</div> <!-- end 会员 box -->
+		
+		<div class="box" style="margin-top:0px;">
+				<div class="box-header well" >
+					<h2><i class="icon icon-color icon-archive"></i>&nbsp;新闻公告</h2>
+					<div class="box-icon">
+					</div>
+				</div>
+				<div class="box-content " style="height:200px;">
+				  <#if contentsList?? && contentsList.getList()??>
+				  	<#list contentsList.getList() as x>
+				  	 <ul style="margin-left:5px;margin-bottom:2px;">
+						<li>
+							<a href="${ctx_path}/contentsList/look?id=${x.id}&pageIndex=1"><#if x.title?length gt 15>${x.title[0..15]}...<#else>${x.title}</#if></a>
+						</li>
+								
+					</ul>
+					</#list>
+					</#if>    
+
+				</div>
+		</div>
+		
+	</div><!--/span-->
+	<!-- left menu ends -->
+	
+<noscript>
+	<div class="alert alert-block span10">
+		<h4 class="alert-heading">Warning!</h4>
+		<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+	</div>
+</noscript>
+
+<!-- hide form  -->
+
+<form id="personForm">
+	<div class="modal hide fade" id="personLook">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>个人信息</h3>
+		</div>
+		<div class="modal-body form-horizontal">
+			<div class="control-group">
+				<label class="control-label">用户账号</label>
+				<div class="controls">
+					<div id="personAccount" style="padding-top:5px;"></div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">用户姓名</label>
+				<div class="controls">
+					<input type="text" id="personName" class="validate[required,minSize[3],maxSize[20]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">身份证号</label>
+				<div class="controls">
+					<input type="text" id="personIdCard" name="personIdCard" class="validate[required,custom[idCard]]" >
+				    <font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">手机号码</label>
+				<div class="controls">
+					<input type="text" id="personTelephone" name="personTelephone" class="validate[required,custom[mobile]]" >
+				    <font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">性别</label>
+				<div class="controls">
+					<input type="radio" id="personSex" name="personSex" value="男" style="float:left;"><span style="padding-top:5px;float:left;">男</span>
+					<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+					<input type="radio" id="personSex" name="personSex" value="女" style="float:left;"><span style="padding-top:5px;float:left;">女</span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">电子邮箱</label>
+				<div class="controls">
+					<input type="text" id="personEmail" class="validate[custom[email]]">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-info" onclick="javascript:personSave();">保存</a>
+			<a href="#" class="btn" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="personPw">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>修改密码</h3>
+		</div>
+		<div class="modal-body form-horizontal">
+		    <div class="control-group">
+				<label class="control-label">会员账号</label>
+				<div class="controls">
+					${(session['member'].account)!}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">原密码</label>
+				<div class="controls">
+					<input type="password" id="pw1" class="validate[required,minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">新密码</label>
+				<div class="controls">
+					<input type="password" id="pw2" class="validate[required,minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">重复新密码</label>
+				<div class="controls">
+					<input type="password" id="pw3" class="validate[required,equals[pw2],minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-info" onclick="javascript:personSavePw();">保存</a>
+			<a href="#" class="btn" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+</form>
+
+<!-- 会员注册 -->
+<form id="memberForm"  action="" method="post">
+  <input type="hidden" id="memberToken" name="memberToken" value="${(memberToken)!}">
+  <div class="modal hide fade" id="memberAddOrEdit">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3><div id="membertitle"></div></h3>
+		</div>
+		<div class="modal-body form-horizontal">
+			<div class="control-group">
+				<label class="control-label">会员账号</label>
+				<div class="controls">
+					<input type="text" id="account" name="member.account" class="validate[required,minSize[5],maxSize[30]]" >
+					<font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">姓名</label>
+				<div class="controls">
+					<input type="text" id="name" name="member.name" class="validate[required,minSize[3],maxSize[20]]">
+					<font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">密码</label>
+				<div class="controls">
+					<input type="password" id="password" name="member.password" class="validate[required,minSize[6],maxSize[30]]" >
+					<font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">重复密码</label>
+				<div class="controls">
+					<input type="password" id="password2" name="password2" class="validate[required,equals[password],minSize[6],maxSize[30]]" >
+					<font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">身份证号</label>
+				<div class="controls">
+					<input type="text" id="idCard" name="member.idCard" class="validate[required,custom[idCard]]" >
+				    <font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">手机号码</label>
+				<div class="controls">
+					<input type="text" id="telephone" name="member.telephone" class="validate[required,custom[mobile]]" >
+				    <font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">性别</label>
+				<div class="controls">
+						<input type="radio" id="sex" name="member.sex" value="男" style="float:left;" checked><span style="padding-top:5px;float:left;">男</span>
+						<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+						<input type="radio" id="sex" name="member.sex" value="女" style="float:left;"><span style="padding-top:5px;float:left;">女</span>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label">电子邮箱</label>
+				<div class="controls">
+					<input type="text" id="email" name="member.email" class="validate[custom[email]]" value="${(member.email)!}">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer center">
+			<a href="#" class="btn btn-small btn-info" onclick="javascript:save();">保存</a>
+			<a href="#" class="btn btn-small" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+</form>	
+

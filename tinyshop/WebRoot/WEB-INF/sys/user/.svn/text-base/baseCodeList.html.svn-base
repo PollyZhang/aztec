@@ -1,0 +1,172 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<script src="${ctx_path}/sys/js/tbo_baseCode.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx_path}/common/zTree/css/zTreeStyle.css">
+<script type="text/javascript" src="${ctx_path}/common/zTree/jquery.ztree.core-3.5.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$("#baseCodeForm").validationEngine();
+	<#if tokenMsg??>
+	noty({"text":"${tokenMsg}",timeout: 1000,"layout":"center","type":"error"});
+	</#if>
+	<#if errorinfo??>
+	noty({"text":"${errorinfo}",timeout: 1000,"layout":"center","type":"error"});
+	</#if>
+	<#if msg??>
+	noty({"text":"${msg}",timeout: 1000,"layout":"center","type":"success"});
+	</#if>
+	<#if type?? && (type=='add' || type=='edit')>
+	<#if code??>
+	noty({"text":"${code}",timeout: 1000,"layout":"center","type":"error"});
+	</#if>
+	<#if name??>
+	noty({"text":"${name}",timeout: 1000,"layout":"center","type":"error"});
+	</#if>
+	
+	<#if type=='add' && (code?? || name?? || errorinfo??)>
+	<#-- 添加字典失败 -->
+	$('#baseCodetitle').text('添加字典');
+	$('#baseCodeAddOrEdit').modal('show');
+	</#if>	
+	<#if type=='edit' && (name?? || code?? || errorinfo??)>
+	<#-- 编辑字典失败 -->
+	$('#baseCodetitle').text('编辑字典');
+	$('#baseCodeAddOrEdit').modal('show');
+	</#if>	
+	</#if>
+});
+</script>
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div><h4>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/baseCode/">字典管理</a>
+			</li>
+		</ul>
+		</h4>
+	</div>
+	<form id="baseCodeForm" name="baseCodeForm" class="form-horizontal" action="" method="post">
+	<div class="row-fluid sortable">
+		<div class="box span12">
+		
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-list-alt"></i>&nbsp;<span id="titleDiv"><#if baseDict??>${baseDict.categoryName}</#if>字典列表</span></h2>
+				<div class="box-icon">
+				   <a class="btn btn-primary" id="addSubmit" style="width:55px;"  href="#" onclick="javascript:add();">
+						<i class="icon-plus icon-white"></i>添加 
+					</a>
+				</div>
+			</div>
+			<div class="box-content">
+			<div  style="float:left;width:20%;border: 1px solid #617775;margin-bottom:10px;">
+					<ul id="dictTree" class="ztree" style="overflow-y:scroll;height:360px;"></ul>
+			</div>
+				<div style="float:left;width:78%;margin-left:10px;">
+				  <div  id="dictListDiv" style="height:420px;overflow:auto;">
+				  <table class="table table-striped table-bordered bootstrap-datatable datatable">
+					  <thead>
+						  <tr class="alert alert-info">
+							  <th width="30px">序号</th>
+							  <th>字典编码</th>
+							  <th>字典名称</th>
+							  <th>排列序号</th>
+							  <th>操作</th>
+						  </tr>
+					  </thead>   
+					  <tbody>
+					    	<#list baseCodeList as x>
+						  	<tr>
+						  		<td><center>${x_index+1}</center></td>
+						  		<td>${x.code}</td>
+						  		<td>${x.name}</td>
+						  		<td>${(x.orderNum)!}</td>
+						  		<td>
+						  			<a class="btn btn-mini btn-info" href="#" onclick="javascript:edit('${x.id}');">
+										<i class="icon-edit icon-white"></i>  
+										编辑                                            
+									</a>
+									<a class="btn btn-mini btn-danger"  href="#" onclick="javascript:del('${x.id}','${x.name}');">
+										<i class="icon-trash icon-white"></i> 
+										删除
+									</a>
+						  		</td>
+						  	</tr>
+						  	</#list>
+					  	  
+					  </tbody>
+				  </table>
+				  </div>
+				 </div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="baseCodeToken" name="baseCodeToken" value="${(baseCodeToken)!}">
+	<input type="hidden" id="baseCodeid" name="baseCode.id" value="${(baseCode.id)!}">
+	<input type="hidden" id="categoryId" name="baseCode.categoryId" value="${(baseDict.categoryId)!}">
+	<div class="modal hide fade" id="baseCodeAddOrEdit">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3><span id="baseCodetitle"></span>:<span id="noteSpan" class="btn btn-primary"><#if baseDict??>${baseDict.categoryName}</#if></span></h3>
+		</div>
+		<div class="modal-body">
+		    <div class="control-group">
+				<label class="control-label">字典编码</label>
+				<div class="controls">
+					<input type="text" id="code" name="baseCode.code" class="validate[required,minSize[1],maxSize[6]]" value="${(baseCode.code)!}">
+					<font color="red">*</font>
+				</div>
+			</div>	
+			<div class="control-group">
+				<label class="control-label">字典名称</label>
+				<div class="controls">
+					<input type="text" id="name" name="baseCode.name" class="validate[required,minSize[1],maxSize[30]]" value="${(baseCode.name)!}">
+					<font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">排列序号</label>
+				<div class="controls">
+					<input type="text" id="orderNum" name="baseCode.orderNum" class="validate[custom[integer],min[0],max[150]]" value="${(baseCode.orderNum)!}">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <a href="#" class="btn btn-primary" onclick="javascript:save();">保存</a>
+			<a href="#" class="btn" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+	</form>
+	
+</div>
+
+<script type="text/javascript">
+        var zNodes=${treeJson};
+        var setting = {
+           callback: {
+				beforeClick: beforeClick
+			} 
+          }; 
+      
+       function beforeClick(treeId, treeNode, clickFlag) {
+			
+			 if(treeNode.pId=='-1'){
+			   $("#addSubmit").addClass("hide");
+			 }else{
+			    $('#titleDiv').text(treeNode.name+'字典列表');
+			    $('#noteSpan').text(treeNode.name);
+			   $('#addSubmit').removeClass("hide");
+			 } 
+		} 
+		
+      $(document).ready(function(){
+			$.fn.zTree.init($("#dictTree"), setting, zNodes);
+		});
+   </script>
+</br>
+
+<#include "/WEB-INF/web/frame/foot.html"/>
+

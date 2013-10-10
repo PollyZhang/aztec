@@ -1,0 +1,153 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<script src="${ctx_path}/sys/js/tbo_common.js"></script>
+	
+<style>
+<!--
+ /* IE下的样式 */ 
+p span{
+display: block;
+width:80px;/*对宽度的定义,根据情况修改*/
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+/* FF 下的样式 */ 
+p{clear:both;}
+p span{
+float:left;
+max-width:80px;   /*IE不能解释该属性，而FF可以*/
+}
+-->
+</style>
+
+<script type="text/javascript">
+ var sexJson=JSON.parse(${userSexJson});
+ var statusJson=JSON.parse(${statusJson});
+ var accountType='${session['user'].accountType}';
+ 
+ var itemName='${itemName!}';
+ if(itemName!=null && itemName!=''){
+   $("#contentsTitleDiv").text(itemName+'内容列表');
+ }
+//JSON.stringify(jsonObject);
+<!--
+$(function(){
+	<#if msg??>
+	noty({"text":"${(msg)!}",timeout: 1000,"layout":"center","type":"success"});
+	</#if>
+	<#if errorinfo??>
+	  noty({"text":"${(errorinfo)!}",timeout: 2000,"layout":"center","type":"error"});
+	</#if>
+	<#if itemName??>
+    $("#contentsTitleDiv").text('${(itemName)!}内容列表');
+	</#if>
+	
+	
+	$.fn.zTree.init($("#itemsTree"), setting);
+	query();
+	expandAll();
+	setTimeout(expandAll,600);
+});
+//-->
+</script>
+<!-- zTree树-3.5-->
+<link rel="stylesheet" type="text/css" href="${ctx_path}/common/zTree/css/zTreeStyle.css">
+<script type="text/javascript" src="${ctx_path}/common/zTree/jquery.ztree.core-3.5.min.js"></script>
+<script src="${ctx_path}/sys/js/tbo_contents.js"></script>
+
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/contents/">内容管理</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-th-list"></i><span id="contentsTitleDiv">内容列表</span></h2>
+				<div class="box-icon" >
+				<a class="btn btn-primary" style="width:55px;"  href="#" onclick="javascript:add();">
+							<i class="icon-plus icon-white"></i>  
+							添加                                            
+						</a>
+				</div>
+			</div>
+			<form class="form-horizontal" id="contentsQueryForm" action="" method="post">
+		    <input type="hidden" id="id" name="id">
+		    <input type="hidden" id="itemId" name="itemId" value="${(itemId)!}">
+		    <input type="hidden" id="itemName" name="itemName" value="${(itemName)!}">
+		     <input type="hidden" id="itemTypeQuery" name="itemTypeQuery" value="${(itemTypeQuery)!}">
+			<div class="box-content">
+				<div style="float:left;width:14%;border: 1px solid #617775;margin-bottom:10px;">
+					<ul id="itemsTree" class="ztree" style="overflow-y:scroll;height:490px;"></ul>
+				</div>
+				<div style="float:left;width:85%;margin-left:3px;">
+				    <p>
+				        <input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
+						标题
+						<input type="text" class="input-small" id="titleQuery" name="titleQuery" value="${(titleQuery)!}">
+						类型
+						<select id="contentTypeQuery" name="contentTypeQuery"  style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
+							<option value="">请选择</option>
+							<#if contentTypeList??>
+								<#list contentTypeList as x>
+							      <option value="${x.code}" <#if contentTypeQuery?? && contentTypeQuery==x.code>selected</#if>>${x.name}</option>
+								</#list>
+							</#if>
+					  	</select>
+					  	状态
+						<select id="statusQuery" name="statusQuery" style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
+							<option value="">请选择</option>
+							<#if contentStatusList??>
+							  <#list contentStatusList as cs>
+							    	<option value="${cs.code}" <#if statusQuery?? && statusQuery==cs.code>selected</#if>>${cs.name}</option>
+							  </#list>
+							</#if>
+					  	</select>
+					  	发布日期
+							<input type="text" style="width:67px;" onkeydown="return false;" class="input-small datepicker" id="startNewsDateQuery" name="startNewsDateQuery" value="${(startNewsDateQuery)!}">
+					  	   -
+							<input type="text" style="width:67px;" onkeydown="return false;" class="input-small datepicker" id="endNewsDateQuery" name="endNewsDateQuery" value="${(endNewsDateQuery)!}">
+					  	<a class="btn btn-info" href="#" onclick="javascript:resetQuery();">
+							<i class="icon-remove-sign icon-white"></i>  
+							重置                                            
+						</a>
+						&nbsp;<a class="btn btn-inverse" href="#" onclick="javascript:query();">
+							<i class="icon-zoom-out icon-white"></i>  
+							查询                                            
+						</a>		
+					</p>
+					<div id="itemsDiv"></div>
+					<!-- ------- -->
+					<div class="modal hide fade " id="contentsVerifyDiv" style="width:800px;" >
+						<div class="modal-header">
+						    <button type="button" class="close" data-dismiss="modal">×</button>
+							<h3><div id="cTitle">内容详情</div></h3>
+						</div>
+						<div class="modal-body">
+						<fieldset> 
+						  <div id="contentsVerifyListDIV"></div>
+						</fieldset>
+						</div>
+						<div class='modal-footer'>
+		                  <a href='#' class='btn btn-primary' onclick='javascript:verifySave("S03","审核通过");'>通过</a>
+		 		          <a href='#' class='btn btn-warning' onclick='javascript:verifySave("S04","驳回成功");'>驳回</a>
+		 				  <a href='#' class='btn' data-dismiss='modal'>关闭</a>
+		               </div>
+					</div>
+					<!-- ------- -->
+				</div>
+			</div>
+		</div>
+	</div>	   
+	</form>
+</div>
+<#include "/WEB-INF/sys/frame/foot.html"/>
+

@@ -1,0 +1,70 @@
+package com.sosee.app.util;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+/**
+ * @author  :outworld
+ * @date    :2012-11-28 上午11:10:49
+ * @Copyright:2012 outworld Studio Inc. All rights reserved.
+ * @function: 内容常量类
+ */
+public final class AppConstants {
+   
+	//内容状态草稿、未审、已审、驳回、已归档
+	public static final String CONTANTS_STATUS_DRAFT= "S01";//"草稿";
+	public static final String CONTANTS_STATUS_NONE= "S02";//"未审";
+	public static final String CONTANTS_STATUS_OK = "S03";//"已审";
+	public static final String CONTANTS_STATUS_RETURN= "S04";//"驳回";
+	public static final String CONTANTS_STATUS_FILE= "S05";//"已归档";
+	
+	// 内容分类文字：word、图片photo、视频video、广告ad、其他要根据需要再添加
+	public static final String BASECODE_CONTENTS_CONTENTTYPE_STRING="contents_contentType";
+	
+	public static final String MEMBER = "member";//登录用户
+	public static final String VERIFY_CODE = "verifycode";//登录用户验证码
+	public static final String WEB_LOGIN_IP = "loginIP";//登录用户的IP
+	public static final String WEB_LOGIN_NAME = "loginName";//登录用户名称
+
+	
+	//会员类型
+	public static final String MEMBER_TYPE_VIP="vip";//vip
+	public static final String MEMBER_TYPE_NORMAL="normal";//普通用户
+	
+	public static final String MEMBER_STATUS_NORMAL="正常";//正常
+	public static final String MEMBER_STATUS_DISABLED="禁用";//禁用
+	
+	
+   //订票状态：未付款、已支付、已撤销、已领取、已退票
+	public static final String PAY_STATUS_NO="未付款";
+	public static final String PAY_STATUS_YES="已支付";
+	public static final String PAY_STATUS_CANCEL="已撤销";
+	public static final String PAY_STATUS_OVER="已领取";
+	
+	//超时30分钟不支付，订单自动转为已撤销
+	public static final int DELAY_PAYMENT=30;
+
+
+	/**
+	 * 状态类型
+	 * @return
+	 */
+	public static Map<String,String> getZhuangTaiMap(){
+		 Map<String,String> zhuangTaiMap = new HashMap<String,String>();
+		 zhuangTaiMap.put(PAY_STATUS_NO, PAY_STATUS_NO);
+		 zhuangTaiMap.put(PAY_STATUS_YES, PAY_STATUS_YES);
+		 zhuangTaiMap.put(PAY_STATUS_CANCEL, PAY_STATUS_CANCEL);
+		 zhuangTaiMap.put(PAY_STATUS_OVER, PAY_STATUS_OVER);
+		 
+		 return zhuangTaiMap;
+	}
+	
+	//内容状态字典标识
+	public static final String BASECODE_CONTENTS_STATUS="contents_status";
+	//内容栏目类型
+	public static final String BASECODE_CONTENTS_ITEMTYPE="contents_itemtype";
+	public static final String BASECODE_CONTENTS_ITEMTYPE_PUBLIC="C00";//此类型为公共内容，所有栏目都显示
+	public static final String SYNC_RiCheCiJiHua = null;
+	
+}
