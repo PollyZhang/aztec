@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+	<appender name="tbo" class="org.apache.log4j.RollingFileAppender">
+	     <param name="file" value="../logs/tbo.log"/>
+	     <param name="Append" value="true" />  
+         <param name="MaxBackupIndex" value="10" />  
+	     <layout class="org.apache.log4j.PatternLayout">
+	       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:dd}#%-5p#[%c]#%X{loginName}#%X{loginIP}#%m%n"/>
+         </layout>	
+	</appender>
+
+   <logger name="debug">
+      <level value="DEBUG"/>
+      <appender-ref ref="tbo"/>
+   </logger>
+   <logger name="business">
+      <level value="INFO"/>
+      <appender-ref ref="tbo"/>
+   </logger>
+   <logger name="security">
+      <level value="INFO"/>
+      <appender-ref ref="tbo"/>
+   </logger>
+   <logger name="system">
+      <level value="INFO"/>
+      <appender-ref ref="tbo"/>
+   </logger>
+</log4j:configuration>

@@ -1,0 +1,75 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<!-- zTree树-3.5-->
+<link rel="stylesheet" type="text/css" href="${ctx_path}/common/zTree/css/zTreeStyle.css">
+<script type="text/javascript" src="${ctx_path}/common/zTree/jquery.ztree.core-3.5.min.js"></script>
+<script src="${ctx_path}/sys/js/tbo_itemCategory.js"></script>
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/itemCategory/">商品分类管理</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-th-list"></i>&nbsp;分类列表</h2>
+				<div class="box-icon">
+					<a class="btn btn-primary" href="#" style="width:55px;" onclick="javascript:add();">
+							<i class="icon-plus icon-white"></i>  
+							添加                                            
+					</a>
+					<a id="itemCategoryMain" class="btn btn-danger hide" style="width:80px;" href="#" onclick="javascript:mainHide();">
+							<i class="icon-step-backward icon-white"></i>  
+							返回主栏目                                            
+					</a>
+				</div>
+			</div>
+			<div class="box-content">
+				<div style="float:left;width:20%;border: 1px solid #617775;margin-bottom:10px;">
+					<ul id="itemCategoryTree" class="ztree" style="overflow-y:scroll;height:360px;"></ul>
+				</div>
+				<div style="float:left;width:78%;margin-left:10px;">
+					<h3 id="itemCategoryTitle">分类列表</h3>
+					<div id="itemCategoryDiv"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form class="form-horizontal" action="" method="post">
+	<input type="hidden" id="id">
+	<div class="modal hide fade" id="itemCategoryAddOrEdit">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3><div id="itemCategorytitle"></div></h3>
+			</div>
+			<div class="modal-body">
+				<div class="control-group">
+					<label class="control-label">分类名称</label>
+					<div class="controls">
+						<input type="text" id="name" class="validate[required,minSize[3],maxSize[15]]">
+						<font color="red">*</font>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">分类编码</label>
+					<div class="controls">
+						<input type="text" id="code" class="validate[required,minSize[1],maxSize[10]">
+						<font color="red">*</font>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-primary" onclick="javascript:save();">保存</a>
+				<a href="#" class="btn" data-dismiss="modal">关闭</a>
+			</div>
+	</div>
+	</form>
+</div>
+<#include "/WEB-INF/sys/frame/foot.html"/>
+

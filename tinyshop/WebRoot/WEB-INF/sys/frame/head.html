@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>${title!}</title>
+	<!-- The styles -->
+	<link id="bs-css" href="${ctx_path}/sys/css/bootstrap-cerulean.css" rel="stylesheet">
+	<style type="text/css">
+	  body {padding-bottom: 40px;font-family:宋体;}
+	  .sidebar-nav {padding: 9px 0;}
+	</style>
+	<link href="${ctx_path}/sys/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="${ctx_path}/sys/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+	<link href='${ctx_path}/sys/css/opa-icons.css' rel='stylesheet'>
+	<link href="${ctx_path}/sys/css/charisma-app.css" rel="stylesheet">
+	<link href='${ctx_path}/sys/css/chosen.css' rel='stylesheet'>
+	<link href='${ctx_path}/sys/css/jquery.noty.css' rel='stylesheet'>
+	<link href='${ctx_path}/sys/css/noty_theme_default.css' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="${ctx_path}/common/validationEngine/css/validationEngine.jquery.css">
+
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="${ctx_path}/sys/js/html5.js"></script>
+	<![endif]-->
+
+	<!-- 图标 -->
+	<link rel="shortcut icon" href="${ctx_path}/sys/images/favicon.ico">
+	<script>
+		var baseUrl="${ctx_path}";
+	</script>
+	  
+	
+	
+	<!-- jQuery -->
+	<script src="${ctx_path}/sys/js/jquery-1.7.2.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="${ctx_path}/sys/js/jquery-ui-1.8.21.custom.min.js"></script>
+	<!-- jquery.cookie插件 -->
+	<script src="${ctx_path}/sys/js/jquery.cookie.js"></script>
+	<!-- bootstrap-dropdown -->
+	<script src="${ctx_path}/sys/js/bootstrap-dropdown.js"></script>
+	<!-- modal / dialog library -->
+	<script src="${ctx_path}/sys/js/bootstrap-modal.js"></script>	
+	<!-- select or dropdown enhancer -->
+	<script src="${ctx_path}/sys/js/jquery.chosen.min.js"></script>
+	<!-- notification plugin -->
+	<script src="${ctx_path}/sys/js/jquery.noty.js"></script>
+	<!-- ValidationEngine-2.6.2-->
+	<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/validationEngine/js/languages/jquery.validationEngine-zh_CN.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/validationEngine/js/jquery.validationEngine.js"></script>
+	<!-- 界面初始化脚本 -->
+	<script src="${ctx_path}/sys/js/tbo_head.js"></script>	
+	<link href="${ctx_path}/common/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+	<!--顶部 -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<!-- logo -->
+				<a class="brand" href="#">
+					<span style="width:500px"><img  src="${ctx_path}/sys/images/${logo}" width="35" height="35" />${title}</span>
+				</a>
+				<!-- 主题 -->
+				<div class="btn-group pull-right theme-container" >
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-tint"></i><span class="hidden-phone">改变主题/皮肤</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" id="themes">
+						<li><a data-value="classic" href="#"><i class="icon-blank"></i> 经典</a></li>
+						<li><a data-value="cerulean" href="#"><i class="icon-blank"></i> 蔚蓝</a></li>
+						<li><a data-value="cyborg" href="#"><i class="icon-blank"></i> 黑色</a></li>
+						<li><a data-value="redy" href="#"><i class="icon-blank"></i> 红色</a></li>
+						<li><a data-value="journal" href="#"><i class="icon-blank"></i> 云白</a></li>
+						<li><a data-value="simplex" href="#"><i class="icon-blank"></i> 简约</a></li>
+						<li><a data-value="slate" href="#"><i class="icon-blank"></i> 蓝灰</a></li>
+						<li><a data-value="spacelab" href="#"><i class="icon-blank"></i> 浅灰</a></li>
+						<li><a data-value="united" href="#"><i class="icon-blank"></i> 橘红</a></li>
+					</ul>
+				</div>
+				<!-- 用户 -->
+				<div class="btn-group pull-right" >
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i><span class="hidden-phone">${(session['user'].name)!}</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#" onclick="javascript:person('${(session['user'].id)!}');">个人信息</a></li>
+						<li><a href="#" onclick="javascript:personPw('${(session['user'].id)!}');">修改密码</a></li>
+						<li class="divider"></li>
+						<li><a href="#" id="logout">退出</a></li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<form id="personForm">
+	<div class="modal hide fade" id="personLook">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>个人信息</h3>
+		</div>
+		<div class="modal-body form-horizontal">
+			<div class="control-group">
+				<label class="control-label">用户账号</label>
+				<div class="controls">
+					<div id="personAccount" style="padding-top:5px;"></div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">用户名称</label>
+				<div class="controls">
+					<input type="text" id="personName" class="validate[required,minSize[3],maxSize[20]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">用户类型</label>
+				<div class="controls">
+					<div id="personAccountType" style="padding-top:5px;"></div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">用户性别</label>
+				<div class="controls">
+				    
+				    <#if userSexList??>
+				       <#list userSexList as us>
+				       	   <input type="radio" id="personSex" name="personSex" value="${us.code}" style="float:left;"><span style="padding-top:5px;float:left;">${us.name}</span>
+				           <span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+				       </#list>
+				    </#if>
+				
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">用户年龄</label>
+				<div class="controls">
+					<input type="text" id="personAge" class="validate[custom[integer],min[0],max[150]]">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">联系电话</label>
+				<div class="controls">
+					<input type="text" id="personTelephone" class="validate[custom[phone]]">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">电子邮箱</label>
+				<div class="controls">
+					<input type="text" id="personEmail" class="validate[custom[email]]">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">登陆次数</label>
+				<div class="controls">
+					<div id="personLoginSum" style="padding-top:5px;"></div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">最后登陆时间</label>
+				<div class="controls">
+					<div id="personLastLoginTime" style="padding-top:5px;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-primary" onclick="javascript:personSave();">保存</a>
+			<a href="#" class="btn" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+	<div class="modal hide fade" id="personPw">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>修改密码</h3>
+		</div>
+		<div class="modal-body form-horizontal">
+			<div class="control-group">
+				<label class="control-label">原密码</label>
+				<div class="controls">
+					<input type="password" id="pw1" class="validate[required,minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">新密码</label>
+				<div class="controls">
+					<input type="password" id="pw2" class="validate[required,minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">重复新密码</label>
+				<div class="controls">
+					<input type="password" id="pw3" class="validate[required,equals[pw2],minSize[6],maxSize[30]]"><font color="red">*</font>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-primary" onclick="javascript:personSavePw();">保存</a>
+			<a href="#" class="btn" data-dismiss="modal">关闭</a>
+		</div>
+	</div>
+	</form>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<!-- 左边菜单 -->
+			<div class="span2 main-menu-span">
+				<#if session['moudle']??>
+				<div class="well nav-collapse sidebar-nav">
+					<ul class="nav nav-tabs nav-stacked main-menu">
+						<#list session['moudle'] as x>
+							<#if !x.parentId??>
+						<li class="nav-header hidden-tablet">${x.moudleName}</li>
+							<#else>
+						<li><a class="ajax-link" href="${ctx_path}<#if x.url??>${x.url}<#else>/login/main</#if>"><i class="<#if x.image??>${x.image}<#else>icon-list-alt</#if>"></i><span class="hidden-tablet">${x.moudleName}</span></a></li>
+							</#if>
+							<#if session['moudleMap'][x.id]??>
+								<#list session['moudleMap'][x.id] as y>
+						<li><a class="ajax-link" href="${ctx_path}<#if y.url??>${y.url}<#else>/login/main</#if>"><i class="<#if y.image??>${y.image}<#else>icon-list-alt</#if>"></i><span class="hidden-tablet">${y.moudleName}</span></a></li>
+								</#list>
+							</#if>
+						</#list>
+					</ul>
+				</div>
+				<#else>
+				<div class="well nav-collapse sidebar-nav">
+					<ul class="nav nav-tabs nav-stacked main-menu">
+						<li class="nav-header hidden-tablet">无任何菜单权限</li>
+					</ul>
+				</div>
+				</#if>
+			</div>
+			<!-- noscript提示 -->
+			<noscript>
+				<div class="alert alert-block span10">
+					<h4 class="alert-heading">警告!</h4>
+					<p>你必须启用<a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>才能访问。</p>
+				</div>
+			</noscript>

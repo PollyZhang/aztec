@@ -1,0 +1,101 @@
+<#include "/WEB-INF/web/frame/head.html"/>
+<#if !contents??>
+<script>
+function doPage(pageNum){
+	var pageCount=${contentsPage.totalPage};
+	var pageIndex=${contentsPage.pageNumber};
+	if(pageNum>pageCount){
+		pageNum=pageCount==0?1:pageCount;
+	}else if(pageNum<1){
+		pageNum=1;
+	}
+	if(pageIndex!=pageNum){
+		$("#pageIndex").val(pageNum);
+		$("#contentsForm").attr("action","${ctx_path}/contentsList/");
+		$("#contentsForm").submit();
+	}
+}
+</script>
+</#if>
+<div class="container-fluid" style="padding-left:0px;padding-right:0px;">
+	<div class="row-fluid">
+
+		<noscript>
+			<div class="alert alert-block span10">
+				<h4 class="alert-heading">Warning!</h4>
+				<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+			</div>
+		</noscript>
+		<div id="content" class="span9">
+			<div>
+				<ul class="breadcrumb">
+					<li>
+						<a href="${ctx_path}/index">首页</a><span class="divider">/</span>
+					</li>
+					<li>
+					<#if contents??>
+						<a href="${ctx_path}/contentsList?type=${type}&pageIndex=${pageIndex}">${itemsName}</a>
+					<#else>
+						<a href="${ctx_path}/contentsList?type=${items.code}&pageIndex=1">${items.name}</a>
+					</#if>
+					</li>
+					<#if contents??>
+					<li>
+						<span class="divider">/</span><a href="#">${contents.title}</a>
+					</li>
+					</#if>
+				</ul>
+			</div>
+			<div>
+				<div class="box">
+					<div class="box-content">
+					<#if !contents??>
+						<table class="table table-condensed">
+							  <thead>
+								  <tr>
+									  <th>标题</th>
+									  <th width="120">创建时间</th>                                      
+								  </tr>
+							  </thead>   
+							  <tbody>
+							  	<#if contentsPage.getList()?? && contentsPage.getList()?size gt 0>
+							  	<#list contentsPage.getList() as x>
+								<tr>
+									<td><a href="${ctx_path}/contentsList/look?id=${x.id}&pageIndex=${pageIndex}"><#if x.title?length gt 49>${x.title[0..49]}...<#else>${x.title}</#if></a></td>
+									<td class="center">${x.createTime?string('yyyy年MM月dd日')}</td>                                   
+								</tr> 
+								</#list>
+								<#else>
+									<tr><td colspan="2" height="50"><div style="margin-top:20px;"><center>没有找到相关信息</div></center></td></tr>
+								</#if>                               
+							  </tbody>
+						 </table>  
+						 <div style="float:left;">
+						  		总记录数:${contentsPage.totalRow}条  当前<#if contentsPage.totalPage!=0>${contentsPage.pageNumber}<#else>0</#if>页/共${contentsPage.totalPage}页
+						  </div>
+						  <form id="contentsForm" action="" method="post">
+						  	<input id="pageIndex" name="pageIndex" type="hidden">
+						  	<input id="type" name="type" type="hidden" value="${type}">
+						  </form>
+						  <div class="pagination pagination-right">
+							  <ul>
+								<li><a href="#" onclick="javascript:doPage(1);">首页</a></li>
+								<li><a href="#" onclick="javascript:doPage(${contentsPage.pageNumber-1});">上一页</a></li>
+								<li><a href="#" onclick="javascript:doPage(${contentsPage.pageNumber+1});">下一页</a></li>
+								<li><a href="#" onclick="javascript:doPage(${contentsPage.totalPage});">尾页</a></li>
+							  </ul>
+						  </div>
+					<#else>
+						<div style="margin:0 auto;width:730px;">
+							<center><h3>${contents.title}</h3></center>
+							<hr>
+							<p>${contents.contents}</p>
+						</div>
+					</#if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<#include "/WEB-INF/web/frame/foot.html"/>
