@@ -86,6 +86,7 @@ public class ContentCategoryController extends Controller {
 		try{
 			String id=this.getPara("id");
 			if(StringKit.notBlank(id)){
+		
 				//---------------------------------------------------------------删除栏目之前，需要相关关联数据和子栏目----------------------------------------------------------------------
 				Db.update("delete from t_contentcategory where parentId='"+id+"' ");
 				Db.update("delete from t_contents where contentCategoryId='"+id+"' ");
