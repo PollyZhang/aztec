@@ -21,6 +21,8 @@ import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.FreeMarkerRender;
+import com.sosee.app.brand.controller.BrandController;
+import com.sosee.app.brand.pojo.Brand;
 import com.sosee.app.content.controller.ContentsController;
 import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.contentCategory.controller.ContentCategoryController;
@@ -100,7 +102,7 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/contents", ContentsController.class);
 		me.add("/member", MemberController.class);
 		me.add("/itemCategory", ItemCategoryController.class);
-			
+		me.add("/brand", BrandController.class);	
 		//前台控制器
 		me.add("/index",IndexController.class);
 		me.add("/webLogin",WebLoginController.class);
@@ -146,6 +148,7 @@ public class DefaultConfig extends JFinalConfig {
 		arp.addMapping("t_member", Member.class);
 		arp.addMapping("t_itemcategory", ItemCategory.class);
 		arp.addMapping("t_questions", Questions.class);
+		arp.addMapping("t_brand", Brand.class);
 	}
 	
 	/**

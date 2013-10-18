@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/sys/brand/brand.html=UTF-8
+encoding//WebRoot/WEB-INF/sys/brand/brandList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/content/contents.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/content/contentsList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/contentCategory/contentCategoryList.html=UTF-8

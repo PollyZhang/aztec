@@ -1,0 +1,124 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/sys/js/tbo_common.js"></script>
+
+<script type="text/javascript">
+
+$(function(){
+    
+	var nDate='${newsDate!}';
+	 if(nDate!=null && nDate!=''){
+	   $('#newsDate').val(nDate);
+	 }  
+     $("#newsDate").datepicker({
+	            defaultDate: "+1w",
+	            changeYear: true,
+	            changeMonth: true,
+	            numberOfMonths: 1
+	    });
+	          
+	/* $( "#createTime" ).datetimepicker({
+		showSecond: true,
+		timeFormat: 'HH:mm:ss',
+		stepHour: 1,
+		stepMinute: 1,
+		stepSecond: 1 
+	});  */
+	
+	$("#brandForm").validationEngine();
+	<#if msg??>
+	  noty({"text":"${(msg)!}",timeout: 2000,"layout":"center","type":"success"});
+	</#if>
+	<#if errorinfo??>
+	  noty({"text":"${(errorinfo)!}",timeout: 2000,"layout":"center","type":"error"});
+	</#if>
+});
+function validateImage(field, rules, i, options){
+	var strName=[".gif",".png",".jpg",".bmp"];
+	var validateStr=validateFile(strName,field,"gif,jpg和bmp",3);
+	if(validateStr!=null && validateStr!=''){
+		return validateStr;
+	}
+}
+function returnList(){
+	$('#queryForm').submit();
+}
+</script>
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/contents">内容管理</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-home"></i>&nbsp;<#if id?? && id!=''>编辑<#else>“${(name)!}”栏目添加</#if>内容</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			<div class="box-content">
+				<form id="brandForm" action="${ctx_path}/brand/save" class="form-horizontal" enctype="multipart/form-data" method="post">
+
+		    	<input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
+		    	<#if id?? && id!=''>
+		    	<input type="hidden" id="brand.id" name="brand.id" value="${(brand.id)!}">
+		    	</#if>		
+					<table style="line-height:40px;margin-left:16px;">
+						<tr>
+							<td><label class="control-label">品牌名称&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="brand.name" name="brand.name" class="validate[required,maxSize[100]]" style="width:790px;" value="${(brand.name)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">品牌描述&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="brand.details" name="brand.details" class="validate[maxSize[125]]" style="width:790px;" value="${(brand.details)!}"></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">是否置顶&nbsp;</label></td>
+							<td style="line-height:20px;">
+								<input type="radio" id="contents.isTop" name="contents.isTop" value="true" style="float:left;" <#if contents?? && contents.isTop?? && contents.isTop>checked</#if>><span style="padding-top:5px;float:left;">是</span>
+								<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+								<input type="radio" id="contents.isTop" name="contents.isTop" value="false" style="float:left;" <#if contents?? && contents.isTop?? && !contents.isTop>checked<#elseif !contents?? || !contents.isTop??>checked</#if>><span style="padding-top:5px;float:left;">否</span>
+							</td>
+							<td><label class="control-label" style="margin-left:100px;">图片附件&nbsp;</label></td>
+							<td><input type="file" id="imgUrl" name="imgUrl" class="validate[funcCall[validateImage]]" value=""></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="3"><div style="line-height:15px;width:700px;color:#f00;margin-top:5px;">文件上传说明:图片(gif,png,jpg和bmp)大小:3MB,视频(mp4,3gp,rm和rmvb)大小:10MB,附件(txt,rar,zip,doc和docx)大小:10MB,其他类型或者文件太大后台将不做处理！</div></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">品牌描述</label></td>
+							<td colspan="3">
+							 <textarea id="brand.details" name="brand.details" rows="3" class="cleditor validate[maxSize[500]]" style=" width: 790px; height: 60px;">${(brand.details)!}</textarea>
+							</td>
+						</tr>
+					</table>
+					<div class="form-actions">
+					  <button type="submit" class="btn btn-primary">保存</button>
+					  <button type="button" class="btn" onclick="javascript:returnList();">返回</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<form id="queryForm" action="${ctx_path}/contents/returnList" class="form-horizontal" method="post">
+		    	<input type="hidden" id="contentCategoryId1" name="contentCategoryId1" value="${(contentCategoryId)!}">
+		    	<input type="hidden" id="contentCategoryType1" name="contentCategoryType1" value="${(contentCategoryType)!}">
+		    	<input type="hidden" id="contentCategoryTypeQuery1" name="contentCategoryTypeQuery1" value="${(contentCategoryTypeQuery)!}">
+		    	<input type="hidden" id="pageIndex1" name="pageIndex1" value="${(pageIndex)!}">
+		    	<input type="hidden" id="titleQuery1" name="titleQuery1" value="${(titleQuery)!}">
+		    	<input type="hidden" id="contentTypeQuery1" name="contentTypeQuery1" value="${(contentTypeQuery)!}">
+		    	<input type="hidden" id="statusQuery1" name="statusQuery1" value="${(statusQuery)!}">
+		    	<input type="hidden" id="startNewsDateQuery1" name="startNewsDateQuery1" value="${(startNewsDateQuery)!}">
+		    	<input type="hidden" id="endNewsDateQuery1" name="endNewsDateQuery1" value="${(endNewsDateQuery)!}">
+		    	<input type="hidden" id="contentCategoryName1" name="contentCategoryName1" value="${(contentCategoryName)!}">
+  </form>
+<#include "/WEB-INF/sys/frame/foot.html"/>
