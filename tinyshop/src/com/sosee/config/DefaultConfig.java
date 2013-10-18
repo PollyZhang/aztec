@@ -29,6 +29,8 @@ import com.sosee.app.contentCategory.controller.ContentCategoryController;
 import com.sosee.app.contentCategory.pojo.ContentCategory;
 import com.sosee.app.itemCategory.controller.ItemCategoryController;
 import com.sosee.app.itemCategory.pojo.ItemCategory;
+import com.sosee.app.items.controller.ItemsController;
+import com.sosee.app.items.pojo.Items;
 import com.sosee.app.member.controller.MemberController;
 import com.sosee.app.member.controller.WebLoginController;
 import com.sosee.app.member.pojo.Member;
@@ -103,6 +105,7 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/member", MemberController.class);
 		me.add("/itemCategory", ItemCategoryController.class);
 		me.add("/brand", BrandController.class);	
+		me.add("/items", ItemsController.class);	
 		//前台控制器
 		me.add("/index",IndexController.class);
 		me.add("/webLogin",WebLoginController.class);
@@ -149,6 +152,7 @@ public class DefaultConfig extends JFinalConfig {
 		arp.addMapping("t_itemcategory", ItemCategory.class);
 		arp.addMapping("t_questions", Questions.class);
 		arp.addMapping("t_brand", Brand.class);
+		arp.addMapping("t_items", Items.class);
 	}
 	
 	/**

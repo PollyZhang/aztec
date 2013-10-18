@@ -1,13 +1,10 @@
 package com.sosee.web.controller;
 
-import com.jfinal.core.Controller;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.Page;
 import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.contentCategory.pojo.ContentCategory;
 import com.sosee.app.util.AppConstants;
-import com.sosee.sys.item.pojo.Items;
-import com.sosee.sys.util.SysConstants;
 import com.sosee.web.util.Constants;
 /**
  * 作者:强乐

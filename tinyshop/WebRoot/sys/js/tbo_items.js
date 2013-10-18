@@ -1,11 +1,9 @@
-var contentCategoryId="";
-var contentCategoryName="";
-var contentCategoryList=new Array();
+var verifyContentsId;
 function getUrl(treeId, treeNode) {
 	if(treeNode!=null && treeNode.id!=null && treeNode.id!=''){
-		return baseUrl+"/contentCategory/getContentCategoryJson/"+treeNode.id;
+		return baseUrl+"/itemCategory/getItemCategoryJson/"+treeNode.id;
 	}else{
-		return baseUrl+"/contentCategory/getContentCategoryJson/";
+		return baseUrl+"/itemCategory/getItemCategoryJson/";
 	}
 }
 var setting = {
@@ -27,21 +25,13 @@ function filter(treeId, parentNode, childNodes) {
 	return childNodes;
 }
 function zTreeOnClick(event, treeId, treeNode) {
-	contentCategoryId=treeNode.id;
-	contentCategoryName=treeNode.name;
+	$('#itemCategoryId').val(treeNode.id);
     query();
-    $("#contentCategoryTitle").text(contentCategoryName+'栏目列表');
-    $("#contentCategoryMain").removeClass("hide");
+    $("#itemCategoryTitle").text(itemCategoryName+'栏目列表');
+    $("#itemCategoryMain").removeClass("hide");
 };
-$(function(){
-	$("#contentCategoryForm").validationEngine();
-	$.fn.zTree.init($("#contentCategoryTree"), setting);
-	query();
-	expandAll();
-	setTimeout(expandAll,600);
-});
 function expandAll(){
-	var zTree = $.fn.zTree.getZTreeObj("contentCategoryTree");
+	var zTree = $.fn.zTree.getZTreeObj("itemCategoryTree");
 	$("._ico_docu").removeClass("button");
 	expandNodes(zTree,zTree.getNodes());
 }
@@ -56,130 +46,117 @@ function expandNodes(zTree,nodes){
 	}
 }
 function add(){
-	resetForm();
-	$('#contentCategorytitle').text((contentCategoryName!=''?"“"+contentCategoryName+"”栏目添加子栏目":"添加主栏目"));
-	$('#contentCategoryAddOrEdit').modal('show');
-}
-function edit(id){
-	resetForm();
-	
-	if(contentCategoryList!=null && contentCategoryList.length>0){
-		var b=false;
-		for(var i in contentCategoryList){
-			if(contentCategoryList[i].id==id){
-				$("#id").val(id);
-				$("#name").val(contentCategoryList[i].name);
-				$("#code").val(contentCategoryList[i].code);
-				$("#shortName").val(contentCategoryList[i].shortName);
-				$("#url").val(contentCategoryList[i].url);
-				$("#imageFile").val(contentCategoryList[i].imageFile);
-				$("#comments").val(contentCategoryList[i].comments);
-				b=true;
-				break;
-			}
-		}
-		if(b){
-			$('#contentCategorytitle').text((contentCategoryName!=''?"“"+contentCategoryName+"”栏目编辑子栏目":"编辑主栏目"));
-			$('#contentCategoryAddOrEdit').modal('show');
-		}else{
-			noty({"text":"编辑出错!",timeout: 1000,"layout":"center","type":"error"});			
-		}
-	}else{
-		noty({"text":"编辑出错!",timeout: 1000,"layout":"center","type":"error"});
+	$('#id').val('');
+	var itemCategoryId=$('#itemCategoryId').val();
+	if(itemCategoryId==null || itemCategoryId==''){
+		 noty({"text":"请先选择商品类别,再进行添加操作！",timeout: 1000,"layout":"center","type":"error"});
+		 return;
 	}
+	$('#itemsQueryForm').attr('action',baseUrl+'/items/add');
+	$('#itemsQueryForm').submit();
 }
-function save(){
-	var id=$("#id").val();
-	var name=$("#name").val();
-	var code=$("#code").val();
-	var shortName=$("#shortName").val();
-	var url=$("#url").val();
-	var imageFile=$("#imageFile").val();
-	var comments=$("#comments").val();
-	if(name==null || name==''){
-		noty({"text":"请输入栏目名称!",timeout: 1000,"layout":"center","type":"error"});
-		return;
-	}
-	if(code==null || code==''){
-		noty({"text":"请输入栏目编码!",timeout: 1000,"layout":"center","type":"error"});
-		return;
-	}
-	$.post(baseUrl+"/contentCategory/save",{"id":(id!=null && id!=''?id:""),"name":name,"code":code,"shortName":shortName,"url":url,"imageFile":imageFile,"comments":comments,"code":code,"pId":contentCategoryId},function(data){
-		if(data.result==1){
-			var tree=$.fn.zTree.getZTreeObj("contentCategoryTree");
-			tree.reAsyncChildNodes(null, "refresh");
-			setTimeout(expandAll,600);
-			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
-			query();
-			$('#contentCategoryAddOrEdit').modal('hide');
-		}else{
-			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
-		}
-	},"json");
+
+function edit(id,itemCategoryId){
+	$('#id').val(id);
+	$('#itemCategoryId').val(itemCategoryId);
+	$('#itemsQueryForm').attr('action',baseUrl+'/items/edit');
+	$('#itemsQueryForm').submit();
 }
+
+
+
+
 function del(id,name){
 	if(id==null || id==''){
 		noty({"text":"数据异常!",timeout: 1000,"layout":"center","type":"error"});
 		return;
 	}
-	if(!confirm("确定要删除栏目“"+name+"”（删除后将删除其所有子栏目和相关联的数据）?")){
-		return;
+	if(confirm("确定要删除内容\""+name+"\"吗?")){
+		jQuery.ajax({
+			 url: baseUrl+"/items/del/"+id,
+			 type: "POST",
+			 success: function(data)
+			 {
+				 query();
+				 noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
+			 },
+			 error:function(){
+				 noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
+			 }
+			 });
 	}
-	$.post(baseUrl+"/contentCategory/del",{"id":id},function(data){
-		if(data.result==1){
-			var tree=$.fn.zTree.getZTreeObj("contentCategoryTree");
-			tree.reAsyncChildNodes(null, "refresh");
-			setTimeout(expandAll,600);
-			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
-			query();
-		}else{
-			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
-		}
-	},"json");
-}
-function resetForm(){
-	$("#id").val("");
-	$("#name").val("");
-	$("#code").val("");
-	$("#shortName").val("");
-	$("#url").val("");
-	$("#imageFile").val("");
-	$("#comments").val("");
 }
 function query(){
-	$.post(baseUrl+"/contentCategory/query",{"pId":(contentCategoryId!=null && contentCategoryId!=''?contentCategoryId:"")},function(data){
-		if(data.result==1){
-			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable">';
-			strTable+='<thead><tr class="alert alert-info"><th width="30px">序号</th><th>栏目名称</th><th>栏目编码</th><th>栏目简称</th><th>栏目地址</th><th>栏目图标</th><th>栏目备注</th><th>操作</th></tr></thead>';
+	var itemCategoryId=$('#itemCategoryId').val();
+	var dataParam={"itemCategoryId":(itemCategoryId!=null && itemCategoryId!=''?itemCategoryId:""),
+	"nameQuery":$('#nameQuery').val(),
+	"sizeQuery":$('#sizeQuery').val(),
+	"colorQuery":$('#colorQuery').val(),
+	"pageIndex":($('#pageIndex').val()!=null && $('#pageIndex').val()!='')?$('#pageIndex').val():"1"
+	};
+	var pageNumber=0,totalPage=0,totalRow=0;
+	
+	$.post(baseUrl+"/items/query",dataParam,function(data){
+		if(data){
+			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable ellipsisTable">';
+			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="80px">名称</th><th width="25px">价格</th><th width="25px">数量</th><th width="25px">售出</th><th width="160px;">操作</th></tr></thead>';
 			strTable+="<tbody>";
-			if(data.contentCategoryList.length>0){
-				for(var i in data.contentCategoryList){
+			if(data.list && data.list.length>0){
+				$.each(data.list,function(n,value) {
 					strTable+="<tr>";
-					strTable+="<td><center>"+(parseInt(i)+1)+"</center></td>";
-					strTable+="<td>"+data.contentCategoryList[i].name+"</td>";
-					strTable+="<td>"+data.contentCategoryList[i].code+"</td>";
-					strTable+="<td>"+data.contentCategoryList[i].shortName+"</td>";
-					strTable+="<td>"+data.contentCategoryList[i].url+"</td>";
-					strTable+="<td>"+data.contentCategoryList[i].imageFile+"</td>";
-					strTable+="<td>"+data.contentCategoryList[i].comments+"</td>";
-					strTable+="<td style=\"width:140px;\"><a class=\"btn btn-mini btn-info\" href=\"#\" onclick=\"javascript:edit('"+data.contentCategoryList[i].id+"');\"><i class=\"icon-edit icon-white\"></i>编辑</a> <a class=\"btn btn-mini btn-danger\" href=\"#\" onclick=\"javascript:del('"+data.contentCategoryList[i].id+"','"+data.contentCategoryList[i].name+"');\"><i class=\"icon-trash icon-white\"></i>删除</a></td>";
-					strTable+="</tr>";
-				}
-			}else{
-				strTable+="<tr><td colspan='9'><br><br><br><br><br><br><br><center>"+data.msg+"</center><br><br><br><br><br><br></td></tr>";
+					strTable+="<td><center>"+(n+1)+"</center></td>";
+					strTable+="<td>"+value.itemName+"</td>";
+					strTable+="<td>"+value.itemPrice+"</td>";
+					strTable+="<td>"+value.count+"</td>";
+					strTable+="<td>"+value.salesVolume+"</td>";
+					strTable+="</td>";
+					strTable+="<td>";
+					strTable+="<a class='btn btn-mini btn-info' href='#' onclick=\"javascript:edit('"+value.id+"','"+value.itemCategoryId+"');\">";
+					strTable+="<i class='icon icon-edit icon-white'></i>编辑</a>&nbsp;";
+					strTable+="<a class='btn btn-mini btn-danger' href='#' onclick=\"javascript:del('"+value.id+"','"+value.itemName+"');\">";
+					strTable+="<i class='icon icon-white icon-trash'></i>删除</a>";
+					strTable+="</td></tr>";
+				});
+			   
+				pageNumber=data.pageNumber;
+				totalPage=data.totalPage;
+				totalRow=data.totalRow;
 			}
-			contentCategoryList=data.contentCategoryList;
 			strTable+='</tbody></table>';
-			$("#contentCategoryDiv").html(strTable);
+			
+			strTable+='<div style="float:left;">';
+			strTable+='总记录数:'+totalRow+'条  当前'+pageNumber+'页/共'+totalPage+'页';
+			strTable+='</div>';
+			strTable+='<div class="pagination pagination-right">';
+			strTable+='<ul>';
+			strTable+='<li><a href="#" onclick="javascript:doPage(1,'+pageNumber+','+totalPage+');">首页</a></li>';
+			strTable+='<li><a href="#" onclick="javascript:doPage('+(pageNumber - 1)+','+pageNumber+','+totalPage+');">上一页</a></li>';
+			strTable+='<li><a href="#" onclick="javascript:doPage('+(pageNumber + 1)+','+pageNumber+','+totalPage+');">下一页</a></li>';
+			strTable+='<li><a href="#" onclick="javascript:doPage('+totalPage+','+pageNumber+','+totalPage+');">尾页</a></li>';
+			strTable+='</ul>';
+			strTable+='</div>';
+			$("#itemsDiv").html(strTable);
 		}else{
 			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
 		}
 	},"json");
 }
-function mainHide(){
-	contentCategoryId="";
-	contentCategoryName="";
-    query();
-    $("#contentCategoryTitle").text('主栏目列表');
-    $("#contentCategoryMain").addClass("hide");
+
+function doPage(pageNum,pageIndex,pageCount){
+	if(pageNum>pageCount){
+		pageNum=pageCount==0?1:pageCount;
+	}else if(pageNum<1){
+		pageNum=1;
+	}
+	if(pageIndex!=pageNum){
+		$("#pageIndex").val(pageNum);
+		query();
+	}
+}
+
+
+function resetQuery(){
+	$('#nameQuery').val("");
+	$('#sizeQuery').val("");	
+	$("#colorQuery").val("");
 }
