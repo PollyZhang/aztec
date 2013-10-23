@@ -1,0 +1,137 @@
+@charset "utf-8";
+
+
+body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, textarea, p, table, th, td, dl, dt, dd, s { margin: 0; padding: 0; text-decoration:none; }
+fieldset,img { border: 0 none; }
+
+
+/* CSS Document */
+.content_main { width:1000px; margin:0px auto; margin-top:10px; }
+.topbanner { border:1px solid #c7c7c7; width:990px; height:323px; position:relative; overflow:hidden;  }
+.topbanner ul.slider_pic { display:block; position:absolute; top:0px; left:0px; height:323px; }
+.topbanner ul.slider_pic li { float:left; }
+.topbanner ul.slider_pic li img { width:998px; height:323px; }
+.topbanner ul.slider_li { position:absolute; width:1000px; bottom:0px; _bottom:-1px; display:block; height:35px; overflow:hidden; left:0px; }
+.topbanner ul.slider_li li { display:block; height:35px; line-height:35px; border-right:2px solid #fff; width:198px; float:left; text-align:center; }
+.topbanner ul.slider_op li { filter:alpha(opacity=70); opacity: 0.7; -moz-opacity:0.7; background:#7a7a7a; }
+.topbanner ul.slider_li li a { color:#fff; font-size:14px; text-decoration:none; display:block; }
+.topbanner ul.slider_li.slider_op li.current { background:#8bacd1 }
+.topbanner ul.slider_txt { z-index:100; }
+.menu
+{
+	margin-top:15px;
+}
+.menu li
+{
+	margin-left:55px;
+	float:left;
+	text-decoration:none;
+	list-style-type:none;
+	font-size:14px;
+	color:#FFF;
+}
+.menu li a
+{
+	color:#000;
+	text-decoration:none;
+}
+
+.news 
+{
+	margin:0px;
+    padding:0px;
+	display:inline;
+	list-style:none;
+
+}
+.news li
+{
+	font-size:12px;
+	color:#000;
+	line-height:25px;
+	margin:0px;
+　  padding:0px;
+list-style-type:none;
+}
+
+.news li a 
+{
+	color:#000;
+	line-height:30px;
+}
+
+.list_post
+{
+	font-size:12px;
+	color:#666;
+}
+.list_content
+{
+	font-size:12px;
+}
+
+.content_title
+{
+	font-size:28px;
+	color:#000;
+}
+.content_post
+{
+	font-size:12px;
+	color:#666;
+}
+
+.content_content
+{
+	font-size:14px;
+	line-height:25px;
+}
+
+.font2
+{
+	font-size:12px;
+	color:#000;
+}
+.font2 a
+{
+	color:#000;
+	text-decoration:none;
+}
+
+.ul_list2 
+{
+	margin:0px;
+    padding:0px;
+	display:inline;
+	list-style:none;
+	
+}
+.ul_list2 li
+{
+	font-size:12px;
+	color:#000;
+	line-height:35px;
+	margin:0px;
+　  padding:0px;
+list-style-type:none;
+}
+
+.ul_list2 li a 
+{
+	color:#000;
+	line-height:30px;
+}
+
+.list_title a
+{
+	font-size:14px;
+	color:#333;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+
+
+
+
+

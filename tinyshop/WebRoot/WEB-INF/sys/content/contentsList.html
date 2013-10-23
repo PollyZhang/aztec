@@ -102,15 +102,6 @@ $(function(){
 								</#list>
 							</#if>
 					  	</select>
-					  	状态
-						<select id="statusQuery" name="statusQuery" style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
-							<option value="">请选择</option>
-							<#if contentStatusList??>
-							  <#list contentStatusList as cs>
-							    	<option value="${cs.code}" <#if statusQuery?? && statusQuery==cs.code>selected</#if>>${cs.name}</option>
-							  </#list>
-							</#if>
-					  	</select>
 					  	发布日期
 							<input type="text" style="width:67px;" onkeydown="return false;" class="input-small datepicker" id="startNewsDateQuery" name="startNewsDateQuery" value="${(startNewsDateQuery)!}">
 					  	   -

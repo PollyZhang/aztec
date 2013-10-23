@@ -188,7 +188,7 @@ function query(){
 	$.post(baseUrl+"/contents/query",dataParam,function(data){
 		if(data){
 			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable ellipsisTable">';
-			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="80px">标题</th><th width="25px">类型</th><th width="25px">置顶</th><th width="25px">分享</th><th width="25px">浏览次数</th><th width="30px">作者</th><th width="45px">发布人</th><th width="55px">发布日期</th><th width="38px">状态</th><th width="160px;">操作</th></tr></thead>';
+			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="120px">标题</th><th width="25px">类型</th><th width="25px">置顶</th><th width="25px">分享</th><th width="25px">浏览次数</th><th width="50px">作者</th><th width="45px">发布人</th><th width="55px">发布日期</th><th width="100px;">操作</th></tr></thead>';
 			strTable+="<tbody>";
 			
 			if(data.list && data.list.length>0){
@@ -204,51 +204,14 @@ function query(){
 					strTable+="<td>"+(value.author?value.author:'')+"</td>";
 					strTable+="<td >"+(value.creator?value.creator:'')+"</td>";
 					strTable+="<td>"+ (value.newsDate?value.newsDate:'')+"</td>";
-					strTable+="<td  "+((value.status=='S03' || value.status=='S05')?"title='审核人:"+value.checker+"\n审核时间:"+ (value.reviewTime?value.reviewTime.formatDate('yyyy-MM-dd hh:mm'):'')+"\n审核结果:"+value.reviewReason+"'":'')+">";
-					
-					var sStatus="草稿";
-					$.each(statusJson.data,function(sn,sv){
-						if(sv.code==value.status){
-							sStatus=sv.name;
-						}
-					});
-					strTable+="<span class='label "+(value.status=='S05'?'label-inverse':value.status=='S02'?'label-warning':value.status=='S03'?'label-success':value.status=='S04'?'label-important':'')+"'>"+sStatus+"</span>";
-					strTable+="</td>";
 					strTable+="<td>";
 					
-					if(accountType!='emp'){
-						if (value.status=='S01'){
-							strTable+="<a class='btn btn-mini btn-success' href='#' onclick=\"javascript:goNext('"+value.id+"','S02','提交审核');\">";
-							strTable+="<i class='icon-ok-circle icon-white'></i>提交审核</a>&nbsp;";
-						}else if(value.status=='S02'){
-							strTable+="<a class='btn btn-mini btn-success' href='#' onclick=\"javascript:verify('"+value.id+"','S03','开始审核');\">";
-							strTable+="<i class='icon-ok-circle icon-white'></i>开始审核</a>&nbsp;";
-						}else if(value.status=='S04'){
-							strTable+="<a class='btn btn-mini btn-success' href='#' onclick=\"javascript:goNext('"+value.id+"','S02','提交审核');\">";
-							strTable+="<i class='icon-ok-circle icon-white'></i>提交审核</a>&nbsp;";
-//							strTable+="<a class='btn btn-mini btn-warning' href='#' onclick=\"javascript:goNext('"+value.id+"','S01','重新修改');\">";
-//							strTable+="<i class='icon icon-white icon-undo'></i>重填</a>&nbsp;";
-						}else if(value.status=='S03'){
-							strTable+="<a class='btn btn-mini btn-success' href='#' onclick=\"javascript:goNext('"+value.id+"','S05','归档');\">";
-							strTable+="<i class='icon-ok-circle icon-white'></i>归档</a>&nbsp;";
-						}
-					    
-						 if(value.status!='S05'){
-							 strTable+="<a class='btn btn-mini btn-info' href='#' onclick=\"javascript:edit('"+value.id+"','"+value.contentCategoryId+"');\">";
-							 strTable+="<i class='icon icon-edit icon-white'></i>编辑</a>&nbsp;";
-							 strTable+="<a class='btn btn-mini btn-danger' href='#' onclick=\"javascript:del('"+value.id+"','"+value.title+"');\">";
-							 strTable+="<i class='icon icon-white icon-trash'></i>删除</a>";
-						 }
-					}else{
-						if(value.status=='S01' || value.status=='S04'){
-							strTable+="<a class='btn btn-mini btn-success' href='#' onclick=\"javascript:goNext('"+value.id+"','S02','提交审核');\">";
-							strTable+="<i class='icon-ok-circle icon-white'></i>提交审核</a>&nbsp;";
-							strTable+="<a class='btn btn-mini btn-info' href='#' onclick=\"javascript:edit('"+value.id+"','"+value.contentCategoryId+"');\">";
-							strTable+="<i class='icon icon-edit icon-white'></i>编辑</a>&nbsp;";
-							strTable+="<a class='btn btn-mini btn-danger' href='#' onclick=\"javascript:del('"+value.id+"','"+value.title+"');\">";
-							strTable+="<i class='icon icon-white icon-trash'></i>删除</a>";
-						}
-					}
+					strTable+="<a class='btn btn-mini btn-info' href='#' onclick=\"javascript:edit('"+value.id+"','"+value.contentCategoryId+"');\">";
+					strTable+="<i class='icon icon-edit icon-white'></i>编辑</a>&nbsp;";
+					strTable+="<a class='btn btn-mini btn-danger' href='#' onclick=\"javascript:del('"+value.id+"','"+value.title+"');\">";
+					strTable+="<i class='icon icon-white icon-trash'></i>删除</a>";
+					
+					
 		  			
 					strTable+="</td></tr>";
 				});

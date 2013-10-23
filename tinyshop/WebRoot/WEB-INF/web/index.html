@@ -1,428 +1,160 @@
 <#include "/WEB-INF/web/frame/head.html"/>
-			<#if msg??>
-			<script type="text/javascript">
-				noty({"text":"${msg}",timeout: 2000,"layout":"center","type":"error"});
-			</script>
-			</#if>
-			<div id="content" class="span9" style="margin-top:0px;">
-			<div id="step1">
-			     <label>1</label>
-			     <span>
-                   查询<br>
-                   <small>查询余票</small>
-                </span>
-	  		</div>
-	  		<div id="step2">
-			     <label>2</label>
-			     <span>
-                   订单<br>
-                   <small>填写订单信息</small>
-                </span>
-	  		</div>
-	  		<div id="step3">
-			     <label>3</label>
-			     <span>
-                   支付<br>
-                   <small>网上支付</small>
-                </span>
-	  		</div>
-	  		<div id="step4">
-			     <label>4</label>
-			     <span>
-                   完成<br>
-                   <small>购买结果</small>
-                </span>
-	  		</div>
-	  		<style>
-	  		.divCss{
-	  			border:1px solid #ccc;
-	  			-moz-box-shadow:0 0 10px rgba(189, 189, 189, 0.4);
-	  			-webkit-box-shadow:0 0 10px rgba(189, 189, 189, 0.4);
-	  			box-shadow:0 0 10px rgba(189, 189, 189, 0.4);
-	  		}
-	  		</style>
-	  		
-	  		<div class="divCss" style="margin-left:10px;margin-top:15px;margin-bottom:15px;width:723px;padding:10px;float:left;">
-			<#if !type??>
-			<#-- 查询 -->
-			<link href='${ctx_path}/web/css/jquery.autocomplete.css' rel='stylesheet'>
-			<script src="${ctx_path}/web/js/jquery.autocomplete.min.js"></script>
-			<script>
-				$("#step1").addClass("swMain2");
-				$("#step1 label").addClass("stepNumber2");
-				$("#step1 span").addClass("stepDesc2");
-				$("#step2").addClass("swMain3");
-				$("#step2 label").addClass("stepNumber3");
-				$("#step2 span").addClass("stepDesc3");
-				$("#step3").addClass("swMain3");
-				$("#step3 label").addClass("stepNumber3");
-				$("#step3 span").addClass("stepDesc3");
-				$("#step4").addClass("swMain3");
-				$("#step4 label").addClass("stepNumber3");
-				$("#step4 span").addClass("stepDesc3");
-				var bState=false;
-				$(function(){
-					$( "#startDate" ).datepicker({
-			            defaultDate: "+1w",
-			            changeMonth: true,
-			            numberOfMonths: 1,
-			            minDate: new Date()
-			        });
-			        $("#end").autocomplete("${ctx_path}/index/getCode", {
-				        dataType: "json",
-				        max: 20,
-				        minChars: 1,
-				        delay: 10,
-				        cacheLength: 0,
-				        scrollHeight: 400,
-				        matchContains: true,
-				        autoFill: false,
-				        formatItem: function (row, i, max) {
-				            return "<span style='display:inline-block;width:80px;'>" + row.mc + "</span>" +
-				                    "<span style='display:inline-block;width:45px;color:red;font-weight:bold;'>" + row.py + "</span>";
-				        },formatResult: function (row) {
-				            return row.mc;
-				        },parse: function (data) {
-				            return data;
-				        }
-				    }).result(function (event, row, formatted) {
-				        $(this).val(row.mc);
-				        bState=true;
-				    });
-				    $("#query").click(function(e){
-				    	if(bState){
-				    		var start=$("#startDate").val();
-				    		if(start!=null && start!=""){
-				    		
-				    			$.post("${ctx_path}/index/getList",{end:$("#end").val(),startDate:start},function(data){
-				    			
-				    				var strTable="<font color=\"blue\">"+start+"</font> 开往 <font color=\"blue\">"+$("#end").val()+"</font> 的余票信息<br>";
-				    				if(data.length>0){
-				    					strTable+="<table class=\"table\">";
-			    						strTable+="<thead><tr>";
-										strTable+="<th width=\"20%\">车次</th>";
-										strTable+="<th width=\"20%\">终点站</th>";
-										strTable+="<th width=\"20%\">发车时间</th>";
-										strTable+="<th width=\"15%\">座位数</th>";
-										strTable+="<th width=\"15%\">余票数</th>";
-										strTable+="<th width=\"10%\">操作</th>"; 
-			    						strTable+="</tr></thead><tbody>";
-			    						for(var d in data){
-				    						strTable+="<tr>";
-				    						strTable+="<td>"+data[d].checi+"</td>";
-				    						strTable+="<td>"+data[d].end+"</td>";
-				    						strTable+="<td>"+data[d].time+"</td>";
-				    						strTable+="<td>"+data[d].count+"</td>";
-				    						strTable+="<td>"+data[d].yupiao+"</td>";
-				    						strTable+="<td><input class=\"btn btn-mini btn-primary\" type=\"button\" value=\"&nbsp;订&nbsp;&nbsp;&nbsp;&nbsp;票&nbsp;\" onclick=\"javascript:onGo('"+data[d].id+"','"+data[d].checi+"','"+data[d].end+"','"+data[d].time+"');\"></td>";
-				    						strTable+="</tr>";
-				    						strTable+="</tbody>";
-			    						}	      
-				    					$("#sDate").val(start);
-				    				}else{
-				    					strTable+="<div style=\"margin:0px auto;width:200px;margin-top:20px;\">没有查到相关的车次信息！</div>";
-				    				}
-				    				$("#queryVotes").html(strTable);
-				    			},"json");
-				    		}else{
-				    		noty({"text":"请选择发车时间！",timeout: 2000,"layout":"center","type":"error"});
-				    		}
-				    	}else{
-				    		noty({"text":"请选择到达站！",timeout: 2000,"layout":"center","type":"error"});
-				    	}
-				    });
-		        });
-		        function clearState(){
-		        	bState=false;
-		        }
-		        function onGo(id,checi,end,time){
-		        	$("#id").val(id);
-		        	$("#checi").val(checi);
-		        	$("#endSite").val(end);
-		        	$("#startTime").val(time);
-		        	$("#votesForm").submit();
-		        }
-			</script>
-				<form id="votesForm" class="form-inline" style="margin-top:10px;" action="${ctx_path}/index" method="post">
-					<div style="margin:0px auto;width:700px">
-						<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;出发站:&nbsp;${faCheZhan}</label>
-						<label class="control-label" for="focusedInput">&nbsp;&nbsp;&nbsp;&nbsp;到达站:&nbsp;</label>
-						<input id="end" name="end" type="text" style="width:120px" maxlength="10" onkeydown="javascript:clearState();"/>
-						<label class="control-label" for="focusedInput">&nbsp;&nbsp;&nbsp;&nbsp;发车时间:&nbsp;</label>
-						<input class="input-small datepicker" id="startDate" name="startDate" type="text" onkeydown="return false;">&nbsp;&nbsp;&nbsp;&nbsp;
-						<input id="query" class="btn btn-primary" type="button" value="查询">&nbsp;&nbsp;&nbsp;&nbsp;
-						<!-- <input id="msg" class="btn btn-danger" type="button" value="购票须知"> -->
-						<a id="msg" class="btn btn-danger" href="${ctx_path}/contentsList?type=ITEM002&first=98ac448c-c2e0-46b2-8ac2-dafa56c89f0d" title="购票须知">购票须知</a>
-					</div>
-					<input id="id" name="id" type="hidden"/>
-					<input id="checi" name="checi" type="hidden"/>
-					<input id="endSite" name="endSite" type="hidden"/>
-					<input id="startTime" name="startTime" type="hidden"/>
-					<input id="type" name="type" type="hidden" value="0"/>
-					<input id="sDate" name="sDate" type="hidden"/>
-					<div id="queryVotes" style="margin:0px auto;width:700px;margin-top:10px;"></div>		
-				</form>
-			</div>
-	  		<#elseif type=='0'>
-			<#-- 订单信息 -->
-			<script>
-				$("#step1").addClass("swMain1");
-				$("#step1 label").addClass("stepNumber1");
-				$("#step1 span").addClass("stepDesc1");
-				$("#step2").addClass("swMain2");
-				$("#step2 label").addClass("stepNumber2");
-				$("#step2 span").addClass("stepDesc2");
-				$("#step3").addClass("swMain3");
-				$("#step3 label").addClass("stepNumber3");
-				$("#step3 span").addClass("stepDesc3");
-				$("#step4").addClass("swMain3");
-				$("#step4 label").addClass("stepNumber3");
-				$("#step4 span").addClass("stepDesc3");
-				function changeSize(){
-					var piaojia=${piaojia};
-					$("#totalFare").html("&nbsp;&nbsp;"+piaojia*$("#count").val());
-				}
-				$(function(){
-					$("#infoForm").validationEngine();
-				});
-				function changeCodeI(){
-					$("#cImg").attr("src",baseUrl+"/index/getCodeImg/"+new Date());
-				}
-			</script>
-			<style>
-			.tableLabel{width:80px;background:#F8F8F8;}
-			</style>
-				<form id="infoForm" action="${ctx_path}/index" method="post">
-				<input id="type" name="type" type="hidden" value="1">
-				<input id="checi" name="checi" type="hidden" value="${checi}">
-				<input id="endSite" name="endSite" type="hidden" value="${endSite}">
-				<input id="startDate" name="startDate" type="hidden" value="${sDate}">
-				<input id="piaojia" name="piaojia" type="hidden" value="${piaojia}">
-				<input id="startTime" name="startTime" type="hidden" value="${startTime}">
-				<input id="piaoToken" name="piaoToken" type="hidden" value="${piaoToken}">
-				<div style="margin:0 auto;width:400px;">
-					您所订购的车票信息:
-					<table style="width:400px;line-height:30px;margin-top:10px;border:1px solid #ccc;" border="1">
-						<tr><td align="right" class="tableLabel">车辆班次:&nbsp;&nbsp;</td><td colspan="3">&nbsp;&nbsp;${checi}</td></tr>
-						<tr>
-							<td align="right" class="tableLabel">发车站:&nbsp;&nbsp;</td><td style="width:120px">&nbsp;&nbsp;${faCheZhan}</td>
-							<td align="right" class="tableLabel">到达站:&nbsp;&nbsp;</td><td style="width:120px">&nbsp;&nbsp;${endSite}</td>
-						</tr>
-						<tr>
-							<td align="right" class="tableLabel">发车日期:&nbsp;&nbsp;</td><td style="width:120px">&nbsp;&nbsp;${sDate}</td>
-							<td align="right" class="tableLabel">发车时间:&nbsp;&nbsp;</td><td style="width:120px">&nbsp;&nbsp;${startTime}</td>
-						</tr>
-						<tr><td align="right" class="tableLabel">票价:&nbsp;&nbsp;</td><td style="width:120px">&nbsp;&nbsp;${piaojia}</td>
-							<td align="right" class="tableLabel">数量:&nbsp;&nbsp;</td>
-							<td style="width:120px">&nbsp;&nbsp;
-								<select id="count" name="count" style="width:50px;margin-top:10px;line-height:20px;font-size:12px;" onchange="javascript:changeSize();">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-								</select>
-							</td>
-						</tr>
-						<tr><td align="right" class="tableLabel">总票价:&nbsp;&nbsp;</td><td colspan="3"><div id="totalFare">&nbsp;&nbsp;${piaojia}</div></td></tr>
-					</table><br>
-					取票人信息：<br>
-					<table style="width:400px;line-height:30px;margin-top:10px;padding:10px;border:1px solid #ccc;" border="1">
-						<tr>
-							<td align="right" class="tableLabel">姓名:&nbsp;&nbsp;</td><td>&nbsp;&nbsp;<input type="text" name="name" style="margin-top:10px;" data-validation-engine="validate[required,minSize[2],maxSize[10]]" placeholder="请输入姓名" value="<#if name??>${name}</#if>"><font color="red">*</font></td>
-						</tr>
-						<tr>
-							<td align="right" class="tableLabel">身份证号:&nbsp;&nbsp;</td><td>&nbsp;&nbsp;<input type="text" name="cardNum" style="margin-top:10px;" data-validation-engine="validate[required,custom[idCard]]" placeholder="请输入身份证" value="<#if cardNum??>${cardNum}</#if>"><font color="red">*</font></td>
-						</tr>
-						<tr>
-							<td align="right" class="tableLabel">验证码:&nbsp;&nbsp;</td>
-							<td>&nbsp;&nbsp;
-								<input type="text" name="code" style="margin-top:10px;" data-validation-engine="validate[required,minSize[4],maxSize[4]]" placeholder="请输入验证码" ><font color="red">*</font>
-								<img id="cImg" src="${ctx_path}/index/getCodeImg" title="点击更换验证码" alt="点击更换验证码" onclick="javascript:changeCodeI();" style="border:1px solid #ccc;">	
-							</td>
-						</tr></td>
-						</tr>
-					</table>
-					<br>
-					<center><input class="btn btn-primary" type="submit" value="提交"></center>
-				</div>
-				</form>
-	  		<#elseif type=='1'>
-			<#-- 支付 -->
-			<script>
-				$("#step1").addClass("swMain1");
-				$("#step1 label").addClass("stepNumber1");
-				$("#step1 span").addClass("stepDesc1");
-				$("#step2").addClass("swMain1");
-				$("#step2 label").addClass("stepNumber1");
-				$("#step2 span").addClass("stepDesc1");
-				$("#step3").addClass("swMain2");
-				$("#step3 label").addClass("stepNumber2");
-				$("#step3 span").addClass("stepDesc2");
-				$("#step4").addClass("swMain3");
-				$("#step4 label").addClass("stepNumber3");
-				$("#step4 span").addClass("stepDesc3");
-				var workNum='${workNum}';
-				var cPiaojia='${cPiaojia}';
-				var bankCode="";
-				function onBankBorder(strName){
-					$("#bankDiv input[type='radio']").attr("checked",false);
-					$("#bankDiv .icon_bank").removeClass("icon_bank_box_border");
-					$("#bankDiv .icon_"+strName).addClass("icon_bank_box_border");
-					$("#"+strName).attr("checked",true);
-					bankCode=strName;
-				}
-				function onGoBank(){
-					var radioBank=$("#bankDiv input[type='radio'][checked]");
-					if(radioBank.length>0){
-						$.post("${ctx_path}/index/getAlipayUrl",{ workNum:workNum, cPiaojia:cPiaojia,bankCode:bankCode},function(data){
-							if(data.result==1){
-								//$("#bankDiv").hide();
-								//$("#bankFinishDiv").show();
-								//showAlipayPopWin(data.url);
-								//window.open(data.url);
-								window.location.href=data.url;
-							}else{
-								noty({"text":data.url,timeout: 2000,"layout":"center","type":"error"});
-							}
-						},"json");
-					}else{
-						noty({"text":"请至少选择一个支付方式！",timeout: 2000,"layout":"center","type":"error"});
-					}
-				}
-				
-				function showAlipayPopWin(url)
-				{
-				 var opopwin = window.open(url, "fullpopwin", "width=760,height=480");
-				 self.focus();
-				}
-				
-				function onSuccess(){
-					$("#bankForm").submit();
-				}
-				function onFail(){
-					
-				}
-			</script>
-				<style>
-					.icon_bank{display: block;height: 36px;background-repeat: no-repeat;text-indent: -9999px;background-image: url("${ctx_path}/web/images/bank.png")}
-					.icon_bank_box{width: 123px;border: 1px solid #ddd;vertical-align: middle;position: relative;display: inline-block;background-color: #eee;float:left;margin-left:5px;margin-top:5px;}
-					.icon_bank_box_border{border: 1px solid #ff0000;}
-					.icon_ICBC{background-position: 0px -432px;}
-					.icon_CCB{background-position: 0px -72px;}
-					.icon_ABC{background-position: 0px -0px;}
-					.icon_POSTGC{background-position: 0px -504px;}
-					.icon_BOCB2C{background-position: 0px -36px;}
-					.icon_COMM{background-position: 0px -288px;}
-					.icon_CMB{background-position: 0px -216px;}
-					.icon_CEBBANK{background-position: 0px -108px;}
-					.icon_SPDB{background-position: 0px -612px;}
-					.icon_GDB{background-position: 0px -324px;}
-					.icon_CITIC{background-position: 0px -180px;}
-					.icon_CIB{background-position: 0px -144px;}
-					.icon_CMBC{background-position: 0px -252px;}
-					.icon_SPABANK{background-position: 0px -576px;}
-				</style>
-				<div style="margin:0px auto;width:600px;line-height:25px;">
-				<h2>您的订单号:<font color="red">${workNum}</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				总票价:<font color="red">${cPiaojia}</font>元</h2>
-				<div id="bankDiv">
-				支付方式:
-				<div>
-				<input id="ICBCB2C" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="ICBCB2C" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_ICBCB2C" onclick="javascript:onBankBorder('ICBCB2C');">中国工商银行</div>
-				<input id="CCB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CCB" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CCB" onclick="javascript:onBankBorder('CCB');">中国建设银行</div>
-				<input id="ABC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="ABC" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_ABC" onclick="javascript:onBankBorder('ABC');">中国农业银行</div>
-				<input id="POSTGC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="POSTGC" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_POSTGC" onclick="javascript:onBankBorder('POSTGC');">中国邮政储蓄银行</div>
-				<input id="BOCB2C" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="BOCB2C" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_BOCB2C" onclick="javascript:onBankBorder('BOCB2C');">中国银行</div>
-				<input id="COMM" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="COMM" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_COMM" onclick="javascript:onBankBorder('COMM');">交通银行</div>
-				<input id="CMB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CMB" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CMB" onclick="javascript:onBankBorder('CMB');">招商银行</div>
-				<input id="CEBBANK" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CEBBANK" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CEBBANK" onclick="javascript:onBankBorder('CEBBANK');">中国光大银行</div>
-				<input id="SPDB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="SPDB" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_SPDB" onclick="javascript:onBankBorder('SPDB');">浦发银行</div>
-				<input id="GDB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="GDB" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_GDB" onclick="javascript:onBankBorder('GDB');">广东发展银行</div>
-				<input id="CITIC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CITIC" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CITIC" onclick="javascript:onBankBorder('CITIC');">中信银行</div>
-				<input id="CIB" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CIB" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CIB" onclick="javascript:onBankBorder('CIB');">兴业银行</div>
-				<input id="SPABANK" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="SPABANK" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_SPABANK" onclick="javascript:onBankBorder('SPABANK');">平安银行</div>
-				<input id="CMBC" name="bank" type="radio" style="float:left;margin-top:17px;margin-left:5px;" value="CMBC" onclick="javascript:onBankBorder(this.value);">
-				<div class="icon_bank icon_bank_box icon_CMBC" style="float:none;" onclick="javascript:onBankBorder('CMBC');">中国民生银行</div></div><br>
-				<center><span class="btn btn-primary" onclick="javascript:onGoBank();">登陆网上银行</span></center><br>
-				</div>
-				<div id="bankFinishDiv" style="display:none;">
-					<br>
-					<center>
-						<span class="btn btn-primary" onclick="javascript:onSuccess();">支付成功</span>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="btn btn-primary" onclick="javascript:onFail();">支付失败</span>
-					</center>
-					<br>
-					<form id="bankForm" action="${ctx_path}/index" method="post">
-						<input id="type" name="type" type="hidden" value="2">
-						<input id="workNum" name="workNum" type="hidden" value="${workNum}">
-					</form>
-				</div>
-				</div>
-	  		<#elseif type=='2'>
-			<#-- 完成 -->
-			<script>
-				$("#step1").addClass("swMain1");
-				$("#step1 label").addClass("stepNumber1");
-				$("#step1 span").addClass("stepDesc1");
-				$("#step2").addClass("swMain1");
-				$("#step2 label").addClass("stepNumber1");
-				$("#step2 span").addClass("stepDesc1");
-				$("#step3").addClass("swMain1");
-				$("#step3 label").addClass("stepNumber1");
-				$("#step3 span").addClass("stepDesc1");
-				$("#step4").addClass("swMain2");
-				$("#step4 label").addClass("stepNumber2");
-				$("#step4 span").addClass("stepDesc2");
-			</script>
-			<style>
-				.info1{float:left;}
-				.info2{float:left;margin-top:7px;}
-			</style>
-			<div style="margin:0px auto;width:600px;line-height:25px;">
-			<#if alipay=='yes'>
-				<h3>
-					<h2><span class="info1" style="color:red;">恭喜&nbsp;</span></h2>
-					<span class="info2">您已经购票成功！ 请您</span>
-					<span class="info1" style="color:red;"><h2>牢记</h2></span>
-					<span class="info2">订单号:</span>
-					<span class="info2" style="color:red;">${workNum}</span>
-				</h3><br>
-				<p class="info1" style="width:600px;">温馨提示：请您认真阅读订票须知，换取纸质车票需要购票时所使用的二代身份证原件或购票时所使用的二代身份证号和领票人身份证原件，建议在开车前预留充分的时间办理换票手续。</p>
-			<#else>
-				<h3>
-					<h2><span class="info1" style="color:red;">很遗憾&nbsp;</span></h2>
-					<span class="info2">您的订单号:</span>
-					<span class="info2" style="color:red;">${workNum}</span>
-					<span class="info2">没有成功支付！</span>
-				</h3><br>
-				<p class="info1" style="width:600px;">温馨提示：在订单查询里边可以再次进行支付操作！</p>
-	  		</#if>
-	  		</div>
-	  		</#if>		  		
-	  		</div>
-		<!-- content ends -->
-	</div><!--/#content.span10-->
-  </div><!--/fluid-row-->
+<div id="box-body" style="width:1000px; margin:0 auto; height:1550px; ">
+<div style="float:left; margin-top:10px; width:990px;">
+<div class="topbanner">
+		<ul id="slider_pic" class="slider_pic">
+                        <li content="ectype_9"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
+                        <li content="ectype_5"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
+                        <li content="ectype_7"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
+                        <li content="ectype_6"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
+                        <li content="ectype_8"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
+                        
+            
+		</ul>
+		<ul id="slider_op" class="slider_li slider_op">
+                        <li tab="ectype_9" class="current"><a href="javascript:;">国庆华诞 恭祝祖国</a></li>
+                        <li tab="ectype_5"><a href="javascript:;">国庆放假通知</a></li>
+                        <li tab="ectype_7"><a href="javascript:;">合众创业你的首选</a></li>
+                        <li tab="ectype_6"><a href="javascript:;">无需资金解决供货</a></li>
+                        <li tab="ectype_8"><a href="javascript:;">联合商家服务等你来</a></li>
+            		</ul>
+        <script type="text/javascript">
+		$(function(){
+				   $('#slider_op li:first').addClass("current");
+				   $('#slider_op li').click(function(){
+						$('#slider_pic li').hide('show');
+						$('[content="'+$(this).attr('tab')+'"]').show('show');
+						$('#slider_op li').removeClass('current');
+						$(this).addClass("current");
+						
+					});
+				})
+		</script>
+		
+	</div>
+    </div>
+<div id="sub-content" style=" width:990px; height:326px; float:left; background-color:#f4f4f4">
+	<div style="width:250px; height:305px; margin-top:10px; float:left; background-color:#f4f4f4">
+    <img src="${ctx_path}/web/images/index_21.gif" width="257" height="301" /></div>
+    <div style="width:630px; height:300px; float:left; margin-left:60px; margin-top:20px; background-color:#f4f4f4">
+    <table width="633" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="127" height="165" valign="top"><img src="${ctx_path}/web/images/index_24.gif" width="108" height="103" /></td>
+    <td width="215" valign="top"><img style="margin-top:10px;" src="${ctx_path}/web/images/jiarurenmei.png" width="145" height="17" />
+    <p style="font-size:12px; line-height:20px; margin-left:10px;margin-top:10px;">加入仁美创业帮<br />
+选择你想卖的商品<br />
+建设自己的网店</p>
+    </td>
+    <td width="122" height="165" valign="top"><img src="${ctx_path}/web/images/index_26.gif" width="108" height="103" /></td>
+    <td width="189" valign="top"><img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangbangni.png" width="145" height="17" />
+        <p style="font-size:12px; line-height:20px; margin-left:25px;margin-top:10px;">加入仁美创业帮<br />
+选择你想卖的商品<br />
+建设自己的网店</p>
+    </td>
+  </tr>
+  <tr>
+    <td height="40" valign="top"><img src="${ctx_path}/web/images/index_33.gif" width="108" height="103" /></td>
+    <td valign="top"><img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangtouzi.png" width="145" height="17" />
+        <p style="font-size:12px; line-height:20px; margin-left:10px;margin-top:10px;">加入仁美创业帮<br />
+选择你想卖的商品<br />
+建设自己的网店</p>
+    </td>
+    <td height="140" valign="top"><img src="${ctx_path}/web/images/index_31.gif" width="110" height="105" /></td>
+    <td valign="top"><img style="margin-top:10px; margin-left:5px;"  src="${ctx_path}/web/images/tuijianqi.png" width="145" height="17" />
+        <p style="font-size:12px; line-height:20px; margin-left:20px;margin-top:10px">加入仁美创业帮<br />
+选择你想卖的商品<br />
+建设自己的网店</p>
+    </td>
+  </tr>
+</table>
+</div>
+    </div>
+    <!--成功案例 -->
+    <div style="width:1000px; height: 300px; float: left">
+    <table width="1000" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+    <td height="40px;" colspan="4"><img style="margin-left:10px;" src="${ctx_path}/web/images/index_38.gif" width="107" height="24" /></td>
+  </tr>
+  <tr>
+    <td height="230" align="center" bgcolor="#f7e7ca"><img src="${ctx_path}/web/images/index_42.gif" width="146" height="191" /></td>
+    <td align="center" bgcolor="#f7e7ca"><img src="${ctx_path}/web/images/index_42.gif" width="146" height="191" /></td>
+    <td align="center" bgcolor="#f7e7ca"><img src="${ctx_path}/web/images/index_42.gif" width="146" height="191" /></td>
+    <td align="center" bgcolor="#f7e7ca"><img src="${ctx_path}/web/images/index_42.gif" width="146" height="191" /></td>
+    <td align="center" bgcolor="#f7e7ca"><img src="${ctx_path}/web/images/index_42.gif" width="146" height="191" /></td>
+  </tr>
+  <tr>
+    <td height="40" align="center" valign="top" bgcolor="#f7e7ca"><span style="font-size:12px;">红孩子</span></td>
+    <td align="center" valign="top" bgcolor="#f7e7ca"><span style="font-size:12px;">红孩子</span></td>
+    <td align="center" valign="top" bgcolor="#f7e7ca"><span style="font-size:12px;">红孩子</span></td>
+    <td align="center" valign="top" bgcolor="#f7e7ca"><span style="font-size:12px;">红孩子</span></td>
+    <td align="center" valign="top" bgcolor="#f7e7ca"><span style="font-size:12px;">红孩子</span></td>
+  </tr>
+</table>
 
+    </div>
+   <!--文章 --> 
+   <div style="width:1000px; height: 200px; margin-top:20px; float:left">
+    <table width="1000" height="148px" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="22" height="31" bgcolor="#8dbdf9">&nbsp;</td>
+    <td width="83" height="31" bgcolor="#e0edfc">&nbsp;</td>
+    <td width="210" height="31" bgcolor="#e0edfc"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></td>
+    <td width="26" height="31" bgcolor="#e0a689">&nbsp;</td>
+    <td width="68" height="31" bgcolor="#f4ddb4">&nbsp;</td>
+    <td width="217" height="31" bgcolor="#f4ddb4"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></td>
+    <td width="26" height="31" bgcolor="#f9d798">&nbsp;</td>
+    <td width="95" height="31" bgcolor="#f9eeda">&nbsp;</td>
+    <td width="253" height="31" bgcolor="#f9eeda"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></td>
+  </tr>
+  <tr>
+    <td height="117" bgcolor="#8dbdf9">&nbsp;</td>
+    <td height="117" align="center" valign="top" bgcolor="#e0edfc"><img  src="${ctx_path}/web/images/index_62.gif" width="60" height="61" /></td>
+    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px;margin-top:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div></td>
+    <td height="117" bgcolor="#e0a689">&nbsp;</td>
+    <td height="117" align="center" valign="top" bgcolor="#f4ddb4"><img src="${ctx_path}/web/images/index_58.gif" width="62" height="64" /></td>
+    <td height="117" valign="top" bgcolor="#f4ddb4">
+    <div style="padding-left:10px;margin-top:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div>
+    </td>
+    <td height="117" bgcolor="#f9d798">&nbsp;</td>
+    <td height="117" align="center" valign="top" bgcolor="#f9eeda"><img src="${ctx_path}/web/images/index_52.gif" width="95" height="117" /></td>
+    <td height="117" valign="top" bgcolor="#f9eeda">
+    <div style="padding-left:10px;margin-top:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div>
+    </td>
+  </tr>
+</table>
+  </div>
+  <!--战略合作伙伴 -->
+  <div style="float:left"><img src="${ctx_path}/web/images/index_68.gif" width="150" height="24" /></div>
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
+  
+  </div>
+    <!--友情链接  -->
+  <div style="float:left; margin-top:10px;"><img src="${ctx_path}/web/images/index_72.gif" width="103" height="32" /></div>
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
 
+  </div>
+</div>
+</div>
+  
 <#include "/WEB-INF/web/frame/foot.html"/>
