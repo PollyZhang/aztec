@@ -3,20 +3,18 @@
 <div style="float:left; margin-top:10px; width:990px;">
 <div class="topbanner">
 		<ul id="slider_pic" class="slider_pic">
-                        <li content="ectype_9"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
-                        <li content="ectype_5"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
-                        <li content="ectype_7"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
-                        <li content="ectype_6"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
-                        <li content="ectype_8"><a href="#" target="_blank"><img src="${ctx_path}/web/images/index_17.gif" width="998" height="323"></a></li>
-                        
-            
+                        <li content="ectype_9"><a href="#" onclick="viewContent('${imageNewsList[0].id}')"><img src="${ctx_path}/${imageNewsList[0].imageFile}" width="998" height="323"></a></li>
+                        <li content="ectype_5"><a href="#" onclick="viewContent('${imageNewsList[1].id}')"><img src="${ctx_path}/${imageNewsList[1].imageFile}" width="998" height="323"></a></li>
+                        <li content="ectype_7"><a href="#" onclick="viewContent('${imageNewsList[2].id}')"><img src="${ctx_path}/${imageNewsList[2].imageFile}" width="998" height="323"></a></li>
+                        <li content="ectype_6"><a href="#" onclick="viewContent('${imageNewsList[3].id}')"><img src="${ctx_path}/${imageNewsList[3].imageFile}" width="998" height="323"></a></li>
+                        <li content="ectype_8"><a href="#" onclick="viewContent('${imageNewsList[4].id}')"><img src="${ctx_path}/${imageNewsList[4].imageFile}" width="998" height="323"></a></li>
 		</ul>
 		<ul id="slider_op" class="slider_li slider_op">
-                        <li tab="ectype_9" class="current"><a href="javascript:;">国庆华诞 恭祝祖国</a></li>
-                        <li tab="ectype_5"><a href="javascript:;">国庆放假通知</a></li>
-                        <li tab="ectype_7"><a href="javascript:;">合众创业你的首选</a></li>
-                        <li tab="ectype_6"><a href="javascript:;">无需资金解决供货</a></li>
-                        <li tab="ectype_8"><a href="javascript:;">联合商家服务等你来</a></li>
+                        <li tab="ectype_9" class="current"> ${imageNewsList[0].title}</li>
+                        <li tab="ectype_5"> ${imageNewsList[1].title}</li>
+                        <li tab="ectype_7"> ${imageNewsList[2].title}</li>
+                        <li tab="ectype_6"> ${imageNewsList[3].title}</li>
+                        <li tab="ectype_8"> ${imageNewsList[4].title}</li>
             		</ul>
         <script type="text/javascript">
 		$(function(){
@@ -35,37 +33,48 @@
     </div>
 <div id="sub-content" style=" width:990px; height:326px; float:left; background-color:#f4f4f4">
 	<div style="width:250px; height:305px; margin-top:10px; float:left; background-color:#f4f4f4">
-    <img src="${ctx_path}/web/images/index_21.gif" width="257" height="301"  onclick="gotoPage('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')"/></div>
+       <img src="${ctx_path}/web/images/index_21.gif" width="257" height="301" usemap="#Map"/>
+    <map name="Map" id="Map">
+      <area shape="rect" coords="72,105,221,152" href="#" onclick="viewContent('4e35d5a9-465e-4d6c-8af4-908b33f437bc')" />
+      <area shape="rect" coords="77,154,232,203" href="#" onclick="viewContent('29ca07ca-af6d-4994-b921-f99ebc1dfffc')" />
+      <area shape="rect" coords="73,207,238,252" href="#" onclick="viewContent('0f9752c8-2393-4706-b3ee-b2892ed365a0')"/>
+    </map></div>
     <div style="width:630px; height:300px; float:left; margin-left:60px; margin-top:20px; background-color:#f4f4f4">
     <table width="633" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="127" height="165" valign="top"><img src="${ctx_path}/web/images/index_24.gif" width="108" height="103" /></td>
-    <td width="215" valign="top"><img style="margin-top:10px;" src="${ctx_path}/web/images/jiarurenmei.png" width="145" height="17" />
+    <td width="215" valign="top">
+      <a href="#" onclick="viewContent('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')"><img style="margin-top:10px;" src="${ctx_path}/web/images/jiarurenmei.png" width="145" height="17" />
+      </a>
     <p style="font-size:12px; line-height:20px; margin-left:10px;margin-top:10px;">
-    <a href="#" style="float:left" onclick="gotoPage('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')">加入仁美创业帮</a><br />
+  加入仁美创业帮<br />
 选择你想卖的商品<br />
 建设自己的网店</p>
     </td>
     <td width="122" height="165" valign="top"><img src="${ctx_path}/web/images/index_26.gif" width="108" height="103" /></td>
-    <td width="189" valign="top"><img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangbangni.png" width="145" height="17" />
+    <td width="189" valign="top">
+     <a href="#" onclick="viewContent('22418798-0e65-4c63-a927-e3c45eb80a00')">
+    <img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangbangni.png" width="145" height="17" /></a>
         <p style="font-size:12px; line-height:20px; margin-left:25px;margin-top:10px;">
-        <a href="#" style="float:left" onclick="gotoPage('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')">创业帮帮你</a><br />
+      创业帮帮你<br />
 选择你想卖的商品<br />
 建设自己的网店</p>
     </td>
   </tr>
   <tr>
     <td height="40" valign="top"><img src="${ctx_path}/web/images/index_33.gif" width="108" height="103" /></td>
-    <td valign="top"><img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangtouzi.png" width="145" height="17" />
+    <td valign="top">
+    <a href="#" onclick="viewContent('3a9a8647-6eaa-4bd4-9301-1396c8e43d83')"><img style="margin-top:10px;"  src="${ctx_path}/web/images/chuangyebangtouzi.png" width="145" height="17" /></a>
         <p style="font-size:12px; line-height:20px; margin-left:10px;margin-top:10px;">
-        <a href="#" style="float:left" onclick="gotoPage('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')">创业帮投资给你</a><br />
+        创业帮投资给你<br />
 选择你想卖的商品<br />
 建设自己的网店</p>
     </td>
     <td height="140" valign="top"><img src="${ctx_path}/web/images/index_31.gif" width="110" height="105" /></td>
-    <td valign="top"><img style="margin-top:10px; margin-left:5px;"  src="${ctx_path}/web/images/tuijianqi.png" width="145" height="17" />
+    <td valign="top">
+    <a href="#"  onclick="viewContent('3af18c93-d9bc-4315-b5ac-8c10c4031a86')"><img style="margin-top:10px; margin-left:5px;"  src="${ctx_path}/web/images/tuijianqi.png" width="145" height="17" /></a>
         <p style="font-size:12px; line-height:20px; margin-left:20px;margin-top:10px">
-        <a href="#" style="float:left" onclick="gotoPage('bcd688ee-c5d7-4f28-b8bc-1fb229dc298c')">创业帮助推荐器</a><br />
+        创业帮助推荐器</a><br />
 选择你想卖的商品<br />
 建设自己的网店</p>
     </td>
@@ -102,23 +111,27 @@
   <tr>
     <td width="22" height="31" bgcolor="#8dbdf9">&nbsp;</td>
     <td width="83" height="31" bgcolor="#e0edfc">&nbsp;</td>
-    <td width="210" height="31" bgcolor="#e0edfc"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></td>
+    <td width="210" height="31" bgcolor="#e0edfc">
+    <a href="#" onclick="viewContent('509ffc01-2b79-4bfe-bc5a-675ebfe05208')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></a></td>
     <td width="26" height="31" bgcolor="#e0a689">&nbsp;</td>
     <td width="68" height="31" bgcolor="#f4ddb4">&nbsp;</td>
-    <td width="217" height="31" bgcolor="#f4ddb4"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></td>
+    <td width="217" height="31" bgcolor="#f4ddb4">
+    <a href="#" onclick="viewContent('7c24be68-0929-4b60-9f84-fab4ef6bc0c0')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></a></td>
     <td width="26" height="31" bgcolor="#f9d798">&nbsp;</td>
     <td width="95" height="31" bgcolor="#f9eeda">&nbsp;</td>
-    <td width="253" height="31" bgcolor="#f9eeda"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></td>
+    <td width="253" height="31" bgcolor="#f9eeda">
+    <a href="#" onclick="viewContent('39b1ccc3-e7b8-4042-8fda-148538fb7b57')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></a></td>
   </tr>
   <tr>
     <td height="117" bgcolor="#8dbdf9">&nbsp;</td>
     <td height="117" align="center" valign="top" bgcolor="#e0edfc"><img  src="${ctx_path}/web/images/index_62.gif" width="60" height="61" /></td>
     <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if renmeixinwenList?? >
+                	<#list renmeixinwenList as content>
+                  <li> <a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div></td>
     <td height="117" bgcolor="#e0a689">&nbsp;</td>
@@ -126,10 +139,11 @@
     <td height="117" valign="top" bgcolor="#f4ddb4">
     <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if taokefengcaiList?? >
+                	<#list taokefengcaiList as content>
+                  <li><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
@@ -138,10 +152,11 @@
     <td height="117" valign="top" bgcolor="#f9eeda">
     <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if qiyefengcaiList?? >
+                	<#list qiyefengcaiList as content>
+                  <li><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
