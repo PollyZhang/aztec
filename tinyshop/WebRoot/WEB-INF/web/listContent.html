@@ -23,27 +23,32 @@
 
 </div>
 
-<div id="content" style="float:left; width:700; margin-left:20px; margin-top:10px;">
-  <table width="700" border="0" cellpadding="0" cellspacing="0" >
+<div id="content" style="float:left; width:710; margin-left:20px; margin-top:10px;">
+  <table width="710" border="0" cellpadding="0" cellspacing="0" >
     <tr>
-      <td height="36" align="left" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="font2">您的位置:首页&gt;汽车</span></td>
+      <td width="710" height="36" align="left" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="font2">您的位置:首页&gt;汽车</span></td>
     </tr>
     <tr>
-      <td height="125" valign="top"><div style="padding-top:15px;">
-        <table width="706" border="0" cellpadding="0" cellspacing="0">
+      <td height="125"><div style="padding-top:5px;">
+      </#if listContent??>
+      <#list listContent as contents>
+        <table width="714" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="706" height="60" align="center"><span class="content_title">${content.title}</span></td>
+            <td width="451" height="40" align="left"><span class="list_title"><a  href="news_content.html">${contents.title}</a></span></td>
           </tr>
           <tr>
-            <td height="40" align="center"><span class="content_post">${content.createTime?string('yyyy年MM月dd日')}   来源：   ${content.author}</span></td>
+            <td height="30" align="left" valign="top"><span class="list_post">${contents.author} 发布于 ${contents.createTime?string('yyyy年MM月dd日')}</span></td>
           </tr>
           <tr>
-            <td align="left" valign="top">${content.contents}</td>
+            <td height="40" align="left" valign="top" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="list_content">${contents.subTitle}</span></td>
           </tr>
         </table>
+          </#list>
+ 	 </#if>
       </div></td>
     </tr>
   </table>
+
 </div>
 <!--友情链接  -->
 <div style="float:left; margin-top:10px;"><img src="${ctx_path}/web/images/index_72.gif" width="103" height="32" /></div>
@@ -51,5 +56,5 @@
 
   </div>
   </div>
-  <#include "/WEB-INF/web/frame/foot.html"/>
+<#include "/WEB-INF/web/frame/foot.html"/>
 

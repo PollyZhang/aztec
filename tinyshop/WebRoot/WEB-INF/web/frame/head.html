@@ -4,9 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>仁美</title>
 <script src="${ctx_path}/web/js/jquery.js"></script>
+<script src="${ctx_path}/web/js/index.js"></script>
 <link href="${ctx_path}/web/css/style.css" rel="stylesheet" type="text/css" />
 </head>
-	
+<script type="text/javascript">
+ var ctx_path = '${ctx_path}';
+</script>
 <body style=" margin:0 auto">
 
 <div id="box-title" style="width:100%; height:145px; background:url(${ctx_path}/web/images/title_bg2_01.gif); ">
@@ -23,14 +26,17 @@
 <div id="box-menu" style="width:100%; height:48px; background:url(${ctx_path}/web/images/index_13.gif); float:left;">	
 <div style="margin:0 auto; width:1000px;">
 <ul class="menu">
-	<li>网站首页</li>
+	<li><a href="#" style="float:left" onclick="viewHomePage()">网站首页</a></li>
     <li>仁美商城</li>
-    <li>数据包下载</li>
-    <li>一件代发</li>
-    <li>客服帮帮团</li>
-    <li>仁美创业吧</li>
-    <li>关于投资</li>
-    
+    <li><a href="#" style="float:left" onclick="viewContent('7bd997b0-6428-4683-b83b-e2b492fd2652')">数据包下载</a></li>
+    <li><a href="#" style="float:left" onclick="viewContent('ba77590f-b9c0-4ac5-ac1f-fe768ade21ef')">一件代发</a></li>
+    <li><a href="#" style="float:left" onclick="viewContent('9eb79371-aa7d-4e68-b06d-528057700bfa')">客服帮帮团</a></li>
+    <li><a href="#" style="float:left" >仁美创业吧</a></li>
+    <li><a href="#" style="float:left" onclick="viewContent('3a9783d5-0e84-489a-b96c-8327c0db3e5b')">关于投资</a></li>
 </ul>
 </div>
 </div>
+  <form id="queryForm" action="" class="form-horizontal" method="post">
+	<input type="hidden" id="contentId" name="contentId" value="">
+	<input type="hidden" id="contentCategoryId" name="contentCategoryId" value="">
+  </form>
