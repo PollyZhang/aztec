@@ -132,6 +132,24 @@ list-style-type:none;
 
 
 
+.linka
+{
+	margin-left:20px;
+	font-size:14px;
+	display:inline;
+	line-height:30px;
+
+
+}
+.linka a
+{
+	color:#000;
+		text-decoration:none;
+		margin:0;
+		padding:0;
+		display:inline;
+}
+
 
 
 

@@ -50,7 +50,7 @@ public class PropertyUtil {
     }
     
     public static void main(String[] args) {
-		System.out.println(StringUtils.encodeBase64("jincheng#晋城车站电子导向系统"));
+		System.out.println(StringUtils.encodeBase64("jincheng#仁美电商"));
 	}
 
 }

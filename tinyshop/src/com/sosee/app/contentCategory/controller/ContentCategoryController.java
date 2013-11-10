@@ -17,7 +17,6 @@ import com.sosee.sys.base.interceptor.LoginInterceptor;
  *功能：内容管理栏目
  * 2012-12-7 上午9:47:25
  */
-@Before(LoginInterceptor.class)
 public class ContentCategoryController extends Controller {
 
 	/*

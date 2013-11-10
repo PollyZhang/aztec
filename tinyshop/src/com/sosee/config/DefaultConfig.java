@@ -107,7 +107,7 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/brand", BrandController.class);	
 		me.add("/items", ItemsController.class);	
 		//前台控制器
-		me.add("/index",IndexController.class);
+		me.add("/",IndexController.class);
 		me.add("/webLogin",WebLoginController.class);
 
 		//前台新闻列表

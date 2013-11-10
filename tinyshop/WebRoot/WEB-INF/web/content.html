@@ -1,55 +1,26 @@
 <#include "/WEB-INF/web/frame/head.html"/>
 <div id="box-body" style="width:1000px; margin:0 auto;  ">
-<div id="left" style="float:left; width:260; margin-top:10px;">
-<table width="260" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td height="50" valign="middle" bgcolor="#d9310b" ><img src="${ctx_path}/web/images/item1_03.gif" width="27" height="23" style=" margin-left:20px;vertical-align:text-top; float:left" /><span style="float:left;font-size:14px; color:#FFF; margin-top:4px; margin-left:5px;">热门文章</span></td>
-    </tr>
-  <tr>
-    <td height="300" valign="top" bgcolor="#eedcd8">
-    <div style="padding-left:20px; margin-top:18px;">
-            <ul class="ul_list2">
-              <li>・ Jeep自由光等三款新车亮相上海车展</li>
-              <li>・ 三门峡市工信局安排部署“中小企</li>
-              <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-              <li>・ 松花江开江节本周日将开幕</li>
-              <li>・ 国防部公布辽宁舰停靠军港新图 </li>
-              <li>・ “梦幻新境界 浪漫鸡冠洞”夜游项</li>
-            </ul>
-     </div>
-    </td>
-    </tr>
-</table>
 
-</div>
-
-<div id="content" style="float:left; width:700; margin-left:20px; margin-top:10px;">
-  <table width="700" border="0" cellpadding="0" cellspacing="0" >
+<div id="content" style="float:left; width:1000;  margin-top:10px;">
+  <table width="1000" border="0" cellpadding="0" cellspacing="0" >
     <tr>
-      <td height="36" align="left" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="font2">您的位置:首页&gt;汽车</span></td>
-    </tr>
-    <tr>
-      <td height="125" valign="top"><div style="padding-top:15px;">
-        <table width="706" border="0" cellpadding="0" cellspacing="0">
+      <td height="125" valign="top" align="center"><div style="padding-top:15px;">
+        <table width="1000" border="0" height="800" cellpadding="0" cellspacing="0">
           <tr>
             <td width="706" height="60" align="center"><span class="content_title">${content.title}</span></td>
           </tr>
           <tr>
-            <td height="40" align="center"><span class="content_post">${content.createTime?string('yyyy年MM月dd日')}   来源：   ${content.author}</span></td>
+            <td height="40" align="center"><span class="content_post">${content.createTime?string('yyyy年MM月dd日')}   来源：   <#if content.author??>${content.author}</#if></span></td>
           </tr>
           <tr>
-            <td align="left" valign="top">${content.contents}</td>
+            <td align="left" valign="top"><#if content.contents??>${content.contents}</#if></td>
           </tr>
         </table>
       </div></td>
     </tr>
   </table>
 </div>
-<!--友情链接  -->
-<div style="float:left; margin-top:10px;"><img src="${ctx_path}/web/images/index_72.gif" width="103" height="32" /></div>
-  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
+  </div>
 
-  </div>
-  </div>
   <#include "/WEB-INF/web/frame/foot.html"/>
 

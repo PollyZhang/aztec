@@ -1,15 +1,16 @@
 
 
 function viewContent(contentId){
-	$("#contentId").val(contentId);
-	$('#queryForm').attr('action',ctx_path+'/index/contentView');
-	$('#queryForm').submit();
+	window.location.href=ctx_path+"/contentView?contentId="+contentId; 
 }
 
 function viewList(contentCategoryId){
-	$("#contentCategoryId").val(contentCategoryId);
-	$('#queryForm').attr('action',ctx_path+'/index/contentListView');
-	$('#queryForm').submit();
+	window.location.href=ctx_path+"/contentListView?contentCategoryId="+contentCategoryId; 
+}
+
+function viewHome()
+{
+	window.location.href=ctx_path+"/"; 
 }
 
 function viewHomePage()

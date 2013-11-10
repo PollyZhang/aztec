@@ -21,7 +21,6 @@ import com.sosee.util.DateUtil;
  * @Copyright:2012 outworld Studio Inc. All rights reserved.
  * @function:内容对象
  */
-@Before(LoginInterceptor.class)
 public class ContentsController extends BaseController {
 	
 	public void init(){

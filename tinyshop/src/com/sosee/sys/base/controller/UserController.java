@@ -18,7 +18,7 @@ import com.sosee.util.StringUtils;
  *功能：用户管理
  * 2012-12-4 上午10:24:51
  */
-@Before(LoginInterceptor.class)
+
 public class UserController extends BaseController {
    
 	/*
@@ -79,7 +79,7 @@ public class UserController extends BaseController {
 	/*
 	 * 保存（添加和编辑）
 	 */
-	@Before(UserValidator.class)
+
 	public void save() {
 		try{
 			User user=getModel(User.class);

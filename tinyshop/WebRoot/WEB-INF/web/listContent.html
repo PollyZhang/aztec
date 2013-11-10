@@ -24,23 +24,23 @@
 </div>
 
 <div id="content" style="float:left; width:710; margin-left:20px; margin-top:10px;">
-  <table width="710" border="0" cellpadding="0" cellspacing="0" >
+  <table width="710" border="0"  cellpadding="0" cellspacing="0" >
     <tr>
-      <td width="710" height="36" align="left" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="font2">您的位置:首页&gt;汽车</span></td>
+      <td width="710" height="36" align="left" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="font2">您的位置:<a href="#" onclick='viewHome()'>首页</a>&gt;${contentCategory.name}</span></td>
     </tr>
     <tr>
       <td height="125"><div style="padding-top:5px;">
-      </#if listContent??>
-      <#list listContent as contents>
+      <#if contentList??>
+      <#list contentList as contents>
         <table width="714" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="451" height="40" align="left"><span class="list_title"><a  href="news_content.html">${contents.title}</a></span></td>
+            <td width="451" height="40" align="left"><span class="list_title"><a  href="${ctx_path}/contentView?contentId=${contents.id}">${contents.title}</a></span></td>
           </tr>
           <tr>
-            <td height="30" align="left" valign="top"><span class="list_post">${contents.author} 发布于 ${contents.createTime?string('yyyy年MM月dd日')}</span></td>
+            <td height="30" align="left" valign="top"><span class="list_post"><#if contents.author??>${contents.author}</#if> 发布于 <#if contents.createTime??> ${contents.createTime?string('yyyy年MM月dd日')}</#if></span></td>
           </tr>
           <tr>
-            <td height="40" align="left" valign="top" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="list_content">${contents.subTitle}</span></td>
+            <td height="40" align="left" valign="top" style="border-width:0px 0px 1px 0px; border-style:dashed ;"><span class="list_content"><#if contents.subTitle??>${contents.subTitle}</#if></span></td>
           </tr>
         </table>
           </#list>
@@ -50,11 +50,7 @@
   </table>
 
 </div>
-<!--友情链接  -->
-<div style="float:left; margin-top:10px;"><img src="${ctx_path}/web/images/index_72.gif" width="103" height="32" /></div>
-  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
-
-  </div>
-  </div>
+</div>
+   
 <#include "/WEB-INF/web/frame/foot.html"/>
 
