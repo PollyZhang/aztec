@@ -94,7 +94,7 @@ function verifyMsg(data){
 		strTable+="<tr><td>类型</td><td>"+(data.contentType?data.contentType:'')+"</td></tr>";
 		strTable+="<tr><td>所属</br>栏目</td><td>"+(data.contentCategoryId?data.contentCategoryId:'')+"</td></tr>";
 		strTable+="<tr><td>来源</td><td>"+(data.source?data.source:'')+"</td></tr>";
-		strTable+="<tr><td>发布人</td><td>"+(data.creator?data.creator:'')+"</td></tr>";
+		strTable+="<tr><td>排序</td><td>"+(data.creator?data.order:'')+"</td></tr>";
 		strTable+="<tr><td>发布</br>时间</td><td>"+data.createTime.formatDate('yyyy-MM-dd HH:mm:ss')+"</td></tr>";
 		strTable+="<tr><td>摘要</td><td>"+(data.summary?data.summary:'')+"</td></tr>";
 		strTable+="<tr><td>内容</td><td>"+(data.contents?data.contents:'')+"</td></tr>";
@@ -188,7 +188,7 @@ function query(){
 	$.post(baseUrl+"/contents/query",dataParam,function(data){
 		if(data){
 			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable ellipsisTable">';
-			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="120px">标题</th><th width="25px">类型</th><th width="25px">置顶</th><th width="25px">分享</th><th width="25px">浏览次数</th><th width="50px">作者</th><th width="45px">发布人</th><th width="55px">发布日期</th><th width="100px;">操作</th></tr></thead>';
+			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="120px">标题</th><th width="25px">类型</th><th width="25px">置顶</th><th width="25px">分享</th><th width="25px">浏览次数</th><th width="50px">排序</th><th width="45px">发布人</th><th width="55px">发布日期</th><th width="100px;">操作</th></tr></thead>';
 			strTable+="<tbody>";
 			
 			if(data.list && data.list.length>0){
@@ -201,7 +201,7 @@ function query(){
 					strTable+="<td>"+((value.isTop==1)?'是':'否')+"</td>";
 					strTable+="<td>"+((value.isShared==1)?'是':'否')+"</td>";
 					strTable+="<td>"+(value.browseSum?value.browseSum:0)+"</td>";
-					strTable+="<td>"+(value.author?value.author:'')+"</td>";
+					strTable+="<td>"+(value.order?value.order:'')+"</td>";
 					strTable+="<td >"+(value.creator?value.creator:'')+"</td>";
 					strTable+="<td>"+ (value.newsDate?value.newsDate:'')+"</td>";
 					strTable+="<td>";

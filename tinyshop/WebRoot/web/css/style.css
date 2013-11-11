@@ -150,6 +150,30 @@ list-style-type:none;
 		display:inline;
 }
 
+.title 
+{
+	border-width:0px 0px 1px 0px; border-style:dashed ;
+	font-size:16px;
+	font-weight:bold;
+	color:#d9310b;
+}
+
+.title2 
+{
+	font-size:14px;
+	font-weight:bold;
+	color:#d9310b;
+}
+
+.font2
+{
+	font-size:12px;
+	color:#000;
+}
+
+
+
+
 
 
 

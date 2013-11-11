@@ -34,7 +34,7 @@ public class IndexController extends WebController{
 					+ " where c.contentCategoryId = '39b1ccc3-e7b8-4042-8fda-148538fb7b57'");
 			this.setAttr("qiyefengcaiList", qiyefengcaiList);
 			List<Record> imageNewsList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
-					+ " where c.contentCategoryId = '2e51ba23-4757-46f3-bd95-aac08121b18c'");
+					+ " where c.contentCategoryId = '2e51ba23-4757-46f3-bd95-aac08121b18c' order by c.order asc");
 			this.setAttr("imageNewsList", imageNewsList);
 			render("/WEB-INF/web/index.html");
 		} catch (Exception e) {
@@ -71,6 +71,11 @@ public class IndexController extends WebController{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void contactView()
+	{
+		render("/WEB-INF/web/index_contact.html");	
 	}
 	
 }

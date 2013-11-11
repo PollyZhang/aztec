@@ -144,8 +144,8 @@ function returnList(){
 								<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
 								<input type="radio" id="contents.isShared" name="contents.isShared" value="false" style="float:left;" <#if contents?? && contents.isShared?? && !contents.isShared>checked<#elseif !contents?? || !contents.isShared??>checked</#if>><span style="padding-top:5px;float:left;">否</span>
 							</td>
-							<td><label class="control-label" style="margin-left:100px;">作者&nbsp;</label></td>
-								<td><input type="text" id="contents.author" name="contents.author" class="validate[maxSize[10]]" value="${(contents.author)!}"></td>
+							<td><label class="control-label" style="margin-left:100px;">排序&nbsp;</label></td>
+								<td><input type="text" id="contents.order" name="contents.order" class="validate[maxSize[10]]" value="${(contents.order)!}"></td>
 							</td>
 						</tr>
 						<tr>

@@ -38,7 +38,7 @@ public class ContentsController extends BaseController {
 		try{    
 			init();
 			int pageIndex=this.getParaToInt("pageIndex")!=null && this.getParaToInt("pageIndex")!=0?this.getParaToInt("pageIndex"):1;
-			Page<Contents> contentsPage= getModel(Contents.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.contentCategoryType,c.title,b.name as contentType,c.status,c.isTop,c.isShared,c.newsDate,c.browseSum,c.author,c.creator,c.createTime,c.checker,c.reviewTime,c.reviewReason,c.contentCategoryId", "from t_contents as c left JOIN t_basecode as b on c.contentType=b.code and b.categoryId='"+AppConstants.BASECODE_CONTENTS_CONTENTTYPE_STRING+"' where 1=1 "+getParaStr()+" order by createTime desc");
+			Page<Contents> contentsPage= getModel(Contents.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.contentCategoryType,c.title,b.name as contentType,c.status,c.isTop,c.isShared,c.newsDate,c.browseSum,c.author,c.creator,c.createTime,c.checker,c.reviewTime,c.reviewReason,c.contentCategoryId,c.order", "from t_contents as c left JOIN t_basecode as b on c.contentType=b.code and b.categoryId='"+AppConstants.BASECODE_CONTENTS_CONTENTTYPE_STRING+"' where 1=1 "+getParaStr()+" order by createTime desc");
 			
 			if(StringKit.notNull(contentsPage)){
 				if(contentsPage.getList()!=null && contentsPage.getList().size()>0){
