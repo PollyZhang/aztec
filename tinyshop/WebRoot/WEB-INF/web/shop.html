@@ -1,0 +1,176 @@
+<#include "/WEB-INF/web/frame/head.html"/>
+<div id="box-body" style="width:1000px; margin:0 auto; height:1550px; ">
+  <!--商品 -->
+   <div style="width:1000px; height: 280px; float: left; margin-top:20px;">
+   <table width="1010" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="35" bgcolor="#f9a407">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="242" align="center" valign="top" bgcolor="#e1d7c5">
+    <table width="911" border="0" style="margin-top:20px; font-size: 12px;">
+      <tr>
+     <#if newItemsList??>
+    	 <#list newItemsList as items>
+        <td align="center" valign="middle"><img src="${ctx_path}/upload${items.itemPicUrl}" width="105" height="135" /></td>
+        </#list>
+     </#if>
+      </tr>
+      <tr>
+     <#if newItemsList??>
+    	 <#list newItemsList as items>
+        <td align="center">${items.itemName}</td>
+        </#list>
+     </#if>
+       
+      </tr>
+      <tr>
+     <#if newItemsList??>
+    	 <#list newItemsList as items>
+        	<td align="center">销售价：${items.itemPrice}</td>
+        </#list>
+     </#if>
+
+      </tr>
+    </table></td>
+  </tr>
+</table>
+  </div>
+<div style="margin-top:20px;float:left; height:800px;">
+<#if categoryList??>
+<#list categoryList as category>
+<table width="1010" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="323" height="44" background="${ctx_path}/web/${ctx_path}/web/images/index_13.gif" class="font4">
+    <span style="margin:20px; vertical-align:middle"><img src="${ctx_path}/web/${ctx_path}/web/images/icon-cart.png" width="18" height="16" />&nbsp;&nbsp;1F ${category.name} </span></td>
+    <td width="339">&nbsp;</td>
+    <td height="44">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="430" width="650" colspan="2" align="center" bgcolor="#ece2d0">
+    <table width="650" border="0" cellpadding="0" cellspacing="0" style=" font-size: 12px;margin-top:10px;">
+    <#list allList as list>
+    <#if list[0].id == category.id>
+    <#assign columnCount = 4>
+    <#if list.size() % columnCount == 0>
+    <#assign rowCount = ( list.size() / columnCount) - 1 >
+	<#else>
+	    <#assign rowCount = ( list.size() / columnCount) >
+	</#if>
+	<#list 0..rowCount as row >
+      <tr>
+       <#list 0..columnCount - 1 as cell >
+       <#if list[row * columnCount + cell]??>
+         <#assign item =list[row * columnCount + cell]>        
+        <td align="center" valign="middle"><img src="${ctx_path}/upload${item.itemPicUrl}" width="113" height="151" /></td>
+        </#if>
+        </#list>
+      </tr>
+      <tr>
+       <#if list[row * columnCount + cell]??>
+         <#assign item =list[row * columnCount + cell]>      
+        <td height="60" align="center" valign="middle">
+           <span style="margin-top:20px;">
+          <p>${item.itemName}</p>
+          <p style="margin-top:5px">售价：${item.itemPrice}</p>
+            </span>
+          </td>
+         </#if>
+        </#list>
+      </tr>
+       </#list>
+      </table></td>
+    <td width="382">
+    <table width="351" height="460" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="275" colspan="3"><img src="${ctx_path}/web/images/shop2_07.gif" width="360" height="275" /></td>
+        </tr>
+      <tr>
+        <td height="50" colspan="3" background="${ctx_path}/web/images/shop2_10.gif">&nbsp;</td>
+        </tr>
+      <tr>
+        <td width="120" height="64"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+        <td width="120"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+        <td width="111"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+      </tr>
+      <tr>
+        <td height="64"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+        <td><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+        <td><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</#if>
+</#list>
+</#list>
+<#if>
+</div>
+
+<!--文章 --> 
+   <div style="width:1000px; height: 200px; margin-top:20px; float:left">
+    <table width="1000" height="158px" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="22" height="31" bgcolor="#8dbdf9">&nbsp;</td>
+    <td width="83" height="31" bgcolor="#e0edfc">&nbsp;</td>
+    <td width="210" height="31" bgcolor="#e0edfc"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></td>
+    <td width="26" height="31" bgcolor="#e0a689">&nbsp;</td>
+    <td width="68" height="31" bgcolor="#f4ddb4">&nbsp;</td>
+    <td width="217" height="31" bgcolor="#f4ddb4"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></td>
+    <td width="26" height="31" bgcolor="#f9d798">&nbsp;</td>
+    <td width="95" height="31" bgcolor="#f9eeda">&nbsp;</td>
+    <td width="253" height="31" bgcolor="#f9eeda"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></td>
+  </tr>
+  <tr>
+    <td height="117" bgcolor="#8dbdf9">&nbsp;</td>
+    <td height="117" align="center" valign="middle" bgcolor="#e0edfc"><img src="${ctx_path}/web/images//index_62.gif" width="60" height="61" /></td>
+    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px; margin-top:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div></td>
+    <td height="117" bgcolor="#e0a689">&nbsp;</td>
+    <td height="117" align="center" valign="top" bgcolor="#f4ddb4"><img src="${ctx_path}/web/images/index_58.gif" width="62" height="64" /></td>
+    <td height="117" valign="top" bgcolor="#f4ddb4">
+    <div style="padding-left:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div>
+    </td>
+    <td height="117" bgcolor="#f9d798">&nbsp;</td>
+    <td height="117" align="center" valign="top" bgcolor="#f9eeda"><img src="${ctx_path}/web/images/index_52.gif" width="95" height="117" /></td>
+    <td height="117" valign="top" bgcolor="#f9eeda">
+    <div style="padding-left:10px;">
+                <ul class="news">
+                  <li>・ Jeep自由光等三款新车亮相上..</li>
+                  <li>・ 三门峡市工信局安排部署“中..</li>
+                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
+                  <li>・ 松花江开江节本周日将开幕</li>
+                </ul>
+        </div>
+    </td>
+  </tr>
+</table>
+  </div>
+  <!--战略合作伙伴 -->
+  <div style="float:left"><img src="${ctx_path}/web/images/index_68.gif" width="150" height="24" /></div>
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
+  
+  </div>
+
+  
+    <!--友情链接  -->
+  <div style="float:left; margin-top:10px;"><img src="${ctx_path}/web/images/index_72.gif" width="103" height="32" /></div>
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999; text-align:center ">
+  <div class="linka"><a href="http://www.baidu.com/" target="_blank">百度</a>&nbsp;|&nbsp;<a href="http://www.sina.com.cn/" target="_blank">新浪</a>&nbsp;|&nbsp;<a href="http://www.sohu.com/" target="_blank">搜狐</a>&nbsp;|&nbsp;<a href="http://www.g.cn/" target="_blank">谷歌</a>&nbsp;|&nbsp;<a href="http://www.163.com/" target="_blank">网易</a>&nbsp;|&nbsp;<a href="http://www.youku.com/" target="_blank">优酷网</a>&nbsp;|&nbsp;<a href="http://www.xinhuanet.com/" target="_blank">新华网</a>&nbsp;|&nbsp;<a href="http://www.people.com.cn/" target="_blank">人民网</a>&nbsp;|&nbsp;<a href="http://www.ifeng.com/" target="_blank">凤凰网</a>&nbsp;|&nbsp;<a href="http://www.alibaba.com/" target="_blank">阿里巴巴</a>&nbsp;|&nbsp;<a href="http://weibo.com/" target="_blank">新浪微博</a>&nbsp;|&nbsp;<a href="http://www.10010.com/" target="_blank">联通营业厅</a> | <a href="http://www.ct10000.com/" target="_blank">电信营业厅</a> | <a href="http://bbs.tianya.cn/" target="_blank">天涯</a>| <a href="http://www.mop.com/" target="_blank">猫扑</a> | <a href="http://cn.yahoo.com/" target="_blank">雅虎</a> | <a href="http://www.qq.com/" target="_blank">腾讯</a> | <a href="http://www.sdo.com/" target="_blank">盛大</a> | <a href="http://www.douban.com/" target="_blank">豆瓣网</a> | <a href="http://www.taobao.com/" target="_blank">淘宝网</a> | <a href="http://www.renren.com/" target="_blank">人人网</a> | <a href="http://www.huanqiu.com/" target="_blank">环球网</a> | <a href="http://www.jd.com/" target="_blank">京东商城</a> | <a href="http://www.zaobao.com/" target="_blank">联合早报</a> | <a href="http://www.10086.cn/" target="_blank">移动营业厅</a> | <a href="http://www.tuniu.com/" target="_blank">途牛旅游网</a> |</div>
+  </div>
+</div>
+</div>
+<#include "/WEB-INF/web/frame/foot.html"/>

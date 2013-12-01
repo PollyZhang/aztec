@@ -16,4 +16,7 @@ encoding//WebRoot/WEB-INF/web/frame/head.html=UTF-8
 encoding//WebRoot/WEB-INF/web/index.html=UTF-8
 encoding//WebRoot/WEB-INF/web/index_contact.html=UTF-8
 encoding//WebRoot/WEB-INF/web/listContent.html=UTF-8
+encoding//WebRoot/WEB-INF/web/shop.html=UTF-8
+encoding//WebRoot/WEB-INF/web/shopItemList.html=UTF-8
+encoding//WebRoot/WEB-INF/web/shop_items.html=UTF-8
 encoding/<project>=UTF-8

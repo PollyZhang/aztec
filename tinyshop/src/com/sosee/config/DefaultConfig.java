@@ -55,11 +55,7 @@ import com.sosee.sys.base.pojo.UserRole;
 import com.sosee.sys.log.controller.LogController;
 import com.sosee.sys.log.pojo.LogPojo;
 import com.sosee.sys.util.SysConstants;
-import com.sosee.web.controller.BusQueryController;
-import com.sosee.web.controller.ContentsListController;
 import com.sosee.web.controller.IndexController;
-import com.sosee.web.controller.QueryController;
-import com.sosee.web.controller.QuestionsQueryController;
 
 import freemarker.template.TemplateModelException;
 
@@ -110,17 +106,6 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/",IndexController.class);
 		me.add("/webLogin",WebLoginController.class);
 
-		//前台新闻列表
-		me.add("/contentsList",ContentsListController.class);
-		me.add("/orders",OrdersController.class);
-		//前台查询订单列表列表
-		me.add("/query",QueryController.class);
-		me.add("/busQuery",BusQueryController.class);
-			
-		//后台问题回复
-		me.add("/questions",QuestionsController.class);
-		//后台问题回复
-		me.add("/questionsQuery",QuestionsQueryController.class);
 		
 		
 	}

@@ -1,11 +1,15 @@
 package com.sosee.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.contentCategory.pojo.ContentCategory;
+import com.sosee.app.itemCategory.pojo.ItemCategory;
+import com.sosee.app.items.pojo.Items;
+import com.sosee.sys.base.controller.BaseController;
 
 /**
  * 
@@ -15,7 +19,7 @@ import com.sosee.app.contentCategory.pojo.ContentCategory;
  * @function:
  */
 
-public class IndexController extends WebController{
+public class IndexController extends BaseController{
 
 	public void init()
 	{
@@ -77,5 +81,26 @@ public class IndexController extends WebController{
 	{
 		render("/WEB-INF/web/index_contact.html");	
 	}
-	
+	/**
+	 * 跳转到商城首页
+	 */
+	public void shopView()
+	{
+		//新品上架
+		List<Items> newItemsList = getModel(Items.class).find(""
+				+ "select * from t_items order by createTime desc limit 7");
+		this.setAttr("newItemsList", newItemsList);
+		//各分类楼层 
+		List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
+				+ "select * from t_itemCategory");
+		this.setAttr("categoryList", categoryList);
+		List<List<Items>> allList = new ArrayList<>();
+		for (ItemCategory itemCategory : categoryList) {
+			List<Items> itemList = getModel(Items.class).find(""
+					+ "select * from t_items where itemCategoryId = '"+itemCategory.getStr("id")+"' order by createTime limit 8");
+			allList.add(itemList);
+		}
+		this.setAttr("allList", allList);
+		render("/WEB-INF/web/shop.html");		
+	}
 }

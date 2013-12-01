@@ -55,8 +55,8 @@ public class ItemsController extends BaseController {
 		
 		String sqlParam="";
 		
-		if(StringKit.notBlank(getPara("contentCategoryTypeQuery"))){
-			sqlParam+=" and contentCategoryType='"+getPara("contentCategoryTypeQuery")+"' ";
+		if(StringKit.notBlank(getPara("itemCategoryId"))){
+			sqlParam+=" and itemCategoryId='"+getPara("itemCategoryId")+"' ";
 			this.setAttr("contentCategoryTypeQuery", getPara("contentCategoryTypeQuery"));
 		}
 		return sqlParam;

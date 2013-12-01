@@ -13,6 +13,11 @@ function viewHome()
 	window.location.href=ctx_path+"/"; 
 }
 
+function viewShop()
+{
+	window.location.href=ctx_path+"/shopView"; 
+}
+
 function viewHomePage()
 {
     window.location.href=ctx_path+"/index"; 
