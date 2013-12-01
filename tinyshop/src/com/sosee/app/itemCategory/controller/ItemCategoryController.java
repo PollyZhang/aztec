@@ -103,6 +103,7 @@ public class ItemCategoryController extends BaseController {
 			itemCategory.set("id", this.getPara("id"));
 			itemCategory.set("name", this.getPara("name"));
 			itemCategory.set("code", this.getPara("code"));
+			itemCategory.set("order", this.getPara("order"));
 			itemCategory.set("parentId", this.getPara("pId"));
 			itemCategory.set("createById","1111");
 			itemCategory.set("createTime", new Date());

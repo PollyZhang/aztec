@@ -92,7 +92,7 @@ public class IndexController extends BaseController{
 		this.setAttr("newItemsList", newItemsList);
 		//各分类楼层 
 		List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
-				+ "select * from t_itemCategory");
+				+ "select * from t_itemCategory where isDeleted =0");
 		this.setAttr("categoryList", categoryList);
 		List<List<Items>> allList = new ArrayList<>();
 		for (ItemCategory itemCategory : categoryList) {
