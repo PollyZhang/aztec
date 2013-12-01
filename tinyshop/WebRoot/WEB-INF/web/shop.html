@@ -36,9 +36,10 @@
   </tr>
 </table>
   </div>
-<div style="margin-top:20px;float:left; height:800px;">
-<#if categoryList??>
+  <#if categoryList??>
 <#list categoryList as category>
+<div style="margin-top:20px;float:left; height:500px;">
+
 <table width="1010" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="323" height="44" background="${ctx_path}/web/${ctx_path}/web/images/index_13.gif" class="font4">
@@ -49,8 +50,16 @@
   <tr>
     <td height="430" width="650" colspan="2" align="center" bgcolor="#ece2d0">
     <table width="650" border="0" cellpadding="0" cellspacing="0" style=" font-size: 12px;margin-top:10px;">
-    <#list allList as list>
-    <#if list[0].id == category.id>
+   
+    <#list allList as listItems >
+    <#list listItems as item>
+     <#if item.itemCategoryId == category.id>
+     	 <#assign list  = listItems>
+     	 <#break>
+    </#if>
+    </#list>
+    </#list>
+
     <#assign columnCount = 4>
     <#if list.size() % columnCount == 0>
     <#assign rowCount = ( list.size() / columnCount) - 1 >
@@ -67,8 +76,9 @@
         </#list>
       </tr>
       <tr>
-       <#if list[row * columnCount + cell]??>
-         <#assign item =list[row * columnCount + cell]>      
+      <#list 0..columnCount - 1 as cell >
+      <#if list[row * columnCount + cell]??>
+       <#assign item = list[row * columnCount + cell]>
         <td height="60" align="center" valign="middle">
            <span style="margin-top:20px;">
           <p>${item.itemName}</p>
@@ -101,12 +111,11 @@
     </table></td>
   </tr>
 </table>
-</#if>
-</#list>
-</#list>
-<#if>
+
 </div>
 
+</#list>
+</#if>
 <!--文章 --> 
    <div style="width:1000px; height: 200px; margin-top:20px; float:left">
     <table width="1000" height="158px" border="0" cellpadding="0" cellspacing="0">

@@ -11,21 +11,19 @@
   <tr>
     <td bgcolor="#d6d4d4">&nbsp;</td>
   </tr>
+  <#list categoryList as category>
+   <#if category_index % 2 == 0>
   <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">男装</span></td>
+    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
   </tr>
+  </#else>
   <tr>
-    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">女装</span></td>
+    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
   </tr>
-  <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">冬装</span></td>
-  </tr>
-  <tr>
-    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">羽绒服</span></td>
-  </tr>
-  <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">毛线衫</span></td>
-  </tr>
+  </#if>
+  
+  </#list>
+  
   <tr>
     <td height="30" bgcolor="#d6d4d4">&nbsp;</td>
   </tr>
@@ -51,49 +49,35 @@
    </div>
    <div id="itemList" style="float:left;width:700px;">
    <table width="700" border="0" style=" font-size:12px;">
-  <tr>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
+   
+    <#assign columnCount = 5>
+    <#if itemList.size() % columnCount == 0>
+    <#assign rowCount = ( itemList.size() / columnCount) - 1 >
+	<#else>
+	    <#assign rowCount = ( itemList.size() / columnCount) >
+	</#if>
+	<#list 0..rowCount as row >
+      <tr>
+       <#list 0..columnCount - 1 as cell >
+       <#if itemList[row * columnCount + cell]??>
+         <#assign item =itemList[row * columnCount + cell]>  
+    		<td align="center"><img src="${ctx_path}/upload${item.itemPicUrl}" width="116" height="150" /></td>
+            </#if>
+        </#list>
   </tr>
   <tr>
+        <#list 0..columnCount - 1 as cell >
+      <#if itemList[row * columnCount + cell]??>
+       <#assign item = itemList[row * columnCount + cell]>
     <td height="50" align="center">          
      <span style="margin-top:20px;">
-          <p>2013夏季女装服装销</p>
-          <p style="margin-top:5px">售价：200</p>
+          <p>${item.itemName}</p>
+          <p style="margin-top:5px">售价：${item.itemPrice}</p>
             </span></td>
-    <td height="50" align="center">
-               <span style="margin-top:20px;">
-          <p>2013夏季女装服装销</p>
-          <p style="margin-top:5px">售价：200</p>
-            </span>
-    </td>
-    <td height="50" align="center">
-               <span style="margin-top:20px;">
-          <p>2013夏季女装服装销</p>
-          <p style="margin-top:5px">售价：200</p>
-            </span>
-    </td>
-    <td height="50" align="center">
-               <span style="margin-top:20px;">
-          <p>2013夏季女装服装销</p>
-          <p style="margin-top:5px">售价：200</p>
-            </span>
-    </td>
+        </#if>
+        </#list>
   </tr>
-  <tr>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-    <td align="center"><img src="${ctx_path}/web/images/pic.jpg" width="116" height="150" /></td>
-  </tr>
-  <tr>
-    <td height="50" align="center">&nbsp;</td>
-    <td height="50" align="center">&nbsp;</td>
-    <td height="50" align="center">&nbsp;</td>
-    <td height="50" align="center">&nbsp;</td>
-  </tr>
+     </#list>
 </table>
 
    </div>

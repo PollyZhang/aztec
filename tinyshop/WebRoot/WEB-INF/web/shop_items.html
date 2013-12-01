@@ -11,21 +11,18 @@
   <tr>
     <td bgcolor="#d6d4d4">&nbsp;</td>
   </tr>
+  <#list categoryList as category>
+   <#if category_index % 2 == 0>
   <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">男装</span></td>
+    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
   </tr>
+  </#else>
   <tr>
-    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">女装</span></td>
+    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
   </tr>
-  <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">冬装</span></td>
-  </tr>
-  <tr>
-    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">羽绒服</span></td>
-  </tr>
-  <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">毛线衫</span></td>
-  </tr>
+  </#if>
+  
+  </#list>
   <tr>
     <td height="30" bgcolor="#d6d4d4">&nbsp;</td>
   </tr>
@@ -54,34 +51,34 @@
    <table width="700" border="0" style=" font-size:12px;">
   <tr>
     <td width="330" rowspan="8" align="center"><img src="" width="330" height="347" /></td>
-    <td height="41" colspan="5" align="center" valign="top"><span style="font-size:25px;">厂家清仓！绵羊皮中长款皮衣女</span></td>
+    <td height="41" colspan="5" align="center" valign="top"><span style="font-size:25px;">${item.itemName}</span></td>
     </tr>
   <tr>
     <td width="87" height="40"  align="right">价格：</td>
-    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px; color:#F00">998</span></td>
+    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px; color:#F00">${item.itemPrice}</span></td>
   </tr>
   <tr>
     <td width="87" align="right">品牌：</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td height="40" colspan="4" align="left">${item.brand}</td>
   </tr>
   <tr>
     <td width="87" align="right">销售情况：</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td height="40" colspan="4" align="left">${item.salesVolume}</td>
   </tr>
   <tr>
-    <td width="87" align="right">商品数量：</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td width="87" align="right">商品数量:</td>
+    <td height="40" colspan="4" align="left">${item.count}</td>
   </tr>
   <tr>
     <td width="87" align="right">浏览次数：</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td height="40" colspan="4" align="left"></td>
   </tr>
   <tr>
     <td width="87" align="right">尺码：</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td height="40" colspan="4" align="left">${item.size}</td>
   </tr>
   <tr>
-    <td width="87" align="right" valign="middle">颜色：</td>
+    <td width="87" align="right" valign="middle">颜色：${item.color}</td>
     <td height="40" colspan="4" align="left">&nbsp;</td>
   </tr>
    </table>
@@ -93,7 +90,7 @@
          <td width="454">&nbsp;</td>
        </tr>
        <tr>
-         <td colspan="2">&nbsp;</td>
+         <td colspan="2">${item.descrip}</td>
          </tr>
      </table>
    </div>
