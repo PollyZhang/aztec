@@ -150,16 +150,6 @@ function returnList(){
 	</div>
 </div>
 
-	<form id="queryForm" action="${ctx_path}/items/returnList" class="form-horizontal" method="post">
-		    	<input type="hidden" id="contentCategoryId1" name="contentCategoryId1" value="${(contentCategoryId)!}">
-		    	<input type="hidden" id="contentCategoryType1" name="contentCategoryType1" value="${(contentCategoryType)!}">
-		    	<input type="hidden" id="contentCategoryTypeQuery1" name="contentCategoryTypeQuery1" value="${(contentCategoryTypeQuery)!}">
-		    	<input type="hidden" id="pageIndex1" name="pageIndex1" value="${(pageIndex)!}">
-		    	<input type="hidden" id="titleQuery1" name="titleQuery1" value="${(titleQuery)!}">
-		    	<input type="hidden" id="contentTypeQuery1" name="contentTypeQuery1" value="${(contentTypeQuery)!}">
-		    	<input type="hidden" id="statusQuery1" name="statusQuery1" value="${(statusQuery)!}">
-		    	<input type="hidden" id="startNewsDateQuery1" name="startNewsDateQuery1" value="${(startNewsDateQuery)!}">
-		    	<input type="hidden" id="endNewsDateQuery1" name="endNewsDateQuery1" value="${(endNewsDateQuery)!}">
-		    	<input type="hidden" id="contentCategoryName1" name="contentCategoryName1" value="${(contentCategoryName)!}">
+	<form id="queryForm" action="${ctx_path}/items" class="form-horizontal" method="post">
   </form>
 <#include "/WEB-INF/sys/frame/foot.html"/>
