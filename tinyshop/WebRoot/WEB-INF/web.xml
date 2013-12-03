@@ -23,12 +23,7 @@
     <filter-name>jfinal</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <servlet>
-    <display-name>StartServlet</display-name>
-    <servlet-name>StartServlet</servlet-name>
-    <servlet-class>com.sosee.sys.job.StartServlet</servlet-class>
-    <load-on-startup>0</load-on-startup>
-  </servlet>
+
   <welcome-file-list>
     <welcome-file>index</welcome-file>
   </welcome-file-list>

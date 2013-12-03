@@ -21,6 +21,7 @@ import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.FreeMarkerRender;
+import com.sosee.app.adv.controller.AdvController;
 import com.sosee.app.brand.controller.BrandController;
 import com.sosee.app.brand.pojo.Brand;
 import com.sosee.app.content.controller.ContentsController;
@@ -34,9 +35,6 @@ import com.sosee.app.items.pojo.Items;
 import com.sosee.app.member.controller.MemberController;
 import com.sosee.app.member.controller.WebLoginController;
 import com.sosee.app.member.pojo.Member;
-import com.sosee.app.ticket.controller.OrdersController;
-import com.sosee.app.ticket.controller.QuestionsController;
-import com.sosee.app.ticket.pojo.Questions;
 import com.sosee.app.util.AppConstants;
 import com.sosee.sys.base.controller.BaseCodeController;
 import com.sosee.sys.base.controller.BaseDictController;
@@ -102,6 +100,7 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/itemCategory", ItemCategoryController.class);
 		me.add("/brand", BrandController.class);	
 		me.add("/items", ItemsController.class);	
+		me.add("/adv", AdvController.class);
 		//前台控制器
 		me.add("/",IndexController.class);
 		me.add("/webLogin",WebLoginController.class);
@@ -135,7 +134,6 @@ public class DefaultConfig extends JFinalConfig {
 		arp.addMapping("t_contents", Contents.class);	
 		arp.addMapping("t_member", Member.class);
 		arp.addMapping("t_itemcategory", ItemCategory.class);
-		arp.addMapping("t_questions", Questions.class);
 		arp.addMapping("t_brand", Brand.class);
 		arp.addMapping("t_items", Items.class);
 	}

@@ -100,7 +100,7 @@ $(function(){
 						<select id="brandQuery" name="brandQuery" style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
 							<option value="">请选择</option>
 							<#if brandList??>
-							  <#list brandList as cs>
+							  <#list brandList as brand>
 							    	<option value="${brand.id}" <#if brandQuery?? && brandQuery==brand.cid>selected</#if>>${brand.name}</option>
 							  </#list>
 							</#if>

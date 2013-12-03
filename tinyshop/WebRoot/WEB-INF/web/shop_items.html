@@ -14,11 +14,11 @@
   <#list categoryList as category>
    <#if category_index % 2 == 0>
   <tr>
-    <td height="30" bgcolor="#e7e7e7"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
+    <td height="30" bgcolor="#e7e7e7" class="font5"><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:20px; ">${category.name}</span></a></td>
   </tr>
-  </#else>
+  <#else>
   <tr>
-    <td height="30" bgcolor="#d6d4d4"><span style="margin-left:20px; font-size:14px;">${category.name}</span></td>
+    <td height="30" bgcolor="#d6d4d4" class="font5"><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:20px; ">${category.name}</span></a></td>
   </tr>
   </#if>
   
@@ -50,7 +50,7 @@
    <div id="itemList" style="float:left;width:700px; margin-left:20px;">
    <table width="700" border="0" style=" font-size:12px;">
   <tr>
-    <td width="330" rowspan="8" align="center"><img src="" width="330" height="347" /></td>
+    <td width="330" rowspan="8" align="center"><img src="${ctx_path}/upload${item.itemPicUrl}" width="340" height="340" /></td>
     <td height="41" colspan="5" align="center" valign="top"><span style="font-size:25px;">${item.itemName}</span></td>
     </tr>
   <tr>
@@ -59,47 +59,47 @@
   </tr>
   <tr>
     <td width="87" align="right">品牌：</td>
-    <td height="40" colspan="4" align="left">${item.brand}</td>
+    <td height="40" colspan="4" align="left"><#if item.brand??>${item.brand}</#if></td>
   </tr>
   <tr>
     <td width="87" align="right">销售情况：</td>
-    <td height="40" colspan="4" align="left">${item.salesVolume}</td>
+    <td height="40" colspan="4" align="left"><#if item.salesVolume??>${item.salesVolume}</#if></td>
   </tr>
   <tr>
-    <td width="87" align="right">商品数量:</td>
-    <td height="40" colspan="4" align="left">${item.count}</td>
+    <td width="87" align="right">商品数量：</td>
+    <td height="40" colspan="4" align="left"><#if item.count??>${item.count}</#if></td>
   </tr>
   <tr>
     <td width="87" align="right">浏览次数：</td>
-    <td height="40" colspan="4" align="left"></td>
+    <td height="40" colspan="4" align="left">&nbsp;</td>
   </tr>
   <tr>
     <td width="87" align="right">尺码：</td>
-    <td height="40" colspan="4" align="left">${item.size}</td>
+    <td height="40" colspan="4" align="left"><#if item.size??>${item.size}</#if></td>
   </tr>
   <tr>
-    <td width="87" align="right" valign="middle">颜色：${item.color}</td>
-    <td height="40" colspan="4" align="left">&nbsp;</td>
+    <td width="87" align="right" valign="middle">颜色：</td>
+    <td height="40" colspan="4" align="left"><#if item.color??>${item.color}</#if></td>
   </tr>
    </table>
    <!-- 产品描述-->
-   <div style="float:left; width:700px">
-     <table width="700" border="0">
+   <div style="float:left; width:700px;margin-top:20px;">
+     <table width="700" border="0" cellpadding="0" cellspacing="0">
        <tr>
-         <td width="136"><img src="${ctx_path}/web/images/ub.jpg" width="29" height="22" style="vertical-align:middle"/>产品描述</td>
-         <td width="454">&nbsp;</td>
+         <td style="border-bottom:2px solid  #fc3205" width="136"><img src="${ctx_path}/web/images/ub.jpg" width="29" height="22" style="vertical-align:middle"/>产品描述</td>
+         <td style="border-bottom:2px solid  #fc3205" width="454" height="40px;">&nbsp;</td>
        </tr>
        <tr>
-         <td colspan="2">${item.descrip}</td>
+         <td colspan="2"><div style="margin:20px">${item.descrip}</div></td>
          </tr>
      </table>
    </div>
       <!-- 同类热卖-->
-   <div style="float:left; width:700px">
-     <table width="700" border="0">
+   <div style="float:left; width:700px;margin-top:20px;">
+     <table width="700" border="0" cellpadding="0" cellspacing="0">
        <tr>
-         <td width="136" height="30"><img src="${ctx_path}/web/images/icon_hotitem.jpg" width="36" height="32" style="vertical-align:middle" />同类热卖</td>
-         <td width="454">&nbsp;</td>
+         <td style="border-bottom:2px solid  #fc3205"  width="136" height="30"><img src="${ctx_path}/web/images/icon_hotitem.jpg" width="36" height="32" style="vertical-align:middle" />同类热卖</td>
+         <td style="border-bottom:2px solid  #fc3205"  width="454" height="40px;>&nbsp;</td>
        </tr>
        <tr>
          <td colspan="2">&nbsp;</td>
@@ -112,50 +112,56 @@
    </div>
   <!--文章 --> 
    <div style="width:1000px; height: 200px; margin-top:20px; float:left">
-    <table width="1000" height="158px" border="0" cellpadding="0" cellspacing="0">
+    <table width="1000" height="148px" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="22" height="31" bgcolor="#8dbdf9">&nbsp;</td>
     <td width="83" height="31" bgcolor="#e0edfc">&nbsp;</td>
-    <td width="210" height="31" bgcolor="#e0edfc"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></td>
+    <td width="210" height="31" bgcolor="#e0edfc">
+    <a href="#" onclick="viewList('509ffc01-2b79-4bfe-bc5a-675ebfe05208')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></a></td>
     <td width="26" height="31" bgcolor="#e0a689">&nbsp;</td>
     <td width="68" height="31" bgcolor="#f4ddb4">&nbsp;</td>
-    <td width="217" height="31" bgcolor="#f4ddb4"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></td>
+    <td width="217" height="31" bgcolor="#f4ddb4">
+    <a href="#" onclick="viewList('7c24be68-0929-4b60-9f84-fab4ef6bc0c0')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></a></td>
     <td width="26" height="31" bgcolor="#f9d798">&nbsp;</td>
     <td width="95" height="31" bgcolor="#f9eeda">&nbsp;</td>
-    <td width="253" height="31" bgcolor="#f9eeda"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></td>
+    <td width="253" height="31" bgcolor="#f9eeda">
+    <a href="#" onclick="viewList('39b1ccc3-e7b8-4042-8fda-148538fb7b57')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></a></td>
   </tr>
   <tr>
     <td height="117" bgcolor="#8dbdf9">&nbsp;</td>
-    <td height="117" align="center" valign="middle" bgcolor="#e0edfc"><img src="${ctx_path}/web/images/index_62.gif" width="60" height="61" /></td>
-    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px; margin-top:10px;">
+    <td height="117" align="center" valign="top" bgcolor="#e0edfc"><img  src="${ctx_path}/web/images/index_62.gif" width="60" height="61" /></td>
+    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if renmeixinwenList?? >
+                	<#list renmeixinwenList as content>
+                  <li class="font2"> <a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div></td>
     <td height="117" bgcolor="#e0a689">&nbsp;</td>
     <td height="117" align="center" valign="top" bgcolor="#f4ddb4"><img src="${ctx_path}/web/images/index_58.gif" width="62" height="64" /></td>
     <td height="117" valign="top" bgcolor="#f4ddb4">
-    <div style="padding-left:10px;">
+    <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if taokefengcaiList?? >
+                	<#list taokefengcaiList as content>
+                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
     <td height="117" bgcolor="#f9d798">&nbsp;</td>
     <td height="117" align="center" valign="top" bgcolor="#f9eeda"><img src="${ctx_path}/web/images/index_52.gif" width="95" height="117" /></td>
     <td height="117" valign="top" bgcolor="#f9eeda">
-    <div style="padding-left:10px;">
+    <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if qiyefengcaiList?? >
+                	<#list qiyefengcaiList as content>
+                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
@@ -164,8 +170,19 @@
   </div>
   <!--战略合作伙伴 -->
   <div style="float:left"><img src="${ctx_path}/web/images/index_68.gif" width="150" height="24" /></div>
-  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
-  
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px;">
+ <img src="${ctx_path}/web/images/zhanluehezuo.jpg" width="1008" height="69" border="0" usemap="#zhanluehezuo" />
+    <map name="zhanluehezuo" id="zhanluehezuo">
+      <area shape="rect" coords="7,7,118,65" target="_blank" href="http://www.taobao.com/" />
+      <area shape="rect" coords="125,10,208,61" target="_blank" href="http://www.paipai.com/" />
+      <area shape="rect" coords="214,9,322,63" target="_blank" href="http://www.tmall.com/" />
+      <area shape="rect" coords="326,10,441,65" target="_blank" href="http://www.amazon.cn/" />
+      <area shape="rect" coords="451,8,552,60" target="_blank" href="http://www.vancl.com/" />
+      <area shape="rect" coords="562,11,655,63" target="_blank" href="http://www.yixun.com/" />
+      <area shape="rect" coords="661,11,770,60" target="_blank" href="http://www.jd.com/" />
+      <area shape="rect" coords="779,10,881,60" target="_blank" href="http://www.dangdang.com/" />
+      <area shape="rect" coords="888,9,999,61" target="_blank" href="http://www.suning.com/" />
+    </map>
   </div>
 
   

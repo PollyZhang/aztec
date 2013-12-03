@@ -1,14 +1,16 @@
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/sys/adv/advList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/brand/brand.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/brand/brandList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/content/contents.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/content/contentsList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/contentCategory/contentCategoryList.html=UTF-8
-encoding//WebRoot/WEB-INF/sys/itemCategory/itemCategory.html=UTF-8
+encoding//WebRoot/WEB-INF/sys/itemCategory/itemCategoryAdv.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/itemCategory/itemCategoryList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/items/items.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/items/itemsList.html=UTF-8
 encoding//WebRoot/WEB-INF/sys/main.html=UTF-8
+encoding//WebRoot/WEB-INF/sys/member/memberList.html=UTF-8
 encoding//WebRoot/WEB-INF/web/busQueryList.html=UTF-8
 encoding//WebRoot/WEB-INF/web/content.html=UTF-8
 encoding//WebRoot/WEB-INF/web/frame/foot.html=UTF-8

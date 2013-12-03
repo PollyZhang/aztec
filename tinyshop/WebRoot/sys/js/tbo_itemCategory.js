@@ -37,9 +37,9 @@ function zTreeOnClick(event, treeId, treeNode) {
 };
 $(function(){
 	$("#itemCategoryForm").validationEngine();
-	$.fn.zTree.init($("#itemCategoryTree"), setting);
+	//$.fn.zTree.init($("#itemCategoryTree"), setting);
 	query();
-	expandAll();
+	//expandAll();
 	setTimeout(expandAll,600);
 });
 function expandAll(){
@@ -85,6 +85,10 @@ function edit(id){
 		noty({"text":"编辑出错!",timeout: 1000,"layout":"center","type":"error"});
 	}
 }
+
+function editAdv(id){
+	window.location.href=baseUrl+"/itemCategory/editAdv?id="+id;
+}
 function save(){
 	var id=$("#id").val();
 	var name=$("#name").val();
@@ -99,9 +103,9 @@ function save(){
 	}
 	$.post(baseUrl+"/itemCategory/save",{"id":(id!=null && id!=''?id:""),"name":name,"code":code,"pId":itemCategoryId},function(data){
 		if(data.result==1){
-			var tree=$.fn.zTree.getZTreeObj("itemCategoryTree");
-			tree.reAsyncChildNodes(null, "refresh");
-			setTimeout(expandAll,600);
+			//var tree=$.fn.zTree.getZTreeObj("itemCategoryTree");
+			//tree.reAsyncChildNodes(null, "refresh");
+			//setTimeout(expandAll,600);
 			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
 			query();
 			$('#itemCategoryAddOrEdit').modal('hide');
@@ -120,9 +124,9 @@ function del(id,name){
 	}
 	$.post(baseUrl+"/itemCategory/del",{"id":id},function(data){
 		if(data.result==1){
-			var tree=$.fn.zTree.getZTreeObj("itemCategoryTree");
-			tree.reAsyncChildNodes(null, "refresh");
-			setTimeout(expandAll,600);
+			//var tree=$.fn.zTree.getZTreeObj("itemCategoryTree");
+			//tree.reAsyncChildNodes(null, "refresh");
+			//setTimeout(expandAll,600);
 			noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
 			query();
 		}else{
@@ -139,7 +143,7 @@ function query(){
 	$.post(baseUrl+"/itemCategory/query",{"pId":(itemCategoryId!=null && itemCategoryId!=''?itemCategoryId:"")},function(data){
 		if(data.result==1){
 			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable">';
-			strTable+='<thead><tr class="alert alert-info"><th width="30px">序号</th><th>分类名称</th><th>分类编码</th><th>操作</th></tr></thead>';
+			strTable+='<thead><tr class="alert alert-info"><th width="30px">序号</th><th width="160px">分类名称</th><th>分类编码</th><th width="230px">操作</th></tr></thead>';
 			strTable+="<tbody>";
 			if(data.itemCategoryList.length>0){
 				for(var i in data.itemCategoryList){
@@ -147,9 +151,9 @@ function query(){
 					{
 						strTable+="<tr>";
 						strTable+="<td><center>"+(parseInt(i)+1)+"</center></td>";
-						strTable+="<td>"+data.itemCategoryList[i].name+"</td>";
+						strTable+="<td width='160px'>"+data.itemCategoryList[i].name+"</td>";
 						strTable+="<td>"+data.itemCategoryList[i].code+"</td>";
-						strTable+="<td style=\"width:140px;\"><a class=\"btn btn-mini btn-info\" href=\"#\" onclick=\"javascript:edit('"+data.itemCategoryList[i].id+"');\"><i class=\"icon-edit icon-white\"></i>编辑</a> <a class=\"btn btn-mini btn-danger\" href=\"#\" onclick=\"javascript:del('"+data.itemCategoryList[i].id+"','"+data.itemCategoryList[i].name+"');\"><i class=\"icon-trash icon-white\"></i>删除</a></td>"
+						strTable+="<td style=\"width:270px;\"><a class=\"btn btn-mini btn-info\" href=\"#\" onclick=\"javascript:editAdv('"+data.itemCategoryList[i].id+"');\"><i class=\"icon-edit icon-white\"></i>管理广告位</a> <a class=\"btn btn-mini btn-info\" href=\"#\" onclick=\"javascript:edit('"+data.itemCategoryList[i].id+"');\"><i class=\"icon-edit icon-white\"></i>编辑</a> <a class=\"btn btn-mini btn-danger\" href=\"#\" onclick=\"javascript:del('"+data.itemCategoryList[i].id+"','"+data.itemCategoryList[i].name+"');\"><i class=\"icon-trash icon-white\"></i>删除</a></td>"
 						strTable+="</tr>";
 					}
 					

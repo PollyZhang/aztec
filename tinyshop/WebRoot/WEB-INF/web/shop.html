@@ -1,33 +1,33 @@
 <#include "/WEB-INF/web/frame/head.html"/>
 <div id="box-body" style="width:1000px; margin:0 auto; height:1550px; ">
   <!--商品 -->
-   <div style="width:1000px; height: 280px; float: left; margin-top:20px;">
+   <div style="width:1000px; height: 280px; float: left; margin-top:20px;margin-bottom:20px;">
    <table width="1010" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="35" bgcolor="#f9a407">&nbsp;</td>
+    <td height="35" bgcolor="#f9a407"><p class="font4" style="margin-left:20px">新品上架</p></td>
   </tr>
   <tr>
     <td height="242" align="center" valign="top" bgcolor="#e1d7c5">
-    <table width="911" border="0" style="margin-top:20px; font-size: 12px;">
+    <table width="1000" border="0" style="margin-top:20px; font-size: 12px;">
       <tr>
      <#if newItemsList??>
-    	 <#list newItemsList as items>
-        <td align="center" valign="middle"><img src="${ctx_path}/upload${items.itemPicUrl}" width="105" height="135" /></td>
+    	 <#list newItemsList as item>
+        <td align="center" valign="middle"><a href="${ctx_path}/itemView?itemId=${item.id}"><img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="135" height="135" /></a></td>
         </#list>
      </#if>
       </tr>
       <tr>
      <#if newItemsList??>
-    	 <#list newItemsList as items>
-        <td align="center">${items.itemName}</td>
+    	 <#list newItemsList as item>
+        <td align="center" height="30" class="font2"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></td>
         </#list>
      </#if>
        
       </tr>
       <tr>
      <#if newItemsList??>
-    	 <#list newItemsList as items>
-        	<td align="center">销售价：${items.itemPrice}</td>
+    	 <#list newItemsList as item>
+        	<td align="center" height="20">销售价：${item.itemPrice}</td>
         </#list>
      </#if>
 
@@ -38,17 +38,16 @@
   </div>
   <#if categoryList??>
 <#list categoryList as category>
-<div style="margin-top:20px;float:left; height:500px;">
-
+<div style="float:left; height:472px;">
 <table width="1010" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td width="323" height="44" background="${ctx_path}/web/${ctx_path}/web/images/index_13.gif" class="font4">
-    <span style="margin:20px; vertical-align:middle"><img src="${ctx_path}/web/${ctx_path}/web/images/icon-cart.png" width="18" height="16" />&nbsp;&nbsp;1F ${category.name} </span></td>
+    <td width="323" height="44" background="${ctx_path}/web/images/index_13.gif" class="font4">
+    <span style="margin-left:20px;  vertical-align:middle"><img  src="${ctx_path}/web/images/icon-cart.png" width="18" height="16" /><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}">&nbsp;&nbsp;${category_index+1}F ${category.name} </a></span></td>
     <td width="339">&nbsp;</td>
     <td height="44">&nbsp;</td>
   </tr>
   <tr>
-    <td height="430" width="650" colspan="2" align="center" bgcolor="#ece2d0">
+    <td height="350" width="650" colspan="2" align="center" bgcolor="#ece2d0">
     <table width="650" border="0" cellpadding="0" cellspacing="0" style=" font-size: 12px;margin-top:10px;">
    
     <#list allList as listItems >
@@ -71,7 +70,7 @@
        <#list 0..columnCount - 1 as cell >
        <#if list[row * columnCount + cell]??>
          <#assign item =list[row * columnCount + cell]>        
-        <td align="center" valign="middle"><img src="${ctx_path}/upload${item.itemPicUrl}" width="113" height="151" /></td>
+        <td align="center" valign="middle"><a href="${ctx_path}/itemView?itemId=${item.id}"><img src="${ctx_path}/upload${item.itemPicUrl}" width="130" height="130" /></a></td>
         </#if>
         </#list>
       </tr>
@@ -81,7 +80,7 @@
        <#assign item = list[row * columnCount + cell]>
         <td height="60" align="center" valign="middle">
            <span style="margin-top:20px;">
-          <p>${item.itemName}</p>
+          <p class="font2"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></p>
           <p style="margin-top:5px">售价：${item.itemPrice}</p>
             </span>
           </td>
@@ -91,15 +90,15 @@
        </#list>
       </table></td>
     <td width="382">
-    <table width="351" height="460" border="0" cellpadding="0" cellspacing="0">
+    <table width="351" height="428" border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td height="275" colspan="3"><img src="${ctx_path}/web/images/shop2_07.gif" width="360" height="275" /></td>
+        <td height="235" colspan="3"><img src="${ctx_path}/web/images/shop2_07.gif" width="360" height="235" /></td>
         </tr>
       <tr>
-        <td height="50" colspan="3" background="${ctx_path}/web/images/shop2_10.gif">&nbsp;</td>
+        <td height="50" colspan="3" background="${ctx_path}/web/images/bg_01.png">&nbsp;</td>
         </tr>
       <tr>
-        <td width="120" height="64"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
+        <td width="120" height="64"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="71" /></td>
         <td width="120"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
         <td width="111"><img src="${ctx_path}/web/images/shop2_13.gif" width="120" height="69" /></td>
       </tr>
@@ -118,50 +117,56 @@
 </#if>
 <!--文章 --> 
    <div style="width:1000px; height: 200px; margin-top:20px; float:left">
-    <table width="1000" height="158px" border="0" cellpadding="0" cellspacing="0">
+    <table width="1000" height="148px" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="22" height="31" bgcolor="#8dbdf9">&nbsp;</td>
     <td width="83" height="31" bgcolor="#e0edfc">&nbsp;</td>
-    <td width="210" height="31" bgcolor="#e0edfc"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></td>
+    <td width="210" height="31" bgcolor="#e0edfc">
+    <a href="#" onclick="viewList('509ffc01-2b79-4bfe-bc5a-675ebfe05208')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_46.gif" width="120" height="20" /></a></td>
     <td width="26" height="31" bgcolor="#e0a689">&nbsp;</td>
     <td width="68" height="31" bgcolor="#f4ddb4">&nbsp;</td>
-    <td width="217" height="31" bgcolor="#f4ddb4"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></td>
+    <td width="217" height="31" bgcolor="#f4ddb4">
+    <a href="#" onclick="viewList('7c24be68-0929-4b60-9f84-fab4ef6bc0c0')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_49.gif" width="72" height="24" /></a></td>
     <td width="26" height="31" bgcolor="#f9d798">&nbsp;</td>
     <td width="95" height="31" bgcolor="#f9eeda">&nbsp;</td>
-    <td width="253" height="31" bgcolor="#f9eeda"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></td>
+    <td width="253" height="31" bgcolor="#f9eeda">
+    <a href="#" onclick="viewList('39b1ccc3-e7b8-4042-8fda-148538fb7b57')"><img style="margin-top:15px;" src="${ctx_path}/web/images/index_54.gif" width="72" height="18" /></a></td>
   </tr>
   <tr>
     <td height="117" bgcolor="#8dbdf9">&nbsp;</td>
-    <td height="117" align="center" valign="middle" bgcolor="#e0edfc"><img src="${ctx_path}/web/images//index_62.gif" width="60" height="61" /></td>
-    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px; margin-top:10px;">
+    <td height="117" align="center" valign="top" bgcolor="#e0edfc"><img  src="${ctx_path}/web/images/index_62.gif" width="60" height="61" /></td>
+    <td height="117" valign="top" bgcolor="#e0edfc"><div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if renmeixinwenList?? >
+                	<#list renmeixinwenList as content>
+                  <li class="font2"> <a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div></td>
     <td height="117" bgcolor="#e0a689">&nbsp;</td>
     <td height="117" align="center" valign="top" bgcolor="#f4ddb4"><img src="${ctx_path}/web/images/index_58.gif" width="62" height="64" /></td>
     <td height="117" valign="top" bgcolor="#f4ddb4">
-    <div style="padding-left:10px;">
+    <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if taokefengcaiList?? >
+                	<#list taokefengcaiList as content>
+                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
     <td height="117" bgcolor="#f9d798">&nbsp;</td>
     <td height="117" align="center" valign="top" bgcolor="#f9eeda"><img src="${ctx_path}/web/images/index_52.gif" width="95" height="117" /></td>
     <td height="117" valign="top" bgcolor="#f9eeda">
-    <div style="padding-left:10px;">
+    <div style="padding-left:10px;margin-top:10px;">
                 <ul class="news">
-                  <li>・ Jeep自由光等三款新车亮相上..</li>
-                  <li>・ 三门峡市工信局安排部署“中..</li>
-                  <li>・ 癸巳年黄帝故里拜祖大典典礼</li>
-                  <li>・ 松花江开江节本周日将开幕</li>
+                <#if qiyefengcaiList?? >
+                	<#list qiyefengcaiList as content>
+                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  	</#list>
+                </#if>
                 </ul>
         </div>
     </td>
@@ -170,8 +175,19 @@
   </div>
   <!--战略合作伙伴 -->
   <div style="float:left"><img src="${ctx_path}/web/images/index_68.gif" width="150" height="24" /></div>
-  <div style=" margin-top:10px;float:left; width:1000px; height:80px; border-width:1px 1px 1px 1px; border-style:solid;border-color:#999 ">
-  
+  <div style=" margin-top:10px;float:left; width:1000px; height:80px;">
+ <img src="${ctx_path}/web/images/zhanluehezuo.jpg" width="1008" height="69" border="0" usemap="#zhanluehezuo" />
+    <map name="zhanluehezuo" id="zhanluehezuo">
+      <area shape="rect" coords="7,7,118,65" target="_blank" href="http://www.taobao.com/" />
+      <area shape="rect" coords="125,10,208,61" target="_blank" href="http://www.paipai.com/" />
+      <area shape="rect" coords="214,9,322,63" target="_blank" href="http://www.tmall.com/" />
+      <area shape="rect" coords="326,10,441,65" target="_blank" href="http://www.amazon.cn/" />
+      <area shape="rect" coords="451,8,552,60" target="_blank" href="http://www.vancl.com/" />
+      <area shape="rect" coords="562,11,655,63" target="_blank" href="http://www.yixun.com/" />
+      <area shape="rect" coords="661,11,770,60" target="_blank" href="http://www.jd.com/" />
+      <area shape="rect" coords="779,10,881,60" target="_blank" href="http://www.dangdang.com/" />
+      <area shape="rect" coords="888,9,999,61" target="_blank" href="http://www.suning.com/" />
+    </map>
   </div>
 
   

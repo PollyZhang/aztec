@@ -22,18 +22,22 @@ public class ItemsController extends BaseController {
 		if(StringKit.notBlank(getPara("itemCategoryQuery"))){
 			this.setAttr("itemCategoryQuery", getPara("itemCategoryQuery"));
 		}
+
 	}
 	
 	public void index(){
 		//this.createToken("contentsToken",1800);
+		List<Record> brandList = Db.find("select * from t_brand");
+		this.setAttr("brandList", brandList);
 		render("/WEB-INF/sys/items/itemsList.html");
+		
 	}
 	
 	public void query(){
 		try{    
 			init();
 			int pageIndex=this.getParaToInt("pageIndex")!=null && this.getParaToInt("pageIndex")!=0?this.getParaToInt("pageIndex"):1;
-			Page<Items> itemsPage= getModel(Items.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.itemName,b.name as itemCategory,c.itemPrice,c.count,c.itemPicUrl", "from t_items as c left JOIN t_itemCategory as b on c.itemCategoryId=b.id   where 1=1 "+getParaStr()+" order by c.createTime desc");
+			Page<Items> itemsPage= getModel(Items.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.itemName,b.name as itemCategory,c.itemPrice,c.count,c.itemPicUrl,c.salesVolume", "from t_items as c left JOIN t_itemCategory as b on c.itemCategoryId=b.id   where 1=1 "+getParaStr()+" order by c.createTime desc");
 			
 			if(StringKit.notNull(itemsPage)){
 				if(itemsPage.getList()!=null && itemsPage.getList().size()>0){
@@ -177,6 +181,8 @@ public class ItemsController extends BaseController {
 		try{
 			this.keepPara();
 			//this.createToken("contentsToken",1800);
+			List<Record> brandList = Db.find("select * from t_brand");
+			this.setAttr("brandList", brandList);
 			String id=this.getPara("id");
 			if(StringKit.notBlank(id)){
 				Items items=this.getModel(Items.class).findById(id);

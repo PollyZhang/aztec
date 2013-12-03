@@ -181,6 +181,42 @@ public class ItemCategoryController extends BaseController {
 			index();
 		}
 	}
+	
+	public void editAdv() {
+		try {
+			this.keepPara();
+			
+			String id = this.getPara("id");
+			if (StringKit.notBlank(id)) {
+				ItemCategory itemCategory = this.getModel(ItemCategory.class).findById(id);
+				if (StringKit.notNull(itemCategory)) {
+					this.setAttr("itemCategory", itemCategory);
+					render("/WEB-INF/sys/itemCategory/itemCategoryAdv.html");
+				} else {
+					index();
+				}
+			} else {
+				index();
+			}
+		} catch (Exception e) {
+			index();
+		}
+	}
+	@Before(ItemCategroyValidator.class)
+	public void saveAdv()
+	{
+		try {
+			this.keepPara();
+			String id = getAttrForStr("itemCategory.id");
+			String id2 = getAttr("itemCategory.id");
+			String id3 = getPara("itemCategory.id");
+			ItemCategory itemCategory = getModel(ItemCategory.class);
+			itemCategory.update();
+		} catch (Exception e) {
+			index();
+		}
+	
+	}
 
 	public void del() {
 		try {

@@ -1,0 +1,162 @@
+<#include "/WEB-INF/sys/frame/head.html"/>
+<!-- UEdit编辑器-1.2.3.0-->
+<link rel="stylesheet" type="text/css" href="${ctx_path}/common/ueditor/themes/default/ueditor.css">
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/ueditor/editor_config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/common/ueditor/editor_all_min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx_path}/sys/js/tbo_common.js"></script>
+<script type="text/javascript">
+
+$(function(){
+   
+
+	/* $( "#createTime" ).datetimepicker({
+		showSecond: true,
+		timeFormat: 'HH:mm:ss',
+		stepHour: 1,
+		stepMinute: 1,
+		stepSecond: 1 
+	});  */
+	
+	$("#advForm").validationEngine();
+	<#if msg??>
+	  noty({"text":"${(msg)!}",timeout: 2000,"layout":"center","type":"success"});
+	</#if>
+	<#if errorinfo??>
+	  noty({"text":"${(errorinfo)!}",timeout: 2000,"layout":"center","type":"error"});
+	</#if>
+});
+function validateImage(field, rules, i, options){
+	var strName=[".gif",".png",".jpg",".bmp"];
+	var validateStr=validateFile(strName,field,"gif,jpg和bmp",3);
+	if(validateStr!=null && validateStr!=''){
+		return validateStr;
+	}
+}
+
+function returnList(){
+	$('#queryForm').submit();
+}
+</script>
+<!-- 内容 -->
+<div id="content" class="span10">
+	<div>
+		<ul class="breadcrumb">
+			<li>
+				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
+			</li>
+			<li>
+				<a href="${ctx_path}/itemCategory">广告管理</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-home"></i>&nbsp;<#if id?? && id!=''>编辑<#else>“${(categoryName)!}”栏目添加</#if>内容</h2>
+				<div class="box-icon">
+				</div>
+			</div>
+			<div class="box-content">
+				<form id="itemCategoryForm" action="${ctx_path}/itemCategory/saveAdv" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<input type="hidden" id="itemCategory.id" name="itemCategory.id" value="${(itemCategory.id)!}">
+				<input type="hidden" id="itemCategory.order" name="itemCategory.order" value="${(itemCategory.order)!}">
+				<input type="hidden" id="itemCategory.isParent" name="itemCategory.isParent" value="${(itemCategory.isParent)!}">
+					<table style="line-height:40px;margin-left:16px;">
+						<tr>
+						<td><label class="control-label" style="">图片广告位&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl1" name="itemCategory.advImgUrl1" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">图片广告位链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl1" name="itemCategory.advUrl1" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl1)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+						<td><label class="control-label" style="">LOGO广告位1&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl2" name="itemCategory.advImgUrl2" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位1链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl2" name="itemCategory.advUrl2" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl2)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+						<td><label class="control-label" style="">LOGO广告位2&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl3" name="itemCategory.advImgUrl3" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位2链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl3" name="itemCategory.advUrl3" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl3)!}"><font color="red">*</font></td>
+						</tr>
+												<tr>
+						<td><label class="control-label" style="">LOGO广告位3&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl4" name="itemCategory.advImgUrl4" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位3链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl4" name="itemCategory.advUrl4" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl4)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+						<td><label class="control-label" style="">LOGO广告位4&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl5" name="itemCategory.advImgUrl5" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位4链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl5" name="itemCategory.advUrl5" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl5)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+						<td><label class="control-label" style="">LOGO广告位5&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl6" name="itemCategory.advImgUrl6" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位5链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl6" name="itemCategory.advUrl6" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl6)!}"><font color="red">*</font></td>
+						</tr>
+						<tr>
+						<td><label class="control-label" style="">LOGO广告位6&nbsp;</label></td>
+							<td><input type="file" id="itemCategory.advImgUrl7" name="itemCategory.advImgUrl7" class="validate[funcCall[validateImage]]" value=""></td>
+							<td></td>
+							<td style="line-height:20px;">
+							</td>
+							
+						</tr>
+						<tr>
+							<td><label class="control-label">LOGO广告位6链接&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl7" name="itemCategory.advUrl7" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl7)!}"><font color="red">*</font></td>
+						</tr>
+					</table>
+					<div class="form-actions">
+					  <button type="submit" class="btn btn-primary">保存</button>
+					  <button type="button" class="btn" onclick="javascript:returnList();">返回</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<form id="queryForm" action="${ctx_path}/items/returnList" class="form-horizontal" method="post">
+
+  </form>
+<#include "/WEB-INF/sys/frame/foot.html"/>

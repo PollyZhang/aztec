@@ -17,7 +17,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
-import com.sosee.app.ticket.pojo.WangShangShouPiaoJiLu;
 import com.sosee.util.DateUtil;
 
 /**
@@ -58,72 +57,8 @@ public class AlipayUtils {
 	//支付宝消息验证地址
 	private static final String HTTPS_VERIFY_URL = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
 	
-	/**
-	 * ***订购某年某月某日 几点几分从某地到某地的某某车次编号为某某的定单
-	 * @param workOrder
-	 * @return
-	 */
-	private static String getWorkOrderMsg(WangShangShouPiaoJiLu workOrder){
-		StringBuffer sBuffer = new StringBuffer();
-		sBuffer.append(workOrder.getStr("GouPiaoRenXingMing"));
-		sBuffer.append("订购的");
-		sBuffer.append(DateUtil.formatDate(workOrder.getTimestamp("FaCheRiQi")));
-		sBuffer.append("开车时间为");
-		sBuffer.append(workOrder.getStr("FaCheShiJian"));
-		sBuffer.append("从");
-		sBuffer.append(workOrder.getStr("FaCheZhan"));
-		sBuffer.append("到");
-		sBuffer.append(workOrder.getStr("XiaKeZhan"));
-		sBuffer.append(workOrder.getStr("CheCi"));
-		sBuffer.append("次,编号为");
-		sBuffer.append(workOrder.getStr("DingDanHao"));
-		sBuffer.append("的定单");
-		return sBuffer.toString();
-	}
-	/**
-	 * 通过参数构造URL提交到支付宝进行支付
-	 * @param workOrderNum 商户订单号(系统生成有)
-	 * @param totalMoney 付款金额(session里边取)
-	 * @param defaultbank 默认网银(前台选着传递过来)
-	 * @param clientIp 客户端的IP地址(通过参数获取)
-     * @return get方式的提交地址加提交参数
-	 */
-    public static String buildRequest(WangShangShouPiaoJiLu workOrder,String totalMoney,String defaultbank ,String clientIp) {
-    	//把请求参数打包成数组
-		Map<String, String> sParaTemp = new HashMap<String, String>();
-		sParaTemp.put("service", "create_direct_pay_by_user");
-        sParaTemp.put("partner", partner);
-        sParaTemp.put("_input_charset", input_charset);
-		sParaTemp.put("payment_type", payment_type);//支付类型(必填,不能修改)
-		sParaTemp.put("notify_url", notify_url);//服务器异步通知页面路径
-		sParaTemp.put("return_url", return_url);//页面跳转同步通知页面路径
-		sParaTemp.put("seller_email", seller_email);//卖家支付宝帐户(必填)
-		sParaTemp.put("out_trade_no", workOrder.getStr("DingDanHao"));//商户订单号(必填)
-		sParaTemp.put("subject", getWorkOrderMsg(workOrder));//订单名称(必填)
-		sParaTemp.put("total_fee", totalMoney);//付款金额(必填)
-		sParaTemp.put("body", getWorkOrderMsg(workOrder));//订单描述 workOrder.getStr("GouPiaoRenDengLuMing")
-		sParaTemp.put("paymethod", paymethod);//默认支付方式(必填)
-		sParaTemp.put("defaultbank", defaultbank);//默认网银(必填)
-		sParaTemp.put("show_url", show_url);//商品展示地址
-		//sParaTemp.put("anti_phishing_key", query_timestamp());//防钓鱼时间戳
-		//sParaTemp.put("exter_invoke_ip", clientIp);//客户端的IP地址
-        //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
-        List<String> keys = new ArrayList<String>(sPara.keySet());
-
-        StringBuffer sbUrl = new StringBuffer();
-
-        sbUrl.append(alipayGateWayNew+ "_input_charset=" + input_charset);
-
-        for (int i = 0; i < keys.size(); i++) {
-            String name = (String) keys.get(i);
-            String value = (String) sPara.get(name);
-
-            sbUrl.append("&"+name + "=" + value);
-        }
-
-        return sbUrl.toString();
-    }
+	
+	
     
     /**
      * 生成要请求给支付宝的参数数组
