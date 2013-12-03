@@ -57,14 +57,15 @@ function returnList(){
 				</div>
 			</div>
 			<div class="box-content">
-				<form id="itemCategoryForm" action="${ctx_path}/itemCategory/saveAdv" class="form-horizontal" enctype="multipart/form-data" method="post">
-				<input type="hidden" id="itemCategory.id" name="itemCategory.id" value="${(itemCategory.id)!}">
-				<input type="hidden" id="itemCategory.order" name="itemCategory.order" value="${(itemCategory.order)!}">
-				<input type="hidden" id="itemCategory.isParent" name="itemCategory.isParent" value="${(itemCategory.isParent)!}">
+			
+				<form id="itemCategoryForm" action="${ctx_path}/itemCategoryAdv/save" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<input type="hidden" id="itemCategory.id" name="itemCategory.id" value="${(itemCategory.id)!}" />
+				<input type="hidden" id="itemCategory.order" name="itemCategory.order" value="${(itemCategory.order)!}" />
+				<input type="hidden" id="itemCategory.isParent" name="itemCategory.isParent" value="${(itemCategory.isParent)!}" />
 					<table style="line-height:40px;margin-left:16px;">
 						<tr>
 						<td><label class="control-label" style="">图片广告位&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl1" name="itemCategory.advImgUrl1" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl1" name="advImgUrl1" class="validate[funcCall[validateImage]]" value=""><font color="red">(360x236)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -72,11 +73,11 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">图片广告位链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl1" name="itemCategory.advUrl1" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl1)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl1" name="itemCategory.advUrl1" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl1)!}"></td>
 						</tr>
 						<tr>
 						<td><label class="control-label" style="">LOGO广告位1&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl2" name="itemCategory.advImgUrl2" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="dvImgUrl2" name="advImgUrl2" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -84,11 +85,11 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位1链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl2" name="itemCategory.advUrl2" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl2)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl2" name="itemCategory.advUrl2" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl2)!}"></td>
 						</tr>
 						<tr>
 						<td><label class="control-label" style="">LOGO广告位2&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl3" name="itemCategory.advImgUrl3" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl3" name="advImgUrl3" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -96,11 +97,11 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位2链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl3" name="itemCategory.advUrl3" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl3)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl3" name="itemCategory.advUrl3" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl3)!}"></td>
 						</tr>
 												<tr>
 						<td><label class="control-label" style="">LOGO广告位3&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl4" name="itemCategory.advImgUrl4" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl4" name="advImgUrl4" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -108,11 +109,11 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位3链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl4" name="itemCategory.advUrl4" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl4)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl4" name="itemCategory.advUrl4" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl4)!}"></td>
 						</tr>
 						<tr>
 						<td><label class="control-label" style="">LOGO广告位4&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl5" name="itemCategory.advImgUrl5" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl5" name="advImgUrl5" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -120,22 +121,22 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位4链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl5" name="itemCategory.advUrl5" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl5)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl5" name="itemCategory.advUrl5" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl5)!}"></td>
 						</tr>
 						<tr>
 						<td><label class="control-label" style="">LOGO广告位5&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl6" name="itemCategory.advImgUrl6" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl6" name="advImgUrl6" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位5链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl6" name="itemCategory.advUrl6" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl6)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl6" name="itemCategory.advUrl6" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl6)!}"></td>
 						</tr>
 						<tr>
 						<td><label class="control-label" style="">LOGO广告位6&nbsp;</label></td>
-							<td><input type="file" id="itemCategory.advImgUrl7" name="itemCategory.advImgUrl7" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="advImgUrl7" name="advImgUrl7" class="validate[funcCall[validateImage]]" value=""><font color="red">(120x70)</font></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
@@ -143,7 +144,7 @@ function returnList(){
 						</tr>
 						<tr>
 							<td><label class="control-label">LOGO广告位6链接&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="itemCategory.advUrl7" name="itemCategory.advUrl7" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl7)!}"><font color="red">*</font></td>
+							<td colspan="3"><input type="text" id="itemCategory.advUrl7" name="itemCategory.advUrl7" class="validate[maxSize[125]]" style="width:220px;" value="${(itemCategory.advUrl7)!}"></td>
 						</tr>
 					</table>
 					<div class="form-actions">
@@ -156,7 +157,7 @@ function returnList(){
 	</div>
 </div>
 
-	<form id="queryForm" action="${ctx_path}/items/returnList" class="form-horizontal" method="post">
+	<form id="queryForm" action="${ctx_path}/itemCategory/" class="form-horizontal" method="post">
 
   </form>
 <#include "/WEB-INF/sys/frame/foot.html"/>

@@ -71,6 +71,7 @@ function edit(id){
 				$("#id").val(id);
 				$("#name").val(itemCategoryList[i].name);
 				$("#code").val(itemCategoryList[i].code);
+				$("#order").val(itemCategoryList[i].order);
 				b=true;
 				break;
 			}
@@ -87,12 +88,13 @@ function edit(id){
 }
 
 function editAdv(id){
-	window.location.href=baseUrl+"/itemCategory/editAdv?id="+id;
+	window.location.href=baseUrl+"/itemCategoryAdv/edit?id="+id;
 }
 function save(){
 	var id=$("#id").val();
 	var name=$("#name").val();
 	var code=$("#code").val();
+	var order=$("#order").val();
 	if(name==null || name==''){
 		noty({"text":"请输入栏目名称!",timeout: 1000,"layout":"center","type":"error"});
 		return;
@@ -101,7 +103,7 @@ function save(){
 		noty({"text":"请输入栏目编码!",timeout: 1000,"layout":"center","type":"error"});
 		return;
 	}
-	$.post(baseUrl+"/itemCategory/save",{"id":(id!=null && id!=''?id:""),"name":name,"code":code,"pId":itemCategoryId},function(data){
+	$.post(baseUrl+"/itemCategory/save",{"id":(id!=null && id!=''?id:""),"name":name,"code":code,"pId":itemCategoryId,"order":order},function(data){
 		if(data.result==1){
 			//var tree=$.fn.zTree.getZTreeObj("itemCategoryTree");
 			//tree.reAsyncChildNodes(null, "refresh");

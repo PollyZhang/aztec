@@ -28,6 +28,7 @@ import com.sosee.app.content.controller.ContentsController;
 import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.contentCategory.controller.ContentCategoryController;
 import com.sosee.app.contentCategory.pojo.ContentCategory;
+import com.sosee.app.itemCategory.controller.ItemCategoryAdvController;
 import com.sosee.app.itemCategory.controller.ItemCategoryController;
 import com.sosee.app.itemCategory.pojo.ItemCategory;
 import com.sosee.app.items.controller.ItemsController;
@@ -98,6 +99,7 @@ public class DefaultConfig extends JFinalConfig {
 		me.add("/contents", ContentsController.class);
 		me.add("/member", MemberController.class);
 		me.add("/itemCategory", ItemCategoryController.class);
+		me.add("/itemCategoryAdv", ItemCategoryAdvController.class);
 		me.add("/brand", BrandController.class);	
 		me.add("/items", ItemsController.class);	
 		me.add("/adv", AdvController.class);

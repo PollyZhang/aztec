@@ -14,11 +14,11 @@
   <#list categoryList as category>
    <#if category_index % 2 == 0>
   <tr>
-    <td height="30" bgcolor="#e7e7e7" class="font5"><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:20px; ">${category.name}</span></a></td>
+   <td height="30" bgcolor="#e7e7e7" class="font5"> <img style="margin-left:20px;vertical-align: middle; " src="${ctx_path}/web/images/arrow.png" style="" /><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:10px; ">${category.name}</span></a></td>
   </tr>
   <#else>
   <tr>
-    <td height="30" bgcolor="#d6d4d4" class="font5"><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:20px; ">${category.name}</span></a></td>
+    <td height="30" bgcolor="#d6d4d4" class="font5"> <img style="margin-left:20px;vertical-align: middle; " src="${ctx_path}/web/images/arrow.png" style="" /><a href = "${ctx_path}/itemListView?itemCategoryId=${category.id}"><span style="margin-left:10px; ">${category.name}</span></a></td>
   </tr>
   </#if>
   
@@ -31,17 +31,16 @@
   </tr>
   <tr>
     <td height="58" align="center">
-    <table width="230" border="0" style="font-size:12px; margin-top:20px;">
+    <table width="230" border="0" class="font2" style="margin-top:20px;">
+    <#if hotItemsList??>
+    <#list hotItemsList as item>
       <tr>
-        <td width="102" rowspan="3"><img src="" width="66" height="87" /></td>
-        <td width="148">2013夏季女装服装新款雨</td>
+        <td width="102" height="100px" ><a href="${ctx_path}/itemView?itemId=${item.id}"><img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="90" height="90" /></a></td>
+        <td width="148" align="left"><p><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></p><p style="margin-top:5px;">销售价：${item.itemPrice!}</p><p style="margin-top:5px;">已售出：${item.salesVolume!}</p></td>
       </tr>
-      <tr>
-        <td>销售价：200</td>
-      </tr>
-      <tr>
-        <td>已售出：200</td>
-      </tr>
+     
+      </#list>
+      </#if>
     </table></td>
   </tr>
 </table>
@@ -49,9 +48,11 @@
    </div>
    <div id="itemList" style="float:left;width:700px; margin-left:20px;">
    <table width="700" border="0" style=" font-size:12px;">
+     <tr>
+    <td height="31" colspan="6" align="left" valign="top"><span style="font-size:16px;font-weight:bold;">${item.itemName}</span></td>
+    </tr>
   <tr>
     <td width="330" rowspan="8" align="center"><img src="${ctx_path}/upload${item.itemPicUrl}" width="340" height="340" /></td>
-    <td height="41" colspan="5" align="center" valign="top"><span style="font-size:25px;">${item.itemName}</span></td>
     </tr>
   <tr>
     <td width="87" height="40"  align="right">价格：</td>
@@ -90,7 +91,7 @@
          <td style="border-bottom:2px solid  #fc3205" width="454" height="40px;">&nbsp;</td>
        </tr>
        <tr>
-         <td colspan="2"><div style="margin:20px">${item.descrip}</div></td>
+         <td colspan="2"><div style="margin:20px">${item.descrip!}</div></td>
          </tr>
      </table>
    </div>
@@ -134,7 +135,7 @@
                 <ul class="news">
                 <#if renmeixinwenList?? >
                 	<#list renmeixinwenList as content>
-                  <li class="font2"> <a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  <li class="font2" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; width:160px;"> <a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
                   	</#list>
                 </#if>
                 </ul>
@@ -146,7 +147,7 @@
                 <ul class="news">
                 <#if taokefengcaiList?? >
                 	<#list taokefengcaiList as content>
-                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  <li class="font2" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; width:160px;"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
                   	</#list>
                 </#if>
                 </ul>
@@ -159,7 +160,7 @@
                 <ul class="news">
                 <#if qiyefengcaiList?? >
                 	<#list qiyefengcaiList as content>
-                  <li class="font2"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
+                  <li class="font2" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; width:160px;"><a href="#" onclick="viewContent('${content.id}')">・ ${content.title}</a></li>
                   	</#list>
                 </#if>
                 </ul>

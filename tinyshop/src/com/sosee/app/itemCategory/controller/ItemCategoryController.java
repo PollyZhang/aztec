@@ -8,7 +8,6 @@ import com.jfinal.aop.Before;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.StringKit;
 import com.jfinal.plugin.activerecord.Db;
-import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.itemCategory.pojo.ItemCategory;
 import com.sosee.app.itemCategory.validator.ItemCategroyValidator;
 import com.sosee.sys.base.controller.BaseController;
@@ -164,12 +163,9 @@ public class ItemCategoryController extends BaseController {
 			this.createToken("contentsToken", 1800);
 			String id = this.getPara("id");
 			if (StringKit.notBlank(id)) {
-				Contents contents = this.getModel(Contents.class).findById(id);
-				if (StringKit.notNull(contents)) {
-					this.setAttr("contents", contents);
-					this.setAttr("imageFile", contents.getStr("imageFile"));
-					this.setAttr("videoFile", contents.getStr("videoFile"));
-					this.setAttr("attachFile", contents.getStr("attachFile"));
+				ItemCategory itemCategory = this.getModel(ItemCategory.class).findById(id);
+				if (StringKit.notNull(itemCategory)) {
+					this.setAttr("itemCategory", itemCategory);
 					render("/WEB-INF/sys/content/contents.html");
 				} else {
 					index();
@@ -182,41 +178,7 @@ public class ItemCategoryController extends BaseController {
 		}
 	}
 	
-	public void editAdv() {
-		try {
-			this.keepPara();
-			
-			String id = this.getPara("id");
-			if (StringKit.notBlank(id)) {
-				ItemCategory itemCategory = this.getModel(ItemCategory.class).findById(id);
-				if (StringKit.notNull(itemCategory)) {
-					this.setAttr("itemCategory", itemCategory);
-					render("/WEB-INF/sys/itemCategory/itemCategoryAdv.html");
-				} else {
-					index();
-				}
-			} else {
-				index();
-			}
-		} catch (Exception e) {
-			index();
-		}
-	}
-	@Before(ItemCategroyValidator.class)
-	public void saveAdv()
-	{
-		try {
-			this.keepPara();
-			String id = getAttrForStr("itemCategory.id");
-			String id2 = getAttr("itemCategory.id");
-			String id3 = getPara("itemCategory.id");
-			ItemCategory itemCategory = getModel(ItemCategory.class);
-			itemCategory.update();
-		} catch (Exception e) {
-			index();
-		}
 	
-	}
 
 	public void del() {
 		try {
