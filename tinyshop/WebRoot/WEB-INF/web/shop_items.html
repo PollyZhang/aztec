@@ -35,8 +35,8 @@
     <#if hotItemsList??>
     <#list hotItemsList as item>
       <tr>
-        <td width="102" height="100px" ><a href="${ctx_path}/itemView?itemId=${item.id}"><img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="90" height="90" /></a></td>
-        <td width="148" align="left"><p><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></p><p style="margin-top:5px;">销售价：${item.itemPrice!}</p><p style="margin-top:5px;">已售出：${item.salesVolume!}</p></td>
+        <td width="102" height="100px" ><a href="${ctx_path}/itemView?itemId=${item.id}"><#if item.itemPicUrl??><img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="90" height="90" /></a></#if></td>
+        <td width="148" align="left"><p><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName!}</a></p><p style="margin-top:5px;">销售价：${item.itemPrice!}</p><p style="margin-top:5px;">已售出：${item.salesVolume!}</p></td>
       </tr>
      
       </#list>
@@ -56,19 +56,19 @@
     </tr>
   <tr>
     <td width="87" height="40"  align="right">价格：</td>
-    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px; color:#F00">${item.itemPrice}</span></td>
+    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px; color:#F00">${item.itemPrice!}</span></td>
   </tr>
   <tr>
     <td width="87" align="right">品牌：</td>
-    <td height="40" colspan="4" align="left"><#if item.brand??>${item.brand}</#if></td>
+    <td height="40" colspan="4" align="left">${item.brandName!}</td>
   </tr>
   <tr>
     <td width="87" align="right">销售情况：</td>
-    <td height="40" colspan="4" align="left"><#if item.salesVolume??>${item.salesVolume}</#if></td>
+    <td height="40" colspan="4" align="left">${item.salesVolume!}</td>
   </tr>
   <tr>
     <td width="87" align="right">商品数量：</td>
-    <td height="40" colspan="4" align="left"><#if item.count??>${item.count}</#if></td>
+    <td height="40" colspan="4" align="left">${item.count!}</td>
   </tr>
   <tr>
     <td width="87" align="right">浏览次数：</td>
@@ -76,11 +76,11 @@
   </tr>
   <tr>
     <td width="87" align="right">尺码：</td>
-    <td height="40" colspan="4" align="left"><#if item.size??>${item.size}</#if></td>
+    <td height="40" colspan="4" align="left">${item.size!}</td>
   </tr>
   <tr>
     <td width="87" align="right" valign="middle">颜色：</td>
-    <td height="40" colspan="4" align="left"><#if item.color??>${item.color}</#if></td>
+    <td height="40" colspan="4" align="left">${item.color!}</td>
   </tr>
    </table>
    <!-- 产品描述-->

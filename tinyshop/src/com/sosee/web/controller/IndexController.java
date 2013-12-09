@@ -173,6 +173,8 @@ public class IndexController extends BaseController{
 	 */
 	public void itemView()
 	{
+		try
+		{
 		List<Record> renmeixinwenList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
 				+ " where c.contentCategoryId = '509ffc01-2b79-4bfe-bc5a-675ebfe05208'");
 		this.setAttr("renmeixinwenList", renmeixinwenList);
@@ -192,13 +194,17 @@ public class IndexController extends BaseController{
 		this.setAttr("hotItemsList", hotItemsList);
 		
 		
-		Items item = getModel(Items.class).findById(itemId);
+		Record item = Db.findFirst("select d.name as brandName,c.id,c.itemName,c.itemPrice,c.itemPicUrl,c.descrip,c.discountPrice,c.itemCategoryId,c.taobaoUrl,c.count,c.size,c.color  from t_items as c,t_itemcategory as d where c.itemCategoryId = d.id and c.id = '"+getPara("itemId")+"'");
 		this.setAttr("item", item);
 		//各分类楼层 
 		List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
 				+ "select * from t_itemCategory where isDeleted =0");
 		this.setAttr("categoryList", categoryList);
 	
-		render("/WEB-INF/web/shop_items.html");		
+		render("/WEB-INF/web/shop_items.html");	
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 }

@@ -67,13 +67,13 @@ function returnList(){
 	<div class="row-fluid sortable">
 		<div class="box span12">
 			<div class="box-header well" data-original-title>
-				<h2><i class="icon-home"></i>&nbsp;<#if id?? && id!=''>编辑<#else>“${(itemCategoryName)!}”栏目添加</#if>内容</h2>
+				<h2><i class="icon-home"></i>&nbsp;<#if itemCategory?? && id!=''>编辑<#else>“${(itemCategory.name)!}”栏目添加</#if>内容</h2>
 				<div class="box-icon">
 				</div>
 			</div>
 			<div class="box-content">
 				<form id="itemsForm" action="${ctx_path}/items/save" class="form-horizontal" enctype="multipart/form-data" method="post">
-				<input type="hidden" id="itemCategoryId" name="itemCategoryId" value="${(itemCategoryId)!}">
+				<input type="hidden" id="itemCategoryId" name="itemCategoryId" value="${(itemCategory.id)!}">
 		    	<input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
 		    	<#if id?? && id!=''>
 		    	<input type="hidden" id="items.id" name="items.id" value="${(items.id)!}">

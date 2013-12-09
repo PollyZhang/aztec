@@ -10,6 +10,7 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.sosee.app.content.pojo.Contents;
+import com.sosee.app.itemCategory.pojo.ItemCategory;
 import com.sosee.app.items.pojo.Items;
 import com.sosee.app.items.validator.ItemsValidator;
 import com.sosee.sys.base.controller.BaseController;
@@ -161,9 +162,9 @@ public class ItemsController extends BaseController {
 			this.setAttr("brandList", brandList);
 			
 			//this.createToken("contentsToken",1800);
-			String itemCategoryName=Db.queryStr("select name from t_itemCategory where id='"+this.getAttrForStr("itemCategoryId")+"'");
-			if(StringKit.notBlank(itemCategoryName)){
-				this.setAttr("itemCategoryName", itemCategoryName);
+			ItemCategory itemCategory=getModel(ItemCategory.class).findById(this.getAttrForStr("itemCategoryId"));
+			if(StringKit.notNull(itemCategory)){
+				this.setAttr("itemCategory", itemCategory);;
 				if(StringKit.notBlank(getPara("itemCategoryQuery"))){
 					this.setAttr("itemCategoryQuery", getPara("itemCategoryQuery"));
 				}
@@ -186,8 +187,10 @@ public class ItemsController extends BaseController {
 			String id=this.getPara("id");
 			if(StringKit.notBlank(id)){
 				Items items=this.getModel(Items.class).findById(id);
+				ItemCategory itemCategory=getModel(ItemCategory.class).findById(items.get("itemCategoryId"));
 				if(StringKit.notNull(items)){
 					this.setAttr("items", items);
+					this.setAttr("itemCategory", itemCategory);;
 					this.setAttr("imageFile", items.getStr("imageFile"));
 					render("/WEB-INF/sys/items/items.html");
 				}else{

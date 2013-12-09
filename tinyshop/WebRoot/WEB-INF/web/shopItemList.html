@@ -36,8 +36,8 @@
     <#if hotItemsList??>
     <#list hotItemsList as item>
       <tr>
-        <td width="102" height="100px" ><a href="${ctx_path}/itemView?itemId=${item.id}"><img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="90" height="90" /></a></td>
-        <td width="148" align="left"><p><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></p><p style="margin-top:5px;">销售价：${item.itemPrice!}</p><p style="margin-top:5px;">已售出：${item.salesVolume!}</p></td>
+        <td width="102" height="100px" ><a href="${ctx_path}/itemView?itemId=${item.id}"><#if item.itemPicUrl??> <img style="border:0px;" src="${ctx_path}/upload${item.itemPicUrl}" width="90" height="90" /></a></#if></td>
+        <td width="148" align="left"><p><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName!}</a></p><p style="margin-top:5px;">销售价：${item.itemPrice!}</p><p style="margin-top:5px;">已售出：${item.salesVolume!}</p></td>
       </tr>
      
       </#list>
@@ -61,7 +61,7 @@
        <#list 0..columnCount - 1 as cell >
        <#if itemList[row * columnCount + cell]??>
          <#assign item =itemList[row * columnCount + cell]>  
-    		<td align="center"><a href="${ctx_path}/itemView?itemId=${item.id}"><img src="${ctx_path}/upload${item.itemPicUrl}" width="130" height="130" /></a></td>
+    		<td align="center"><#if item.itemPicUrl??><a href="${ctx_path}/itemView?itemId=${item.id}"><img src="${ctx_path}/upload${item.itemPicUrl}" width="130" height="130" /></a></#if></td>
             </#if>
         </#list>
   </tr>
@@ -71,8 +71,8 @@
        <#assign item = itemList[row * columnCount + cell]>
     <td height="50" align="center">          
      <span style="margin-top:20px;">
-          <p class="font2"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></p>
-          <p style="margin-top:5px">售价：${item.itemPrice}</p>
+          <p class="font2"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName!}</a></p>
+          <p style="margin-top:5px">售价：${item.itemPrice!}</p>
             </span></td>
         </#if>
         </#list>
