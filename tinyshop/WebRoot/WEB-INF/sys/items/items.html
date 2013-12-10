@@ -88,6 +88,14 @@ function returnList(){
 							<td colspan="3"><input type="text" id="items.itemPrice" name="items.itemPrice" class="validate[required,maxSize[10]]" style="width:120px;" value="${(items.itemPrice)!}"><font color="red">*</font></td>
 						</tr>
 						<tr>
+							<td><label class="control-label">销售情况&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="items.salesVolume" name="items.salesVolume" class="validate[maxSize[125]]" style="width:500px;" value="${(items.salesVolume)!}"></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">商品数量&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="items.count" name="items.count" class="validate[maxSize[125]]" style="width:500px;" value="${(items.count)!}"></td>
+						</tr>
+						<tr>
 							<td><label class="control-label">颜色&nbsp;</label></td>
 							<td colspan="3"><input type="text" id="items.color" name="items.color" class="validate[maxSize[125]]" style="width:500px;" value="${(items.color)!}"></td>
 						</tr>

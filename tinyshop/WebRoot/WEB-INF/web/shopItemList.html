@@ -69,18 +69,32 @@
         <#list 0..columnCount - 1 as cell >
       <#if itemList[row * columnCount + cell]??>
        <#assign item = itemList[row * columnCount + cell]>
-    <td height="50" align="center">          
+    <td height="70" align="center">          
      <span style="margin-top:20px;">
-          <p class="font2"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName!}</a></p>
+          <p class="font2" style="line-height:18px;"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName!}</a></p>
           <p style="margin-top:5px">售价：${item.itemPrice!}</p>
             </span></td>
         </#if>
         </#list>
   </tr>
      </#list>
-</table>
+     
 
+</table>
+<div  style="float:left;font-size:14px;margin-top:20px;">
+			总记录数：${totalRow}条  当前${pageNumber}页/共${totalPage}页
+			</div>
+<div class="pagination pagination-right">
+			<ul>
+			<li><a href="#" onclick="javascript:doPage(1,'${pageNumber}','${totalPage}');">首页</a></li>
+			<li><a href="#" onclick="javascript:doPage('${pageNumber} - 1)+','${pageNumber}','${totalPage}');">上一页</a></li>
+			<li><a href="#" onclick="javascript:doPage('${pageNumber} + 1)+','${pageNumber}','${totalPage}');">下一页</a></li>
+			<li><a href="#" onclick="javascript:doPage('${totalPage}','${pageNumber}','${totalPage}');">尾页</a></li>
+			</ul>
+</div>
    </div>
+   
+   
    <!-- 商品列表 -->
    </div>
   <!--文章 --> 

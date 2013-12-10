@@ -187,15 +187,20 @@ public class IndexController extends BaseController{
 		List<Record> imageNewsList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
 				+ " where c.contentCategoryId = '2e51ba23-4757-46f3-bd95-aac08121b18c' order by c.order asc");
 		this.setAttr("imageNewsList", imageNewsList);
-		String itemId = getPara("itemId");
+		
 		//热卖商品
 		List<Record> hotItemsList = Db.find("SELECT c.itemName,c.id,c.itemPicUrl,c.itemPrice,c.salesVolume FROM t_items as c"
 				+ " order by c.salesVolume desc limit 6");
 		this.setAttr("hotItemsList", hotItemsList);
 		
-		
-		Record item = Db.findFirst("select d.name as brandName,c.id,c.itemName,c.itemPrice,c.itemPicUrl,c.descrip,c.discountPrice,c.itemCategoryId,c.taobaoUrl,c.count,c.size,c.color  from t_items as c,t_itemcategory as d where c.itemCategoryId = d.id and c.id = '"+getPara("itemId")+"'");
+		String itemId = getPara("itemId");
+		Record item = Db.findFirst("select d.name as brandName,c.id,c.itemName,c.itemPrice,c.itemPicUrl,c.descrip,c.discountPrice,c.itemCategoryId,c.taobaoUrl,c.count,c.size,c.color,c.salesVolume,c.visited  from t_items as c,t_itemcategory as d where c.itemCategoryId = d.id and c.id = '"+getPara("itemId")+"'");
 		this.setAttr("item", item);
+		//更新点击次数
+		Items itemVisited = getModel(Items.class).findById(itemId);
+		Integer click = itemVisited.getInt("visited");
+		itemVisited.set("visited", click==null?0:click+1);
+		itemVisited.update();
 		//各分类楼层 
 		List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
 				+ "select * from t_itemCategory where isDeleted =0");
