@@ -34,3 +34,13 @@ function doPage(pageNum,pageIndex,pageCount){
 		query();
 	}
 }
+
+function pad(num) {  
+	var a = num.toString();
+	var s = a.indexOf(".");
+	if(s==-1)
+	{
+		a = a+".00";
+	}
+    return a;  
+}  

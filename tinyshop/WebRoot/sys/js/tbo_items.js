@@ -86,12 +86,39 @@ function del(id,name){
 			 });
 	}
 }
+
+function toTop(id,isTop){	
+	if(confirm("确定此操作吗?")){
+		var dataParam={"id":id,"isTop":isTop};
+		jQuery.ajax({
+			 url: baseUrl+"/items/toTop/",
+			 type: "POST",
+			 dataType:"json",
+			 data:dataParam,
+			 success: function(data)
+			 {
+				if(data.result==0){
+					noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
+					return;
+				}else{
+					noty({"text":data.msg,timeout: 1000,"layout":"center","type":"success"});
+					query();
+				}	
+			 },
+			 error:function(){
+				 noty({"text":data.msg,timeout: 1000,"layout":"center","type":"error"});
+			 }
+			 });
+	}
+}
+
+
 function query(){
 	var itemCategoryId=$('#itemCategoryId').val();
 	var dataParam={"itemCategoryId":(itemCategoryId!=null && itemCategoryId!=''?itemCategoryId:""),
-	"nameQuery":$('#nameQuery').val(),
-	"sizeQuery":$('#sizeQuery').val(),
-	"colorQuery":$('#colorQuery').val(),
+	"itemNameQuery":$('#itemNameQuery').val(),
+	"isTopQuery":$('#isTopQuery').val(),
+	"brandQuery":$('#brandQuery').val(),
 	"pageIndex":($('#pageIndex').val()!=null && $('#pageIndex').val()!='')?$('#pageIndex').val():"1"
 	};
 	var pageNumber=0,totalPage=0,totalRow=0;
@@ -99,17 +126,22 @@ function query(){
 	$.post(baseUrl+"/items/query",dataParam,function(data){
 		if(data){
 			var strTable='<table class="table table-striped table-bordered bootstrap-datatable datatable ellipsisTable">';
-			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="80px">名称</th><th width="25px">价格</th><th width="25px">数量</th><th width="25px">售出</th><th width="160px;">操作</th></tr></thead>';
+			strTable+='<thead><tr class="alert alert-info"><th width="25px">序号</th><th width="140px">名称</th><th style=\"text-align:center\" width="25px">价格</th><th style=\"text-align:center\" width="25px">数量</th><th style=\"text-align:center\" width="25px">售出</th><th style=\"text-align:center\" width="15px">置顶</th><th style=\"text-align:center\" width="15px">排序</th><th style=\"text-align:center\" width="60px;">操作</th></tr></thead>';
 			strTable+="<tbody>";
 			if(data.list && data.list.length>0){
 				$.each(data.list,function(n,value) {
 					strTable+="<tr>";
 					strTable+="<td><center>"+(n+1)+"</center></td>";
 					strTable+="<td>"+value.itemName+"</td>";
-					strTable+="<td>"+value.itemPrice+"</td>";
-					strTable+="<td>"+value.count+"</td>";
-					strTable+="<td>"+value.salesVolume+"</td>";
-					strTable+="</td>";
+					strTable+="<td style=\"text-align:right\">"+pad(value.itemPrice)+"</td>";
+					strTable+="<td style=\"text-align:right\">"+value.count+"</td>";
+					strTable+="<td style=\"text-align:right\">"+value.salesVolume+"</td>";
+					if(value.isTop==1){
+						strTable+="<td style=\"text-align:center\"><a class='btn btn-mini btn-success' href='#' title='点击取消置顶' onclick=\"javascript:toTop('"+value.id+"',0);\">是</a></td>";
+					}else{
+						strTable+="<td style=\"text-align:center\"><a class='btn btn-mini btn-warning' href='#' title='点击置顶' onclick=\"javascript:toTop('"+value.id+"',1);\">否</a></td>";
+					}
+					strTable+="<td style=\"text-align:right\">"+((value.order==null)?'':value.order)+"</td>"
 					strTable+="<td>";
 					strTable+="<a class='btn btn-mini btn-info' href='#' onclick=\"javascript:edit('"+value.id+"','"+value.itemCategoryId+"');\">";
 					strTable+="<i class='icon icon-edit icon-white'></i>编辑</a>&nbsp;";
@@ -160,3 +192,14 @@ function resetQuery(){
 	$('#sizeQuery').val("");	
 	$("#colorQuery").val("");
 }
+
+
+function pad(num) {  
+	var a = num.toString();
+	var s = a.indexOf(".");
+	if(s==-1)
+	{
+		a = a+".00";
+	}
+    return a;  
+}  

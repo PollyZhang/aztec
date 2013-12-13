@@ -88,37 +88,42 @@ public class IndexController extends BaseController{
 	 */
 	public void shopView()
 	{
-		List<Record> renmeixinwenList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
-				+ " where c.contentCategoryId = '509ffc01-2b79-4bfe-bc5a-675ebfe05208'");
-		this.setAttr("renmeixinwenList", renmeixinwenList);
-		List<Record> taokefengcaiList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
-				+ " where c.contentCategoryId = '7c24be68-0929-4b60-9f84-fab4ef6bc0c0'");
-		this.setAttr("taokefengcaiList", taokefengcaiList);
-		List<Record> qiyefengcaiList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
-				+ " where c.contentCategoryId = '39b1ccc3-e7b8-4042-8fda-148538fb7b57'");
-		this.setAttr("qiyefengcaiList", qiyefengcaiList);
-		List<Record> imageNewsList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
-				+ " where c.contentCategoryId = '2e51ba23-4757-46f3-bd95-aac08121b18c' order by c.order asc");
-		this.setAttr("imageNewsList", imageNewsList);
-		//新品上架
-		List<Items> newItemsList = getModel(Items.class).find(""
-				+ "select * from t_items order by createTime desc limit 6");
-		this.setAttr("newItemsList", newItemsList);
-		//各分类楼层 
-		List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
-				+ "select * from t_itemCategory as c where isDeleted =0 order by c.order asc");
-		this.setAttr("categoryList", categoryList);
-		List<List<Items>> allList = new ArrayList<>();
-		for (ItemCategory itemCategory : categoryList) {
-			List<Items> itemList = getModel(Items.class).find(""
-					+ "select * from t_items where itemCategoryId = '"+itemCategory.getStr("id")+"' order by createTime limit 8");
-			allList.add(itemList);
+		try {
+			List<Record> renmeixinwenList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
+					+ " where c.contentCategoryId = '509ffc01-2b79-4bfe-bc5a-675ebfe05208'");
+			this.setAttr("renmeixinwenList", renmeixinwenList);
+			List<Record> taokefengcaiList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
+					+ " where c.contentCategoryId = '7c24be68-0929-4b60-9f84-fab4ef6bc0c0'");
+			this.setAttr("taokefengcaiList", taokefengcaiList);
+			List<Record> qiyefengcaiList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
+					+ " where c.contentCategoryId = '39b1ccc3-e7b8-4042-8fda-148538fb7b57'");
+			this.setAttr("qiyefengcaiList", qiyefengcaiList);
+			List<Record> imageNewsList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
+					+ " where c.contentCategoryId = '2e51ba23-4757-46f3-bd95-aac08121b18c' order by c.order asc");
+			this.setAttr("imageNewsList", imageNewsList);
+			//新品上架
+			List<Items> newItemsList = getModel(Items.class).find(""
+					+ "select * from t_items as c where c.isTop = 1 order by c.order desc limit 6");
+			this.setAttr("newItemsList", newItemsList);
+			//各分类楼层 
+			List<ItemCategory> categoryList = getModel(ItemCategory.class).find(""
+					+ "select * from t_itemCategory as c where isDeleted =0 order by c.order asc");
+			this.setAttr("categoryList", categoryList);
+			List<List<Items>> allList = new ArrayList<>();
+			for (ItemCategory itemCategory : categoryList) {
+				List<Items> itemList = getModel(Items.class).find(""
+						+ "select * from t_items as c where c.itemCategoryId = '"+itemCategory.getStr("id")+"' order by c.order asc limit 8");
+				allList.add(itemList);
+			}
+			//用于给前台list赋空值
+			List<Item> listNew = new ArrayList<>();
+			this.setAttr("listNew", listNew);
+			this.setAttr("allList", allList);
+			render("/WEB-INF/web/shop.html");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		//用于给前台list赋空值
-		List<Item> listNew = new ArrayList<>();
-		this.setAttr("listNew", listNew);
-		this.setAttr("allList", allList);
-		render("/WEB-INF/web/shop.html");		
+				
 	}
 	
 	/**
@@ -128,7 +133,7 @@ public class IndexController extends BaseController{
 	{
 		//热卖商品
 		List<Record> hotItemsList = Db.find("SELECT c.itemName,c.id,c.itemPicUrl,c.itemPrice,c.salesVolume FROM t_items as c"
-				+ " order by c.salesVolume desc limit 6");
+				+ " order by c.order asc limit 8");
 		this.setAttr("hotItemsList", hotItemsList);
 		List<Record> renmeixinwenList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
 				+ " where c.contentCategoryId = '509ffc01-2b79-4bfe-bc5a-675ebfe05208'");
@@ -190,7 +195,7 @@ public class IndexController extends BaseController{
 		
 		//热卖商品
 		List<Record> hotItemsList = Db.find("SELECT c.itemName,c.id,c.itemPicUrl,c.itemPrice,c.salesVolume FROM t_items as c"
-				+ " order by c.salesVolume desc limit 6");
+				+ " order by c.order desc limit 8");
 		this.setAttr("hotItemsList", hotItemsList);
 		
 		String itemId = getPara("itemId");

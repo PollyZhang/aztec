@@ -47,42 +47,50 @@
 
    </div>
    <div id="itemList" style="float:left;width:700px; margin-left:20px;">
-   <table width="700" border="0" style=" font-size:12px;">
-     <tr>
-    <td height="31" colspan="6" align="left" valign="top"><span style="font-size:16px;font-weight:bold;">${item.itemName}</span></td>
-    </tr>
+    <span style="font-size:16px;font-weight:bold;">${item.itemName}</span>
+   <div style="border:1px double #999;margin-top:5px;">
+   <table width="700" border="0" style="font-size:14px;">
   <tr>
-    <td width="330" rowspan="8" align="center"><img src="${ctx_path}/upload${item.itemPicUrl}" width="340" height="340" /></td>
-    </tr>
-  <tr>
-    <td width="87" height="40"  align="right">价格：</td>
-    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px; color:#F00">${item.itemPrice!}</span></td>
+    <td width="330" rowspan="9" align="center"><img src="${ctx_path}/upload${item.itemPicUrl}" width="340" height="340" /></td>
+    <td style="background-color:#f4f4f4"> 
+    <table width="300">
+    <tr>
+    <td width="87" height="40"  align="right">价<span style="margin-left:27px;">格</span>：</td>
+    <td width="269" height="40" colspan="4" align="left"><span style="font-size:30px;margin-top:-15px; color:#F00">${item.itemPrice?string('#.00')}</span></td>
   </tr>
   <tr>
-    <td width="87" align="right">品牌：</td>
-    <td height="40" colspan="4" align="left">${item.brandName!}</td>
+    <td width="87" align="right" >品<span style="margin-left:27px;">牌</span>：</td>
+    <td height="40" colspan="4" align="left" >${item.brandName!}</td>
   </tr>
   <tr>
-    <td width="87" align="right">销售情况：</td>
+    <td width="87" align="right" >销售情况：</td>
     <td height="40" colspan="4" align="left">${item.salesVolume!}</td>
   </tr>
   <tr>
     <td width="87" align="right">商品数量：</td>
-    <td height="40px" colspan="4" align="left">${item.count!}</td>
+    <td height="40px" colspan="4" align="left" >${item.count!}</td>
   </tr>
   <tr>
-    <td width="87" align="right">浏览次数：</td>
-    <td height="40px" colspan="4" align="left">${item.visited!}</td>
+    <td width="87" align="right" >浏览次数：</td>
+    <td height="40px" colspan="4" align="left" >${item.visited!}</td>
   </tr>
   <tr>
-    <td width="87" align="right">尺码：</td>
+    <td width="87" align="right" >尺<span style="margin-left:27px;">码</span>：</td>
     <td height="40px" colspan="4" align="left">${item.size!}</td>
   </tr>
-  <tr>
-    <td width="87" align="right" valign="middle">颜色：</td>
+    <tr>
+    <td width="87" align="right" >颜<span style="margin-left:27px;">色</span>：</td>
     <td height="40px" colspan="4" align="left">${item.color!}</td>
   </tr>
+    <tr>
+    <td width="87" align="right"></td>
+    <td height="40px" colspan="4" align="left"></td>
+  </tr>
+    </table>
+    </td>
+    </tr>
    </table>
+   </div>
    <!-- 产品描述-->
    <div style="float:left; width:700px;margin-top:20px;">
      <table width="700" border="0" cellpadding="0" cellspacing="0">

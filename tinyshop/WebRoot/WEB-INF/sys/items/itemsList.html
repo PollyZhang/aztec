@@ -92,10 +92,6 @@ $(function(){
 				        <input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
 						商品名称
 						<input type="text" class="input-small" id="itemNameQuery" name="itemNameQuery" value="${(itemNameQuery)!}">
-						颜色
-						<input type="text" class="input-small" id="colorQuery" name="colorQuery" value="${(colorQuery)!}">
-						尺码
-						<input type="text" class="input-small" id="sizeQuery" name="sizeQuery" value="${(sizeQuery)!}">
 					  	品牌
 						<select id="brandQuery" name="brandQuery" style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
 							<option value="">请选择</option>
@@ -105,7 +101,12 @@ $(function(){
 							  </#list>
 							</#if>
 					  	</select>
-					  	
+					  	是否置顶
+						<select id="isTopQuery" name="isTopQuery" sytle="width:80px;"   class="input-small" data-rel="chosen">
+							<option value="">请选择</option>
+							<option value="0" <#if isTopQuery?? && isTopQuery==0>selected</#if>>未置顶</option>
+							<option value="1" <#if isTopQuery?? && isTopQuery==1>selected</#if>>已置顶</option>
+					  	</select> 
 					  	<a class="btn btn-info" href="#" onclick="javascript:resetQuery();">
 							<i class="icon-remove-sign icon-white"></i>  
 							重置                                            

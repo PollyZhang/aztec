@@ -38,7 +38,7 @@ public class ItemsController extends BaseController {
 		try{    
 			init();
 			int pageIndex=this.getParaToInt("pageIndex")!=null && this.getParaToInt("pageIndex")!=0?this.getParaToInt("pageIndex"):1;
-			Page<Items> itemsPage= getModel(Items.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.itemName,b.name as itemCategory,c.itemPrice,c.count,c.itemPicUrl,c.salesVolume", "from t_items as c left JOIN t_itemCategory as b on c.itemCategoryId=b.id   where 1=1 "+getParaStr()+" order by c.createTime desc");
+			Page<Items> itemsPage= getModel(Items.class).paginate(pageIndex, SysConstants.PAGE_NORMAL_SIZE, "select c.id,c.itemName,b.name as itemCategory,c.itemPrice,c.count,c.itemPicUrl,c.salesVolume,c.isTop,c.order", "from t_items as c left JOIN t_itemCategory as b on c.itemCategoryId=b.id   where 1=1 "+getParaStr()+" order by c.createTime desc");
 			
 			if(StringKit.notNull(itemsPage)){
 				if(itemsPage.getList()!=null && itemsPage.getList().size()>0){
@@ -63,6 +63,26 @@ public class ItemsController extends BaseController {
 		if(StringKit.notBlank(getPara("itemCategoryId"))){
 			sqlParam+=" and itemCategoryId='"+getPara("itemCategoryId")+"' ";
 			this.setAttr("contentCategoryTypeQuery", getPara("contentCategoryTypeQuery"));
+		}
+		if(StringKit.notBlank(getPara("isTopQuery"))){
+			sqlParam+=" and c.isTop ='"+getPara("isTopQuery")+"' ";
+			this.setAttr("isTopQuery", getPara("isTopQuery"));
+		}
+		if(StringKit.notBlank(getPara("itemNameQuery"))){
+			sqlParam+=" and c.itemName like '%"+getPara("itemNameQuery")+"%' ";
+			this.setAttr("itemNameQuery", getPara("itemNameQuery"));
+		}
+		if(StringKit.notBlank(getPara("colorQuery"))){
+			sqlParam+=" and c.color like '%"+getPara("colorQuery")+"%' ";
+			this.setAttr("colorQuery", getPara("colorQuery"));
+		}
+		if(StringKit.notBlank(getPara("sizeQuery"))){
+			sqlParam+=" and c.size like '%"+getPara("sizeQuery")+"%' ";
+			this.setAttr("sizeQuery", getPara("sizeQuery"));
+		}
+		if(StringKit.notBlank(getPara("brandQuery"))){
+			sqlParam+=" and c.brandId = '"+getPara("brandQuery")+"' ";
+			this.setAttr("brandQuery", getPara("brandQuery"));
 		}
 		return sqlParam;
 	}
@@ -176,6 +196,30 @@ public class ItemsController extends BaseController {
 		}catch(Exception e){
 			index();
 		}
+	}
+	
+	public void toTop()
+	{
+		try {
+			String id=this.getPara("id");
+			String isTop=this.getPara("isTop");
+			if(StringKit.notBlank(id)){
+				Items item=this.getModel(Items.class).findById(id);
+				if(StringKit.notNull(item)){
+					item.set("isTop", isTop);
+					item.update();
+					this.renderJson("{\"result\":1,\"msg\":\"操作成功!\"}");
+				}else
+				{
+					index();
+				}
+			}else {
+				index();
+			}
+		} catch (Exception e) {
+			index();
+		}
+		
 	}
 	
 	public void edit(){

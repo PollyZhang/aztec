@@ -27,7 +27,7 @@
       <tr>
      <#if newItemsList??>
     	 <#list newItemsList as item>
-        	<td align="center" height="20">销售价：${item.itemPrice!}</td>
+        	<td align="center" height="20">销售价：${item.itemPrice?string('#.00')}</td>
         </#list>
      </#if>
 
@@ -82,7 +82,7 @@
         <td height="60" align="center" valign="middle">
            <span style="margin-top:20px;">
           <p ><div class="font2" style="width:140px;margin-top:5px"><a href="${ctx_path}/itemView?itemId=${item.id}">${item.itemName}</a></div></p>
-          <p style="margin-top:5px">售价：${item.itemPrice}</p>
+          <p style="margin-top:5px">售价：${item.itemPrice?string('#.00')}</p>
             </span>
           </td>
          </#if>

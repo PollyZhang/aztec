@@ -88,20 +88,29 @@ function returnList(){
 							<td colspan="3"><input type="text" id="items.itemPrice" name="items.itemPrice" class="validate[required,maxSize[10]]" style="width:120px;" value="${(items.itemPrice)!}"><font color="red">*</font></td>
 						</tr>
 						<tr>
+						<td>
+						<label class="control-label">是否置顶：&nbsp;</label></td>
+							<td colspan="3" style="line-height:20px;">
+							<input type="radio" id="items.isTop" name="items.isTop" value="true" style="float:left;" <#if items?? && items.isTop?? && items.isTop>checked</#if>><span style="padding-top:5px;float:left;">是</span>
+								<span style="padding-top:5px;float:left;">&nbsp;&nbsp;</span>
+								<input type="radio" id="items.isTop" name="items.isTop" value="false" style="float:left;" <#if items?? && items.isTop?? && !items.isTop>checked<#elseif !items?? || !items.isTop??>checked</#if>><span style="padding-top:5px;float:left;">否</span>
+							</td>
+						</tr>
+						<tr>
 							<td><label class="control-label">销售情况&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="items.salesVolume" name="items.salesVolume" class="validate[maxSize[125]]" style="width:500px;" value="${(items.salesVolume)!}"></td>
+							<td colspan="3"><input type="text" id="items.salesVolume" name="items.salesVolume" class="validate[maxSize[125]]" style="width:150px;" value="${(items.salesVolume)!}"></td>
 						</tr>
 						<tr>
 							<td><label class="control-label">商品数量&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="items.count" name="items.count" class="validate[maxSize[125]]" style="width:500px;" value="${(items.count)!}"></td>
+							<td colspan="3"><input type="text" id="items.count" name="items.count" class="validate[maxSize[125]]" style="width:150px;" value="${(items.count)!}"></td>
 						</tr>
 						<tr>
 							<td><label class="control-label">颜色&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="items.color" name="items.color" class="validate[maxSize[125]]" style="width:500px;" value="${(items.color)!}"></td>
+							<td colspan="3"><input type="text" id="items.color" name="items.color" class="validate[maxSize[125]]" style="width:150px;" value="${(items.color)!}"></td>
 						</tr>
 						<tr>
 							<td><label class="control-label">尺寸&nbsp;</label></td>
-							<td colspan="3"><input type="text" id="items.size" name="items.size" class="validate[maxSize[125]]" style="width:500px;" value="${(items.size)!}"></td>
+							<td colspan="3"><input type="text" id="items.size" name="items.size" class="validate[maxSize[125]]" style="width:150px;" value="${(items.size)!}"></td>
 						</tr>
 						<tr>
 							<td><label class="control-label" style="">品牌&nbsp;</label></td>
@@ -119,26 +128,17 @@ function returnList(){
 						    <td></td>
 						</tr>
 						<tr>
+							<td><label class="control-label">排序&nbsp;</label></td>
+							<td colspan="3"><input type="text" id="items.order" name="items.order" class="validate[maxSize[125]]" style="width:500px;" value="${(items.order)!}"></td>
+						</tr>
+						<tr>
 						<td><label class="control-label" style="">图片附件&nbsp;</label></td>
-							<td><input type="file" id="itemPicUrl" name="itemPicUrl" class="validate[funcCall[validateImage]]" value=""></td>
+							<td><input type="file" id="itemPicUrl" name="itemPicUrl" class="validate[funcCall[validateImage]]" value=""><#if items?? &&items.itemPicUrl??><a style="margin-left:20px" href="${ctx_path}/upload${items.itemPicUrl}" target="_blank">查看图片</a></#if></td>
 							<td></td>
 							<td style="line-height:20px;">
 							</td>
-							
 						</tr>
-						<tr>
-							<td></td>
-							<td colspan="3">
-								<div style="line-height:15px;width:700px;margin-top:5px;">
-									<#if itemPicUrl??>
-									<div id="imageDiv" style="float:left;">
-									图片附件:&nbsp;<a href="${ctx_path}/upload${itemPicUrl}" class="btn" style="line-height:10px;" target="_blank">查看</a>
-											&nbsp;<a href="#" class="btn"  style="line-height:10px;"onclick="$('#itemPicUrl').val('');$('#imageDiv').hide();">断开连接</a>&nbsp;&nbsp;
-									</div>
-									</#if>
-								</div>
-							</td>
-						</tr>
+						
 						<tr>
 							<td><label class="control-label">内容&nbsp;</label></td>
 							<td colspan="3">
