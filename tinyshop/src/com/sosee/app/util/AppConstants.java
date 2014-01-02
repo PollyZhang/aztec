@@ -66,5 +66,8 @@ public final class AppConstants {
 	public static final String BASECODE_CONTENT_CATEGORY_TYPE="contents_contentCategorytype";
 	public static final String BASECODE_CONTENTS_CATEGORY_TYPE_PUBLIC="C00";//此类型为公共内容，所有栏目都显示
 	public static final String SYNC_RiCheCiJiHua = null;
+	//广告类型 
+	
+	public static final String ADV_CATEGORY_AC01_ID = "fd21c2e2-235b-11e3-8d92-68782241e1a2";
 	
 }

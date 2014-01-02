@@ -22,6 +22,7 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.FreeMarkerRender;
 import com.sosee.app.adv.controller.AdvController;
+import com.sosee.app.adv.pojo.Adv;
 import com.sosee.app.brand.controller.BrandController;
 import com.sosee.app.brand.pojo.Brand;
 import com.sosee.app.content.controller.ContentsController;
@@ -138,6 +139,7 @@ public class DefaultConfig extends JFinalConfig {
 		arp.addMapping("t_itemcategory", ItemCategory.class);
 		arp.addMapping("t_brand", Brand.class);
 		arp.addMapping("t_items", Items.class);
+		arp.addMapping("t_adv", Adv.class);
 	}
 	
 	/**

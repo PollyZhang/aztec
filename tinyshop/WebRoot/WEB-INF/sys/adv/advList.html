@@ -22,11 +22,11 @@ max-width:80px;   /*IE不能解释该属性，而FF可以*/
 </style>
 
 <script type="text/javascript">
- 
- var contentCategoryName='${contentCategoryName!}';
- if(contentCategoryName!=null && contentCategoryName!=''){
-   $("#contentsTitleDiv").text(contentCategoryName+'内容列表');
- }
+ var sexJson=JSON.parse(${userSexJson});
+ var statusJson=JSON.parse(${statusJson});
+ var accountType='${session['user'].accountType}';
+ var ctx_path = '${ctx_path}';
+
 //JSON.stringify(jsonObject);
 <!--
 $(function(){
@@ -36,37 +36,30 @@ $(function(){
 	<#if errorinfo??>
 	  noty({"text":"${(errorinfo)!}",timeout: 2000,"layout":"center","type":"error"});
 	</#if>
-	<#if contentCategoryName??>
-    $("#contentsTitleDiv").text('${(contentCategoryName)!}内容列表');
-	</#if>
-	
-	
-	//$.fn.zTree.init($("#contentCategoryTree"), setting);
 	query();
-	expandAll();
-	setTimeout(expandAll,600);
+	//expandAll();
+	//setTimeout(expandAll,600);
 });
 //-->
 </script>
-
 <script src="${ctx_path}/sys/js/tbo_adv.js"></script>
 
 <!-- 内容 -->
-<div id="content" class="span10">
+<div id="brand" class="span10">
 	<div>
 		<ul class="breadcrumb">
 			<li>
 				<a href="${ctx_path}/login/">主页</a><span class="divider">/</span>
 			</li>
 			<li>
-				<a href="${ctx_path}/adv/">广告管理</a>
+				<a href="${ctx_path}/adv/">成功案例管理</a>
 			</li>
 		</ul>
 	</div>
 	<div class="row-fluid sortable">
 		<div class="box span12">
 			<div class="box-header well" data-original-title>
-				<h2><i class="icon-th-list"></i><span id="advTitleDiv">广告 列表</span></h2>
+				<h2><i class="icon-th-list"></i>&nbsp;品牌列表</h2>
 				<div class="box-icon" >
 				<a class="btn btn-primary" style="width:55px;"  href="#" onclick="javascript:add();">
 							<i class="icon-plus icon-white"></i>  
@@ -76,101 +69,23 @@ $(function(){
 			</div>
 			<form class="form-horizontal" id="advQueryForm" action="" method="post">
 		    <input type="hidden" id="id" name="id">
-		    <input type="hidden" id="itemCategoryId" name="contentCategoryId" value="${(contentCategoryId)!}">
-		    <input type="hidden" id="contentCategoryName" name="contentCategoryName" value="${(contentCategoryName)!}">
-		     <input type="hidden" id="contentCategoryTypeQuery" name="contentCategoryTypeQuery" value="${(contentCategoryTypeQuery)!}">
+		    <input type="hidden" id="name" name="name" value="${(name)!}">
 			<div class="box-content">
 				<div style="float:left;width:85%;margin-left:3px;">
 				    <p>
 				        <input type="hidden" id="pageIndex" name="pageIndex" value="${(pageIndex)!}">
-						标题
-						<input type="text" class="input-small" id="titleQuery" name="titleQuery" value="${(titleQuery)!}">
-						类型
-						<select id="contentTypeQuery" name="contentTypeQuery"  style="width:70px;" class="input-small" style="width:100px;" data-rel="chosen">
-							<option value="">请选择</option>
-							<#if advTypeList??>
-								<#list advTypeList as x>
-							      <option value="${x.code}" >${x.name}</option>
-								</#list>
-							</#if>
-					  	</select>		
+						名称：
+						<input type="text" class="input-small" id="nameQuery" name="nameQuery" value="${(nameQuery)!}">
+					  	<a class="btn btn-info" href="#" onclick="javascript:resetQuery();">
+							<i class="icon-remove-sign icon-white"></i>  
+							重置                                            
+						</a>
+						&nbsp;<a class="btn btn-inverse" href="#" onclick="javascript:query();">
+							<i class="icon-zoom-out icon-white"></i>  
+							查询                                            
+						</a>		
 					</p>
-					<div id="advTypeDiv"></div>
-					<!-- ------- -->
-					<div class="modal hide fade " id="contentsVerifyDiv" style="width:800px;" >
-						<div class="modal-header">
-						    <button type="button" class="close" data-dismiss="modal">×</button>
-							<h3><div id="cTitle">内容详情</div></h3>
-						</div>
-						<div class="modal-body">
-							<div class="control-group">
-								<label class="control-label">名称</label>
-								<div class="controls">
-									<input type="text" id="name" class="validate[required,minSize[3],maxSize[15]]">
-									<font color="red">*</font>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">编码</label>
-								<div class="controls">
-									<input type="text" id="code" class="validate[required,minSize[1],maxSize[10]">
-									<font color="red">*</font>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">广告类别</label>
-								<div class="controls">
-								<select id="advTypeId" name="adv.advTypeId" data-rel="chosen" class="validate[required]">
-									<option value="">---- 请选择 ----</option>
-									<#if advTypeList??>
-										<#list advTypeList as x>
-									<option value="${x.id}" <#if adv?? && adv.advTypeId==x.id>selected</#if>>${x.id}</option>
-										</#list>
-									</#if>
-							  	</select>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">商品类别</label>
-								<select id="categoryId" name="adv.categoryId" data-rel="chosen" class="validate[required]">
-									<option value="">---- 请选择 ----</option>
-									<#if itemCategoryList??>
-										<#list itemCategoryList as x>
-									<option value="${x.id}" <#if adv?? && adv.categoryId==x.id>selected</#if>>${x.id}</option>
-										</#list>
-									</#if>
-							  	</select>
-							</div>
-							<div class="control-group">
-								<label class="control-label">图片</label>
-								<div class="controls">
-									<input type="file" id="imgUrl" name="imgUrl" class="validate[funcCall[validateImage]]" value="">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">描述</label>
-								<div class="controls">
-									<input type="text" id="descript" class="validate[maxSize[100]]">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">尺寸</label>
-								<div class="controls">
-									<input type="text" id="size" class="validate[maxSize[20]]">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">排序</label>
-								<div class="controls">
-									<input type="text" id="order" class="validate[maxSize[10]]">
-								</div>
-							</div>
-						</div>
-						<div class='modal-footer'>
-						<a href="#" class="btn btn-primary" onclick="javascript:save();">保存</a>
-		 				<a href='#' class='btn' data-dismiss='modal'>关闭</a>
-		               </div>
-					</div>
+					<div id="advDiv"></div>
 					<!-- ------- -->
 				</div>
 			</div>

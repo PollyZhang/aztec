@@ -10,6 +10,7 @@ import com.sosee.app.content.pojo.Contents;
 import com.sosee.app.contentCategory.pojo.ContentCategory;
 import com.sosee.app.itemCategory.pojo.ItemCategory;
 import com.sosee.app.items.pojo.Items;
+import com.sosee.app.util.AppConstants;
 import com.sosee.sys.base.controller.BaseController;
 import com.sun.mail.imap.protocol.Item;
 
@@ -30,6 +31,10 @@ public class IndexController extends BaseController{
 
 	public void index(){
 		try {
+			//成功案例
+			List<Record> advList = Db.find("select c.name,c.linkUrl,c.imgUrl from t_adv as c where categoryId = '"+AppConstants.ADV_CATEGORY_AC01_ID+"' order by createTime desc limit 5");
+			this.setAttr("advList", advList);
+			
 			List<Record> renmeixinwenList = Db.find("SELECT c.title,c.id,c.imageFile FROM t_contents as c"
 					+ " where c.contentCategoryId = '509ffc01-2b79-4bfe-bc5a-675ebfe05208'");
 			this.setAttr("renmeixinwenList", renmeixinwenList);
