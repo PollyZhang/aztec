@@ -89,18 +89,18 @@
     <td height="40px;" colspan="4"><img style="margin-left:10px;" src="${ctx_path}/web/images/index_38.gif" width="107" height="24" /></td>
   </tr>
   <tr>
-    <td height="230" align="center" bgcolor="#f7e7ca"><a href="http://zzpyfy.taobao.com" target="_blank"><img src="${ctx_path}/web/images/puyufengyuan.jpg" width="146" height="191" /></a></td>
-    <td align="center" bgcolor="#f7e7ca"><a href="http://zzpyfy.taobao.com" target="_blank"><img src="${ctx_path}/web/images/puyufengyuan.jpg" width="146" height="191" /></a></td>
-    <td align="center" bgcolor="#f7e7ca"><a href="http://zzpyfy.taobao.com" target="_blank"><img src="${ctx_path}/web/images/puyufengyuan.jpg" width="146" height="191" /></a></td>
-    <td align="center" bgcolor="#f7e7ca"><a href="http://zzpyfy.taobao.com" target="_blank"><img src="${ctx_path}/web/images/puyufengyuan.jpg" width="146" height="191" /></a></td>
-    <td align="center" bgcolor="#f7e7ca"><a href="http://zzpyfy.taobao.com" target="_blank"><img src="${ctx_path}/web/images/puyufengyuan.jpg" width="146" height="191" /></a></td>
+  <#if advList??>
+  <#list advList as adv>
+    <td height="230" align="center" bgcolor="#f7e7ca"><a href="${adv.linkUrl!}" target="_blank"><img src="${ctx_path}/upload${adv.imgUrl!}" width="146" height="191" /></a></td>
+    </#list>
+    </#if>
   </tr>
   <tr>
-    <td height="40" align="center" valign="top" bgcolor="#f7e7ca" class="font2"><a href="http://zzpyfy.taobao.com" target="_blank">璞玉蜂园</a></td>
-    <td align="center" valign="top" bgcolor="#f7e7ca" class="font2"><a href="http://zzpyfy.taobao.com" target="_blank">璞玉蜂园</a></td>
-    <td align="center" valign="top" bgcolor="#f7e7ca" class="font2"> <a href="http://zzpyfy.taobao.com" target="_blank">璞玉蜂园</a></td>
-    <td align="center" valign="top" bgcolor="#f7e7ca" class="font2"><a href="http://zzpyfy.taobao.com" target="_blank">璞玉蜂园</a></td>
-    <td align="center" valign="top" bgcolor="#f7e7ca" class="font2"><a href="http://zzpyfy.taobao.com" target="_blank">璞玉蜂园</a></td>
+    <#if advList??>
+  <#list advList as adv>
+    <td height="40" align="center" valign="top" bgcolor="#f7e7ca" class="font2"><a href="${adv.linkUrl!}" target="_blank">${adv.name}</a></td>
+    </#list>
+    </#if>
   </tr>
 </table>
 
